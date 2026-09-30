@@ -1,0 +1,115 @@
+[project]
+name = "rrhh-system-management-django"
+version = "0.1.0"
+description = "Sistema de gestión de Recursos Humanos — monolito modular Django"
+requires-python = ">=3.12"
+
+# ---------------------------------------------------------------------------
+# Ruff — linter y formateador (reemplaza black, isort y flake8)
+# Ver docs/development/12-devsecops.md §L.2
+# ---------------------------------------------------------------------------
+[tool.ruff]
+line-length = 100
+# py312 y no py314 a propósito: con py314, Ruff reescribe `except (A, B):` a la
+# sintaxis sin paréntesis de PEP 758, que solo existe desde Python 3.14 y dejaría
+# el código sin poder ejecutarse en 3.12/3.13. El destino de despliegue aún no
+# está decidido (Fase 9), así que se conserva la compatibilidad amplia.
+target-version = "py312"
+extend-exclude = [
+    "**/migrations/*",  # generadas por Django; no se editan a mano
+    ".venv",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "A",    # flake8-builtins
+    "C4",   # flake8-comprehensions
+    "DTZ",  # flake8-datetimez — crítico con USE_TZ=True
+    "DJ",   # flake8-django
+    "S",    # flake8-bandit
+    "SIM",  # flake8-simplify
+    "ARG",  # flake8-unused-arguments
+    "PTH",  # flake8-use-pathlib
+    "RUF",  # reglas propias de Ruff
+]
+ignore = [
+    "RUF012",  # ClassVar en atributos mutables de clase: ruidoso con Django Meta/Admin
+]
+# El signo de multiplicación aparece en la documentación de las matrices de
+# pruebas ("rol × vista"): es tipografía correcta, no una confusión con la x.
+allowed-confusables = ["×"]
+
+[tool.ruff.lint.per-file-ignores]
+# Los módulos de settings se componen con imports con estrella entre sí.
+"config/settings/*.py" = ["F403", "F405", "E501"]
+# Los formatos localizados son constantes en mayúsculas por convención de Django.
+"config/formats/**/formats.py" = ["N816"]
+# assert es la herramienta de pytest; S106 son contraseñas de prueba.
+"**/tests/**/*.py" = ["S101", "S105", "S106", "ARG001", "ARG002"]
+"tests/**/*.py" = ["S101", "S105", "S106", "ARG001", "ARG002"]
+# La fixture `db` de pytest-django se declara por efecto, no se usa en el cuerpo.
+"conftest.py" = ["S101", "S105", "S106", "ARG001"]
+# Django fija la firma de los hooks del admin: los parámetros no son opcionales.
+"**/admin.py" = ["ARG002"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["apps", "config"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+# ---------------------------------------------------------------------------
+# pytest
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.testing"
+python_files = ["test_*.py"]
+testpaths = ["apps", "tests"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "-ra",
+]
+markers = [
+    "unit: prueba unitaria aislada",
+    "integration: prueba de integración entre capas",
+    "security: prueba de seguridad (permisos, IDOR, escalada)",
+    "slow: prueba lenta",
+]
+filterwarnings = ["error::DeprecationWarning:apps.*"]
+
+# ---------------------------------------------------------------------------
+# coverage — ver §L.4
+# ---------------------------------------------------------------------------
+[tool.coverage.run]
+source = ["apps", "config"]
+branch = true
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "config/settings/*",
+    "config/wsgi.py",
+    "config/asgi.py",
+    "manage.py",
+]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+skip_covered = true
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
+
+[tool.bandit]
+exclude_dirs = [".venv", "tests", "migrations"]

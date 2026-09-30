@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n attendance_extras %}
+{% block title %}{% translate "Resolve incident" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'attendance:incident_list' %}">{% translate "Attendance incidents" %}</a></li>
+      <li aria-current="page">{% translate "Resolve incident" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Resolve incident" %}</h1>
+      <p class="page-header__meta">
+        {{ incident.employee.person.full_name }} · {{ incident.work_date }} ·
+        {{ incident.get_incident_type_display }} · {{ incident.minutes|as_hours }}
+      </p>
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    <div class="alert alert--warning">
+      <p><strong>{% translate "When you confirm:" %}</strong></p>
+      <ul>
+        <li>{% translate "The decision is recorded with your name and the time." %}</li>
+        <li>{% translate "Justified overtime counts for payroll; rejected does not." %}</li>
+        <li>{% translate "A resolved incident is not reopened: a new one is created if the facts change." %}</li>
+      </ul>
+    </div>
+    <div class="mt-6">{% include "includes/form_fields.html" %}</div>
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Save decision" %}</button>
+      <a class="button button--ghost" href="{% url 'attendance:incident_list' %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

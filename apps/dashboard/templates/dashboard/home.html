@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Home" %}{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Welcome" %}</h1>
+      <p class="page-header__meta">{% blocktranslate with email=user.email %}Signed in as {{ email }}.{% endblocktranslate %}</p>
+    </div>
+  </header>
+
+  {% if shows_hr_panel %}
+    {% comment %} Indicadores SIN importes: el inicio es una pantalla que se queda
+       abierta (plan UX/UI §7.1). {% endcomment %}
+    <ul class="metrics">
+      <li class="metric">
+        <span class="metric__value">{{ hr.active_employees }}</span>
+        <span class="metric__label">{% translate "Active employees" %}</span>
+      </li>
+      <li class="metric">
+        <span class="metric__value">{{ hr.draft_contracts }}</span>
+        <span class="metric__label">{% translate "Draft contracts" %}</span>
+      </li>
+      <li class="metric">
+        <span class="metric__value">{{ hr.expiring_contracts }}</span>
+        <span class="metric__label">{% blocktranslate with days=hr.horizon_days %}Ending within {{ days }} days{% endblocktranslate %}</span>
+      </li>
+      <li class="metric">
+        <span class="metric__value">{{ hr.employees_without_contract }}</span>
+        <span class="metric__label">{% translate "Active without a contract" %}</span>
+      </li>
+    </ul>
+
+    <div class="grid grid--2">
+      <section class="card" aria-labelledby="drafts-title">
+        <div class="card__header">
+          <h2 class="card__title" id="drafts-title">{% translate "Drafts to activate" %}</h2>
+          <a class="button button--ghost button--sm" href="{% url 'contracts:list' %}?status=DRAFT">{% translate "See all" %}</a>
+        </div>
+        <ul class="list">
+          {% for contract in hr.drafts %}
+            <li>
+              <span>
+                <a href="{% url 'contracts:detail' contract.public_id %}">{{ contract.employee.person.full_name }}</a><br>
+                <span class="list__muted">{{ contract.employee.employee_code }} · {{ contract.get_contract_type_display }}</span>
+              </span>
+              <a class="button button--secondary button--sm" href="{% url 'contracts:wizard' contract.public_id %}">{% translate "Continue" %}</a>
+            </li>
+          {% empty %}
+            <li class="list__muted">{% translate "Nothing pending." %}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="expiring-title">
+        <div class="card__header">
+          <h2 class="card__title" id="expiring-title">{% translate "Contracts ending soon" %}</h2>
+        </div>
+        <ul class="list">
+          {% for contract in hr.expiring %}
+            <li>
+              <span>
+                <a href="{% url 'contracts:detail' contract.public_id %}">{{ contract.employee.person.full_name }}</a><br>
+                <span class="list__muted">{{ contract.employee.employee_code }}</span>
+              </span>
+              <span>{{ contract.end_date }}</span>
+            </li>
+          {% empty %}
+            <li class="list__muted">{% translate "No contracts ending soon." %}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      {% if hr.pending_employees %}
+        <section class="card" aria-labelledby="pending-title">
+          <div class="card__header">
+            <h2 class="card__title" id="pending-title">{% translate "Active employees without a contract" %}</h2>
+          </div>
+          <ul class="list">
+            {% for employee in hr.pending_employees %}
+              <li>
+                <span>
+                  <a href="{% url 'employees:detail' employee.public_id %}">{{ employee.person.full_name }}</a><br>
+                  <span class="list__muted">{{ employee.employee_code }}</span>
+                </span>
+                {% if perms.contracts.add_employmentcontract %}
+                  <a class="button button--secondary button--sm" href="{% url 'contracts:create' employee.public_id %}">{% translate "Hire" %}</a>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if shows_team_panel %}
+    <section class="card mt-6" aria-labelledby="team-title">
+      <div class="card__header">
+        <h2 class="card__title" id="team-title">{% translate "My team" %}</h2>
+        <a class="button button--ghost button--sm" href="{% url 'employees:list' %}">{% translate "See all" %}</a>
+      </div>
+      <ul class="list">
+        {% for member in team %}
+          <li>
+            <span>
+              <a href="{% url 'employees:detail' member.public_id %}">{{ member.person.full_name }}</a><br>
+              <span class="list__muted">{{ member.employee_code }}</span>
+            </span>
+            {% include "includes/status_badge.html" with status=member.employment_status label=member.get_employment_status_display %}
+          </li>
+        {% empty %}
+          <li class="list__muted">{% translate "Nobody is assigned to your departments yet." %}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  <section class="card mt-6" aria-labelledby="self-title">
+    <h2 class="card__title" id="self-title">{% translate "My space" %}</h2>
+    <ul class="quick-links mt-6">
+      {% if own_employee %}
+        <li>
+          <a class="quick-link" href="{% url 'employees:detail' own_employee.public_id %}">
+            {% include "includes/icon.html" with name="user" %}
+            <span class="quick-link__title">{% translate "My record" %}</span>
+            <span class="quick-link__text">{{ own_employee.employee_code }}</span>
+          </a>
+        </li>
+      {% endif %}
+      {% if own_contract %}
+        <li>
+          <a class="quick-link" href="{% url 'contracts:detail' own_contract.public_id %}">
+            {% include "includes/icon.html" with name="contract" %}
+            <span class="quick-link__title">{% translate "My contract" %}</span>
+            <span class="quick-link__text">{{ own_contract.get_contract_type_display }}</span>
+          </a>
+        </li>
+      {% endif %}
+      <li>
+        <a class="quick-link" href="{% url 'accounts:profile' %}">
+          {% include "includes/icon.html" with name="lock" %}
+          <span class="quick-link__title">{% translate "My profile" %}</span>
+          <span class="quick-link__text">{% translate "Your account, language and password" %}</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+{% endblock %}

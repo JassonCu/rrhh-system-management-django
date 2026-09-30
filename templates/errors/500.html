@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Error · Ceiba RH</title>
+  <!-- Documento autónomo a propósito: sin etiquetas de plantilla, sin contexto ni
+       base de datos. Si lo que falló es la base o la configuración, esta página
+       no puede fallar también (§K.6). La ruta coincide con STATIC_URL = "static/". -->
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="app app--public">
+    <div class="app-body">
+      <header class="app-topbar">
+        <div class="app-topbar__start">
+          <a class="app-brand app-brand--on-light" href="/">
+            <img src="/static/img/brand/ceiba-mark.svg" alt="" width="28" height="28">
+            <span>Ceiba RH</span>
+          </a>
+        </div>
+      </header>
+      <main id="main" class="app-content">
+        <section class="error-page">
+          <p class="error-page__code">500</p>
+          <h1>Error interno del servidor</h1>
+          <p>
+            Ocurrió un error inesperado. El equipo técnico ha sido notificado.
+            Si necesita reportarlo, indique la hora aproximada del intento.
+          </p>
+          <a class="button button--primary" href="/">Volver al inicio</a>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

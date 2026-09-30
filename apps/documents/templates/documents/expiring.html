@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Documents expiring" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Documents expiring" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Documents expiring" %}</h1>
+      <p class="page-header__meta">{% translate "Expired documents are listed first: they are the ones to chase." %}</p>
+    </div>
+  </header>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "Documents that expire soon" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Employee" %}</th>
+          <th scope="col">{% translate "Type" %}</th>
+          <th scope="col">{% translate "Expires" %}</th>
+          <th scope="col">{% translate "Status" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for document in page %}
+          <tr>
+            <td class="cell-strong">
+              <a href="{% url 'employees:detail' document.employee.public_id %}?tab=file">
+                {{ document.employee.person.full_name }}
+              </a>
+            </td>
+            <td>{{ document.document_type.name }}</td>
+            <td>{{ document.expires_on }}</td>
+            <td>
+              {% if document.is_expired %}
+                <span class="badge badge--danger">{% translate "expired" %}</span>
+              {% else %}
+                <span class="badge badge--warning">{% translate "expiring soon" %}</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="calendar" %}
+                <p>{% translate "Nothing expires in the next few days." %}</p>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Work schedules" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Work schedules" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Work schedules" %}</h1>
+      <p class="page-header__meta">{% translate "Each schedule sets its own grace period before an arrival counts as late." %}</p>
+    </div>
+    {% if perms.attendance.add_workschedule %}
+      <div class="page-header__actions">
+        <a class="button button--primary" href="{% url 'attendance:schedule_create' %}">
+          {% include "includes/icon.html" with name="plus" %}<span>{% translate "New schedule" %}</span>
+        </a>
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "List of work schedules" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Code" %}</th>
+          <th scope="col">{% translate "Name" %}</th>
+          <th scope="col">{% translate "Weekly hours" %}</th>
+          <th scope="col">{% translate "Grace period" %}</th>
+          <th scope="col">{% translate "Days" %}</th>
+          <th scope="col">{% translate "Status" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for schedule in page %}
+          <tr>
+            <td class="cell-strong">{{ schedule.code }}</td>
+            <td>{{ schedule.name }}</td>
+            <td>{{ schedule.weekly_hours }}</td>
+            <td>{% blocktranslate with minutes=schedule.grace_minutes %}{{ minutes }} min{% endblocktranslate %}</td>
+            <td class="cell-muted">
+              {% for day in schedule.days.all %}{{ day.get_weekday_display|slice:":3" }} {% endfor %}
+            </td>
+            <td>
+              {% if schedule.is_active %}
+                {% include "includes/status_badge.html" with status="ACTIVE" label=_("Active") %}
+              {% else %}
+                {% include "includes/status_badge.html" with status="INACTIVE" label=_("Inactive") %}
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="6">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "No work schedules defined." %}</p>
+                {% if perms.attendance.add_workschedule %}
+                  <a class="button button--primary button--sm" href="{% url 'attendance:schedule_create' %}">{% translate "New schedule" %}</a>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

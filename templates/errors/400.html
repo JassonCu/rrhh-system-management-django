@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Bad request" %}{% endblock %}
+{% block content %}
+  <section class="error-page">
+    <span class="error-page__icon">{% include "includes/icon.html" with name="alert" %}</span>
+    <p class="error-page__code">400</p>
+    <h1>{% translate "Bad request" %}</h1>
+    <p>{% translate "The request could not be processed. Please check the data and try again." %}</p>
+    <a class="button button--primary" href="{% url 'dashboard:home' %}">{% translate "Back to home" %}</a>
+  </section>
+{% endblock %}

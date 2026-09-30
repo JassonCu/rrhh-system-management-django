@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load i18n leave_extras %}
+{% block title %}{% if leave_type %}{% translate "Edit leave type" %}{% else %}{% translate "New leave type" %}{% endif %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'leave:type_list' %}">{% translate "Leave types" %}</a></li>
+      <li aria-current="page">{% if leave_type %}{{ leave_type.name }}{% else %}{% translate "New leave type" %}{% endif %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">
+        {% if leave_type %}{% translate "Edit leave type" %}{% else %}{% translate "New leave type" %}{% endif %}
+      </h1>
+      <p class="page-header__meta">{% translate "Annual days accrue in twelfths, one twelfth per month worked." %}</p>
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    <div>{% include "includes/form_fields.html" %}</div>
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Save" %}</button>
+      <a class="button button--ghost" href="{% url 'leave:type_list' %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+
+  {% if leave_type %}
+    <section class="card mt-6" aria-labelledby="tiers-title">
+      <h2 class="card__title" id="tiers-title">{% translate "Days by seniority" %}</h2>
+      <p class="list__muted">
+        {% blocktranslate with days=leave_type.default_annual_days|as_days %}Base: {{ days }} days per year. Each tier applies from the completed years of service it states, and can never grant fewer days than the base or a lower tier.{% endblocktranslate %}
+      </p>
+      <ul class="list mt-6">
+        {% for tier in tiers %}
+          <li>
+            <span>
+              {% blocktranslate count years=tier.min_years_of_service %}From {{ years }} year{% plural %}From {{ years }} years{% endblocktranslate %}
+            </span>
+            <span>
+              <span class="cell-strong">{% blocktranslate with days=tier.annual_days|as_days %}{{ days }} days{% endblocktranslate %}</span>
+              {% if perms.leave.delete_leaveaccrualtier %}
+                · <a href="{% url 'leave:tier_remove' leave_type.pk tier.pk %}">{% translate "Remove" %}</a>
+              {% endif %}
+            </span>
+          </li>
+        {% empty %}
+          <li class="list__muted">{% translate "No tiers: everyone accrues the base days." %}</li>
+        {% endfor %}
+      </ul>
+      {% if perms.leave.add_leaveaccrualtier %}
+        <form method="post" action="{% url 'leave:tier_add' leave_type.pk %}" novalidate class="mt-6">
+          {% csrf_token %}
+          {% include "includes/form_fields.html" with form=tier_form %}
+          <div class="form-actions">
+            <button type="submit" class="button button--primary">{% translate "Add tier" %}</button>
+          </div>
+        </form>
+      {% endif %}
+    </section>
+  {% endif %}
+{% endblock %}

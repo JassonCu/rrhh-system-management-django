@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Invite a user" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'accounts:user_list' %}">{% translate "Accounts" %}</a></li>
+      <li aria-current="page">{% translate "Invite a user" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Invite a user" %}</h1>
+      <p class="page-header__meta">{% translate "The person will receive a single-use link to set their own password." %}</p>
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" %}
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Send invitation" %}</button>
+      <a class="button button--ghost" href="{% url 'accounts:user_list' %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

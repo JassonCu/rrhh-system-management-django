@@ -1,0 +1,70 @@
+{% load i18n static %}<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="same-origin">
+  {% comment %} `head_title` es el bloque que usan las plantillas de allauth; `title`, el
+     de las nuestras. El nombre del producto se añade siempre al final. {% endcomment %}
+  <title>{% block head_title %}{% block title %}{% endblock %}{% endblock %} · {{ PRODUCT_NAME }}</title>
+  <meta name="theme-color" content="#0B574A">
+  {# Hoja de estilos externa del propio origen: permitida por style-src 'self'. #}
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+{% block body %}
+  <a class="skip-link" href="#main">{% translate "Skip to main content" %}</a>
+
+  <div class="app{% if not user.is_authenticated %} app--public{% endif %}">
+    {% if user.is_authenticated %}{% include "includes/navbar.html" %}{% endif %}
+
+    <div class="app-body">
+      <header class="app-topbar">
+        <div class="app-topbar__start">
+          {% if not user.is_authenticated %}
+            <a class="app-brand app-brand--on-light" href="{% url 'dashboard:home' %}">
+              <img src="{% static 'img/brand/ceiba-mark.svg' %}" alt="" width="28" height="28">
+              <span>{{ PRODUCT_NAME }}</span>
+            </a>
+          {% endif %}
+          {% block breadcrumbs %}{% endblock %}
+        </div>
+        <div class="app-topbar__end">
+          {% include "includes/language_selector.html" %}
+          {% if user.is_authenticated %}
+            <div class="user-menu">
+              <a class="user-menu__profile" href="{% url 'accounts:profile' %}">
+                <span class="avatar" aria-hidden="true">{{ user.email|first|upper }}</span>
+                <span class="user-menu__email">{{ user.email }}</span>
+              </a>
+              {# Logout SOLO por POST: un GET permitiría un CSRF de cierre de sesión. #}
+              <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="button button--ghost button--sm">
+                  {% include "includes/icon.html" with name="logout" %}<span>{% translate "Sign out" %}</span>
+                </button>
+              </form>
+            </div>
+          {% endif %}
+        </div>
+      </header>
+
+      <main id="main" class="app-content">
+        {% include "includes/messages.html" %}
+        {% block content %}{% endblock %}
+      </main>
+
+      <footer class="app-footer">
+        <p>{{ PRODUCT_NAME }}</p>
+      </footer>
+    </div>
+  </div>
+{% endblock %}
+
+  {# Sin JavaScript en línea: lo exige la CSP estricta (ADR-007). #}
+  <script src="{% static 'js/main.js' %}" defer></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

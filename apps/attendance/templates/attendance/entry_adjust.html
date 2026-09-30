@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Adjust entry" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'attendance:team' %}">{% translate "Team attendance" %}</a></li>
+      <li aria-current="page">{% translate "Adjust entry" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Adjust entry" %}</h1>
+      <p class="page-header__meta">
+        {{ entry.employee.person.full_name }} · {{ entry.work_date }}
+      </p>
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    <div class="alert alert--warning">
+      <p><strong>{% translate "Before:" %}</strong>
+        {{ entry.check_in_at|time:"H:i" }} –
+        {% if entry.check_out_at %}{{ entry.check_out_at|time:"H:i" }}{% else %}{% translate "open" %}{% endif %}
+      </p>
+      <ul>
+        <li>{% translate "The adjustment is recorded with your name and the time." %}</li>
+        <li>{% translate "The attendance of that day is recalculated." %}</li>
+        <li>{% translate "You cannot correct your own attendance." %}</li>
+      </ul>
+    </div>
+    <div class="mt-6">{% include "includes/form_fields.html" %}</div>
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Adjust entry" %}</button>
+      <a class="button button--ghost" href="{% url 'attendance:team' %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

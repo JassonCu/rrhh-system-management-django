@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load i18n leave_extras %}
+{% block title %}{% translate "Leave types" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Leave types" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Leave types" %}</h1>
+      <p class="page-header__meta">{% translate "Types are deactivated, never deleted: the history depends on them." %}</p>
+    </div>
+    {% if perms.leave.add_leavetype %}
+      <div class="page-header__actions">
+        <a class="button button--primary" href="{% url 'leave:type_create' %}">
+          {% include "includes/icon.html" with name="plus" %}<span>{% translate "New type" %}</span>
+        </a>
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "List of leave types" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Code" %}</th>
+          <th scope="col">{% translate "Name" %}</th>
+          <th scope="col">{% translate "Days per year" %}</th>
+          <th scope="col">{% translate "Notice" %}</th>
+          <th scope="col">{% translate "Retroactive" %}</th>
+          <th scope="col">{% translate "Approval" %}</th>
+          <th scope="col">{% translate "Sensitive" %}</th>
+          <th scope="col">{% translate "Status" %}</th>
+          <th scope="col"><span class="visually-hidden">{% translate "Actions" %}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for leave_type in types %}
+          <tr>
+            <td class="cell-strong">{{ leave_type.code }}</td>
+            <td>{{ leave_type.name }}</td>
+            <td>{{ leave_type.default_annual_days|as_days }}</td>
+            <td class="cell-muted">{% blocktranslate with days=leave_type.min_notice_days %}{{ days }} d{% endblocktranslate %}</td>
+            <td class="cell-muted">{% if leave_type.max_backdating_days %}{% blocktranslate with days=leave_type.max_backdating_days %}{{ days }} d{% endblocktranslate %}{% else %}{% translate "No" %}{% endif %}</td>
+            <td>{% if leave_type.requires_approval %}{% translate "Required" %}{% else %}{% translate "Automatic" %}{% endif %}</td>
+            <td>{% if leave_type.is_sensitive %}{% translate "Yes" %}{% else %}{% translate "No" %}{% endif %}</td>
+            <td>
+              {% if leave_type.is_active %}
+                {% include "includes/status_badge.html" with status="ACTIVE" label=_("Active") %}
+              {% else %}
+                {% include "includes/status_badge.html" with status="INACTIVE" label=_("Inactive") %}
+              {% endif %}
+            </td>
+            <td>
+              {% if perms.leave.change_leavetype %}
+                <a href="{% url 'leave:type_update' leave_type.pk %}">{% translate "Edit" %}</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="9">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "No leave types defined." %}</p>
+                {% if perms.leave.add_leavetype %}
+                  <a class="button button--primary button--sm" href="{% url 'leave:type_create' %}">{% translate "New type" %}</a>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

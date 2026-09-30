@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% if document_type %}{% translate "Edit document type" %}{% else %}{% translate "New document type" %}{% endif %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'documents:type_list' %}">{% translate "Document types" %}</a></li>
+      <li aria-current="page">{% if document_type %}{{ document_type.name }}{% else %}{% translate "New document type" %}{% endif %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">
+        {% if document_type %}{% translate "Edit document type" %}{% else %}{% translate "New document type" %}{% endif %}
+      </h1>
+      <p class="page-header__meta">{% translate "Accepted formats: PDF, PNG, JPG, JPEG and DOCX." %}</p>
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    <div class="alert alert--info">
+      <p>{% translate "A confidential type can only be opened by HR administration and auditing; everyone else sees that it exists, not its content." %}</p>
+    </div>
+    <div class="mt-6">{% include "includes/form_fields.html" %}</div>
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Save" %}</button>
+      <a class="button button--ghost" href="{% url 'documents:type_list' %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

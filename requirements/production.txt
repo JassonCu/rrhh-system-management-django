@@ -1,0 +1,4 @@
+-r base.txt
+
+# El servidor WSGI/ASGI se fija al elegir plataforma de despliegue (Fase 9).
+# psycopg[binary]==...   # al migrar a PostgreSQL (ADR-003)

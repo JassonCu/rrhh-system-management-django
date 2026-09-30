@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% comment %}
+  Patrón de confirmación (plan UX/UI §5): página propia —no un modal—, las
+  consecuencias en lista y un botón con verbo explícito. La acción se ejecuta
+  solo por POST y con CSRF, así que un enlace no puede dispararla.
+
+  Contexto: title, subject, consequences (lista), confirm_label, cancel_url,
+  danger (bool) y, opcionalmente, form.
+{% endcomment %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{{ cancel_url }}">{% translate "Back" %}</a></li>
+      <li aria-current="page">{{ title }}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{{ title }}</h1>
+      {% if subject %}<p class="page-header__meta">{{ subject }}</p>{% endif %}
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+
+    <div class="alert alert--{% if danger %}error{% else %}warning{% endif %}">
+      <p><strong>{% translate "When you confirm:" %}</strong></p>
+      <ul>
+        {% for consequence in consequences %}<li>{{ consequence }}</li>{% endfor %}
+      </ul>
+    </div>
+
+    {% if form %}
+      <div class="mt-6">{% include "includes/form_fields.html" %}</div>
+    {% endif %}
+
+    <div class="form-actions">
+      <button type="submit" class="button button--{% if danger %}danger{% else %}primary{% endif %}">{{ confirm_label }}</button>
+      <a class="button button--ghost" href="{{ cancel_url }}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load i18n attendance_extras %}
+{% block title %}{% translate "Team attendance" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Team attendance" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Team attendance" %}</h1>
+      <p class="page-header__meta">{% translate "Hours worked. Never location." %}</p>
+    </div>
+  </header>
+
+  <form method="get" class="toolbar">
+    <div class="field">
+      <label for="date">{% translate "Date" %}</label>
+      <input type="date" id="date" name="date" value="{{ day|date:'Y-m-d' }}">
+    </div>
+    <button type="submit" class="button button--secondary">{% translate "Show" %}</button>
+  </form>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "Team attendance for the selected day" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Employee" %}</th>
+          <th scope="col">{% translate "Entries" %}</th>
+          <th scope="col">{% translate "Expected" %}</th>
+          <th scope="col">{% translate "Worked" %}</th>
+          <th scope="col">{% translate "Incidents" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          <tr>
+            <td class="cell-strong">
+              <a href="{% url 'employees:detail' row.employee.public_id %}">{{ row.employee.person.full_name }}</a><br>
+              <span class="cell-muted">{{ row.employee.employee_code }}</span>
+            </td>
+            <td>
+              {% for entry in row.summary.entries %}
+                {{ entry.check_in_at|time:"H:i" }}–{% if entry.check_out_at %}{{ entry.check_out_at|time:"H:i" }}{% else %}…{% endif %}
+                {% if perms.attendance.adjust_attendance %}
+                  <a class="button button--ghost button--sm" href="{% url 'attendance:entry_adjust' entry.pk %}">{% translate "Adjust" %}</a>
+                {% endif %}
+                <br>
+              {% empty %}<span class="cell-muted">—</span>{% endfor %}
+            </td>
+            <td class="cell-muted">{{ row.summary.expected_minutes|as_hours }}</td>
+            <td>{{ row.summary.worked_minutes|as_hours }}</td>
+            <td>
+              {% for incident in row.summary.incidents %}
+                {% include "includes/status_badge.html" with status=incident.status label=incident.get_incident_type_display %}
+              {% empty %}—{% endfor %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "Nobody to show for that day." %}</p>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

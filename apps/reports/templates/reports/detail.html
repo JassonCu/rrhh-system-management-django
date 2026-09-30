@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load i18n reports_extras %}
+{% block title %}{{ spec.title }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'reports:index' %}">{% translate "Reports" %}</a></li>
+      <li aria-current="page">{{ spec.title }}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{{ spec.title }}</h1>
+      <p class="page-header__meta">{{ spec.description }}</p>
+    </div>
+    {% if result %}
+      <div class="page-header__actions">
+        <a class="button button--primary" href="?{{ export_query }}">
+          {% include "includes/icon.html" with name="contract" %}<span>{% translate "Export to Excel" %}</span>
+        </a>
+        <a class="button button--ghost" href="?{{ pdf_query }}">
+          {% include "includes/icon.html" with name="contract" %}<span>{% translate "PDF with QR" %}</span>
+        </a>
+      </div>
+    {% endif %}
+  </header>
+
+  <form method="get" novalidate class="card form-card">
+    <div>{% include "includes/form_fields.html" %}</div>
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Generate" %}</button>
+      <a class="button button--ghost" href="{% url 'reports:index' %}">{% translate "Back" %}</a>
+    </div>
+  </form>
+
+  {% if result %}
+    <section class="card mt-6" aria-labelledby="result-title">
+      <div class="card__header">
+        <h2 class="card__title" id="result-title">{% translate "Result" %}</h2>
+        <p class="list__muted">
+          {% blocktranslate count rows=result.row_count %}{{ rows }} row{% plural %}{{ rows }} rows{% endblocktranslate %}
+        </p>
+      </div>
+
+      {% if result.truncated %}
+        <div class="alert alert--warning">
+          <p>{% translate "The report exceeded the maximum number of rows and was cut: narrow the range or the department." %}</p>
+        </div>
+      {% endif %}
+
+      <div class="table-scroll">
+        <table>
+          <caption class="visually-hidden">{{ spec.title }}</caption>
+          <thead>
+            <tr>
+              {% for column in result.columns %}
+                <th scope="col">{{ column.label }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in visible_rows %}
+              <tr>
+                {% for column in result.columns %}
+                  <td{% if column.numeric %} class="cell-numeric"{% endif %}>
+                    {# `default_if_none`, no `default`: un cero es un dato, no un hueco. #}
+                    {{ row|get:column.key|default_if_none:"—" }}
+                  </td>
+                {% endfor %}
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="{{ result.columns|length }}">
+                  <div class="empty-state">
+                    {% include "includes/icon.html" with name="inbox" %}
+                    <p>{% translate "Nothing to show with those filters." %}</p>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          {% if result.totals %}
+            <tfoot>
+              <tr>
+                {% for column in result.columns %}
+                  <td{% if column.numeric %} class="cell-numeric"{% endif %}>
+                    <strong>{{ result.totals|get:column.key }}</strong>
+                  </td>
+                {% endfor %}
+              </tr>
+            </tfoot>
+          {% endif %}
+        </table>
+      </div>
+
+      {% if result.row_count > screen_limit %}
+        <p class="list__muted mt-6">
+          {% blocktranslate with shown=screen_limit %}Only the first {{ shown }} rows are shown. Export to see them all.{% endblocktranslate %}
+        </p>
+      {% endif %}
+    </section>
+  {% endif %}
+{% endblock %}

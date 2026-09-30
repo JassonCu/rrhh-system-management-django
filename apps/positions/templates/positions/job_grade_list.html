@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Job grades" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'positions:list' %}">{% translate "Positions" %}</a></li>
+      <li aria-current="page">{% translate "Job grades" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Job grades" %}</h1>
+      <p class="page-header__meta">
+        {% include "includes/icon.html" with name="lock" %}
+        <span>{% translate "Salary bands are confidential information." %}</span>
+      </p>
+    </div>
+    {% if perms.positions.add_jobgrade %}
+      <div class="page-header__actions">
+        <a class="button button--primary" href="{% url 'positions:job_grade_create' %}">
+          {% include "includes/icon.html" with name="plus" %}<span>{% translate "New job grade" %}</span>
+        </a>
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "List of job grades" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Code" %}</th>
+          <th scope="col">{% translate "Name" %}</th>
+          <th scope="col">{% translate "Level" %}</th>
+          <th scope="col">{% translate "Minimum" %}</th>
+          <th scope="col">{% translate "Maximum" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for grade in page %}
+          <tr>
+            <td class="cell-strong">{{ grade.code }}</td>
+            <td>{{ grade.name }}</td>
+            <td>{{ grade.level }}</td>
+            <td>{{ grade.min_salary }} {{ grade.currency }}</td>
+            <td>{{ grade.max_salary }} {{ grade.currency }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "No job grades defined." %}</p>
+                {% if perms.positions.add_jobgrade %}
+                  <a class="button button--primary button--sm" href="{% url 'positions:job_grade_create' %}">{% translate "New job grade" %}</a>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

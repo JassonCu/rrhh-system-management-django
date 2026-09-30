@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Document types" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Document types" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Document types" %}</h1>
+      <p class="page-header__meta">{% translate "Each type decides what formats it accepts, how big and who may open it." %}</p>
+    </div>
+    {% if perms.documents.add_documenttype %}
+      <div class="page-header__actions">
+        <a class="button button--primary" href="{% url 'documents:type_create' %}">
+          {% include "includes/icon.html" with name="plus" %}<span>{% translate "New type" %}</span>
+        </a>
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "List of document types" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Code" %}</th>
+          <th scope="col">{% translate "Name" %}</th>
+          <th scope="col">{% translate "Formats" %}</th>
+          <th scope="col">{% translate "Maximum" %}</th>
+          <th scope="col">{% translate "Confidential" %}</th>
+          <th scope="col">{% translate "The employee uploads it" %}</th>
+          <th scope="col">{% translate "Retention" %}</th>
+          <th scope="col">{% translate "Status" %}</th>
+          <th scope="col"><span class="visually-hidden">{% translate "Actions" %}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for type in types %}
+          <tr>
+            <td class="cell-strong">{{ type.code }}</td>
+            <td>{{ type.name }}</td>
+            <td class="cell-muted">{{ type.allowed_extensions }}</td>
+            <td class="cell-muted">{% blocktranslate with size=type.max_size_mb %}{{ size }} MB{% endblocktranslate %}</td>
+            <td>{% if type.is_sensitive %}{% translate "Yes" %}{% else %}{% translate "No" %}{% endif %}</td>
+            <td>{% if type.employee_can_upload %}{% translate "Yes" %}{% else %}{% translate "No" %}{% endif %}</td>
+            <td class="cell-muted">
+              {% if type.retention_years %}
+                {% blocktranslate with years=type.retention_years %}{{ years }} years{% endblocktranslate %}
+              {% else %}
+                {% translate "not defined" %}
+              {% endif %}
+            </td>
+            <td>
+              {% if type.is_active %}
+                {% include "includes/status_badge.html" with status="ACTIVE" label=_("Active") %}
+              {% else %}
+                {% include "includes/status_badge.html" with status="INACTIVE" label=_("Inactive") %}
+              {% endif %}
+            </td>
+            <td>
+              {% if perms.documents.change_documenttype %}
+                <a href="{% url 'documents:type_update' type.pk %}">{% translate "Edit" %}</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="9">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "No document types defined." %}</p>
+                {% if perms.documents.add_documenttype %}
+                  <a class="button button--primary button--sm" href="{% url 'documents:type_create' %}">{% translate "New type" %}</a>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

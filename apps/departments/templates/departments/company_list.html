@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Companies" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Companies" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Companies" %}</h1>
+      <p class="page-header__meta">{% translate "The employer at the root of the organization chart." %}</p>
+    </div>
+    {% if perms.core.add_company %}
+      <div class="page-header__actions">
+        <a class="button button--primary" href="{% url 'departments:company_create' %}">
+          {% include "includes/icon.html" with name="plus" %}<span>{% translate "New company" %}</span>
+        </a>
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "List of companies" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Code" %}</th>
+          <th scope="col">{% translate "Legal name" %}</th>
+          <th scope="col">{% translate "Tax ID" %}</th>
+          <th scope="col">{% translate "Status" %}</th>
+          <th scope="col"><span class="visually-hidden">{% translate "Actions" %}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for company in page %}
+          <tr>
+            <td class="cell-strong">{{ company.code }}</td>
+            <td>{{ company.legal_name }}</td>
+            <td class="cell-muted">{{ company.tax_id }}</td>
+            <td>
+              {% if company.is_active %}
+                {% include "includes/status_badge.html" with status="ACTIVE" label=_("Active") %}
+              {% else %}
+                {% include "includes/status_badge.html" with status="INACTIVE" label=_("Inactive") %}
+              {% endif %}
+            </td>
+            <td class="cell-actions">
+              {% if perms.core.change_company %}
+                <a class="button button--secondary button--sm" href="{% url 'departments:company_update' company.pk %}">{% translate "Edit" %}</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "No companies registered." %}</p>
+                {% if perms.core.add_company %}
+                  <a class="button button--primary button--sm" href="{% url 'departments:company_create' %}">{% translate "New company" %}</a>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

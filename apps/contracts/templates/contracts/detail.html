@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Contract" %} {{ contract.employee.employee_code }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'contracts:list' %}">{% translate "Contracts" %}</a></li>
+      <li aria-current="page">{{ contract.employee.employee_code }}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Employment contract" %}</h1>
+      <p class="page-header__meta">
+        <a href="{% url 'employees:detail' contract.employee.public_id %}">{{ contract.employee.person.full_name }}</a>
+        <span>{{ contract.employee.employee_code }}</span>
+        {% include "includes/status_badge.html" with status=contract.status label=contract.get_status_display %}
+      </p>
+    </div>
+    {% if perms.contracts.change_employmentcontract or perms.contracts.terminate_contract %}
+      <div class="page-header__actions">
+        {% if can_activate and perms.contracts.change_employmentcontract %}
+          <form method="post" action="{% url 'contracts:activate' contract.public_id %}">
+            {% csrf_token %}<button type="submit" class="button button--primary">{% translate "Activate" %}</button>
+          </form>
+        {% endif %}
+        {% if can_resume and perms.contracts.change_employmentcontract %}
+          <form method="post" action="{% url 'contracts:resume' contract.public_id %}">
+            {% csrf_token %}<button type="submit" class="button button--primary">{% translate "Resume" %}</button>
+          </form>
+        {% endif %}
+        {% if can_suspend and perms.contracts.change_employmentcontract %}
+          <form method="post" action="{% url 'contracts:suspend' contract.public_id %}">
+            {% csrf_token %}<button type="submit" class="button button--secondary">{% translate "Suspend" %}</button>
+          </form>
+        {% endif %}
+        {% if can_terminate and perms.contracts.terminate_contract %}
+          <a class="button button--danger" href="{% url 'contracts:terminate' contract.public_id %}">{% translate "Terminate contract" %}</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </header>
+
+  <section class="card" aria-labelledby="summary-title">
+    <h2 class="card__title" id="summary-title">{% translate "Summary" %}</h2>
+    <dl class="detail mt-6">
+      <dt>{% translate "Employer" %}</dt><dd>{{ contract.company.legal_name }}</dd>
+      <dt>{% translate "Type" %}</dt><dd>{{ contract.get_contract_type_display }}</dd>
+      <dt>{% translate "Start date" %}</dt><dd>{{ contract.start_date }}</dd>
+      <dt>{% translate "End date" %}</dt><dd>{{ contract.end_date|default:"—" }}</dd>
+      {% if contract.probation_end_date %}
+        <dt>{% translate "End of probation" %}</dt><dd>{{ contract.probation_end_date }}</dd>
+      {% endif %}
+      {% if contract.termination_date %}
+        <dt>{% translate "Termination date" %}</dt><dd>{{ contract.termination_date }}</dd>
+        <dt>{% translate "Termination reason" %}</dt><dd>{{ contract.get_termination_reason_display }}</dd>
+      {% endif %}
+    </dl>
+  </section>
+
+  <section class="card" aria-labelledby="salary-title">
+    <div class="card__header">
+      <h2 class="card__title" id="salary-title">{% translate "Salary history" %}</h2>
+      {% if can_view_salary and is_editable and perms.contracts.change_salary %}
+        <a class="button button--ghost button--sm" href="{% url 'contracts:salary_set' contract.public_id %}">
+          {% include "includes/icon.html" with name="plus" %}<span>{% translate "Register salary" %}</span>
+        </a>
+      {% endif %}
+    </div>
+    {% if can_view_salary %}
+      {% comment %} Línea de tiempo en lugar de tabla: la historia salarial es contigua
+         (ADR-014) y lo que importa es el orden y qué período está vigente. {% endcomment %}
+      <ol class="timeline">
+        {% for salary in salaries %}
+          <li class="timeline__item{% if not salary.effective_to %} timeline__item--current{% endif %}">
+            <span class="timeline__marker" aria-hidden="true"></span>
+            <p class="timeline__head">
+              <span class="timeline__amount">{{ salary.amount }} {{ salary.currency }}</span>
+              <span class="badge badge--neutral">{{ salary.get_pay_frequency_display }}</span>
+              {% if not salary.effective_to %}
+                <span class="badge badge--success">{% translate "Current" %}</span>
+              {% endif %}
+            </p>
+            <p class="timeline__meta">
+              {{ salary.effective_from }} — {{ salary.effective_to|default:_("no end date") }}
+              · {{ salary.get_change_reason_display }}
+              {% if salary.created_by %}· {{ salary.created_by.email }}{% endif %}
+            </p>
+            {% if salary.justification %}
+              <p class="timeline__note">{{ salary.justification }}</p>
+            {% endif %}
+          </li>
+        {% empty %}
+          <li>
+            <div class="empty-state">
+              {% include "includes/icon.html" with name="inbox" %}
+              <p>{% translate "No salary registered." %}</p>
+            </div>
+          </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      {% comment %} Los importes ni siquiera llegan a la plantilla: `salaries_for` devuelve un
+         queryset vacío sin `view_salary` o fuera de alcance. {% endcomment %}
+      {% translate "You do not have permission to view salaries." as salary_restricted %}
+      {% include "includes/restricted.html" with message=salary_restricted %}
+    {% endif %}
+  </section>
+
+  <section class="card" aria-labelledby="positions-title">
+    <div class="card__header">
+      <h2 class="card__title" id="positions-title">{% translate "Positions" %}</h2>
+      {% if is_editable and perms.contracts.add_assignment %}
+        <a class="button button--ghost button--sm" href="{% url 'contracts:assignment_add' contract.public_id %}">
+          {% include "includes/icon.html" with name="plus" %}<span>{% translate "Assign position" %}</span>
+        </a>
+      {% endif %}
+    </div>
+    <div class="table-scroll">
+      <table>
+        <caption class="visually-hidden">{% translate "Assignments" %}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{% translate "Position" %}</th>
+            <th scope="col">{% translate "Department" %}</th>
+            <th scope="col">{% translate "From" %}</th>
+            <th scope="col">{% translate "To" %}</th>
+            <th scope="col">{% translate "FTE" %}</th>
+            <th scope="col"><span class="visually-hidden">{% translate "Actions" %}</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for assignment in assignments %}
+            <tr>
+              <td class="cell-strong">
+                {{ assignment.position.title }}
+                {% if assignment.is_primary %}<span class="badge badge--info">{% translate "primary" %}</span>{% endif %}
+              </td>
+              <td>{{ assignment.position.department.name }}</td>
+              <td>{{ assignment.start_date }}</td>
+              <td class="cell-muted">{{ assignment.end_date|default:"—" }}</td>
+              <td>{{ assignment.fte }}</td>
+              <td class="cell-actions">
+                {% if is_editable and not assignment.end_date and not assignment.is_primary and perms.contracts.change_assignment %}
+                  <form method="post" action="{% url 'contracts:assignment_end' contract.public_id assignment.pk %}">
+                    {% csrf_token %}
+                    <label class="visually-hidden" for="end-{{ assignment.pk }}">{% translate "End date" %}</label>
+                    <input type="date" id="end-{{ assignment.pk }}" name="end_date" required>
+                    <button type="submit" class="button button--secondary button--sm">{% translate "End" %}</button>
+                  </form>
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="6"><div class="empty-state"><p>{% translate "No positions assigned." %}</p></div></td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

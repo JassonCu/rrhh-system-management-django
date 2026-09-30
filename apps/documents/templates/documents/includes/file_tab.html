@@ -1,0 +1,82 @@
+{% comment %}
+  Pestaña «Expediente» de la ficha. Recibe `employee`, `file_documents` y
+  `can_upload_documents`.
+
+  Un documento confidencial que quien mira no puede abrir aparece igual: se sabe
+  que **existe** —RRHH necesita poder pedirlo— pero sin enlace de descarga
+  (patrón UX §4.2, matriz §J.2).
+{% endcomment %}
+{% load i18n %}
+<section class="card" aria-labelledby="file-title">
+  <div class="card__header">
+    <h2 class="card__title" id="file-title">{% translate "Employee file" %}</h2>
+    {% if can_upload_documents %}
+      <a class="button button--ghost button--sm" href="{% url 'documents:upload' employee.public_id %}">
+        {% include "includes/icon.html" with name="plus" %}<span>{% translate "Upload document" %}</span>
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "Documents in this employee file" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Type" %}</th>
+          <th scope="col">{% translate "Title" %}</th>
+          <th scope="col">{% translate "Issued" %}</th>
+          <th scope="col">{% translate "Expires" %}</th>
+          <th scope="col"><span class="visually-hidden">{% translate "Actions" %}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in file_documents %}
+          <tr>
+            <td class="cell-strong">{{ entry.document.document_type.name }}</td>
+            <td>
+              {% if entry.can_open %}
+                {{ entry.document.title }}
+                <br><span class="list__muted">{{ entry.document.original_filename }}</span>
+              {% else %}
+                <span class="list__muted">{% translate "Confidential document" %}</span>
+              {% endif %}
+            </td>
+            <td class="cell-muted">{{ entry.document.issued_on|default:"—" }}</td>
+            <td>
+              {% if entry.document.expires_on %}
+                {{ entry.document.expires_on }}
+                {% if entry.document.is_expired %}
+                  <span class="badge badge--danger">{% translate "expired" %}</span>
+                {% elif entry.expiring %}
+                  <span class="badge badge--warning">{% translate "expiring soon" %}</span>
+                {% endif %}
+              {% else %}—{% endif %}
+            </td>
+            <td>
+              {% if entry.can_open %}
+                <a href="{% url 'documents:download' entry.document.public_id %}">{% translate "Download" %}</a>
+              {% else %}
+                <span class="list__muted">{% translate "Restricted" %}</span>
+              {% endif %}
+              {% if perms.documents.archive_document %}
+                · <a href="{% url 'documents:archive' entry.document.public_id %}">{% translate "Archive" %}</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "This file has no documents yet." %}</p>
+                {% if can_upload_documents %}
+                  <a class="button button--primary button--sm" href="{% url 'documents:upload' employee.public_id %}">{% translate "Upload document" %}</a>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>

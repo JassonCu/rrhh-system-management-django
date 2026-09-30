@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Positions" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Positions" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Positions" %}</h1>
+      <p class="page-header__meta">{% blocktranslate count counter=page.paginator.count %}{{ counter }} position{% plural %}{{ counter }} positions{% endblocktranslate %}</p>
+    </div>
+    <div class="page-header__actions">
+      {% if perms.positions.view_jobgrade %}
+        <a class="button button--secondary" href="{% url 'positions:job_grade_list' %}">
+          {% include "includes/icon.html" with name="layers" %}<span>{% translate "Job grades" %}</span>
+        </a>
+      {% endif %}
+      {% if perms.positions.add_position %}
+        <a class="button button--primary" href="{% url 'positions:create' %}">
+          {% include "includes/icon.html" with name="plus" %}<span>{% translate "New position" %}</span>
+        </a>
+      {% endif %}
+    </div>
+  </header>
+
+  <form method="get" role="search" class="toolbar">
+    <div class="field">
+      <label for="search">{% translate "Search by title" %}</label>
+      <input type="search" id="search" name="q" value="{{ query }}">
+    </div>
+    <button type="submit" class="button button--secondary">
+      {% include "includes/icon.html" with name="search" %}<span>{% translate "Search" %}</span>
+    </button>
+  </form>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "List of positions" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Code" %}</th>
+          <th scope="col">{% translate "Title" %}</th>
+          <th scope="col">{% translate "Department" %}</th>
+          <th scope="col">{% translate "Status" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for position in page %}
+          <tr>
+            <td class="cell-strong"><a href="{% url 'positions:detail' position.pk %}">{{ position.code }}</a></td>
+            <td>{{ position.title }}</td>
+            <td class="cell-muted">{{ position.department.name }}</td>
+            <td>
+              {% if position.is_active %}
+                {% include "includes/status_badge.html" with status="ACTIVE" label=_("Active") %}
+              {% else %}
+                {% include "includes/status_badge.html" with status="INACTIVE" label=_("Inactive") %}
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "No positions found." %}</p>
+                {% if perms.positions.add_position and not query %}
+                  <a class="button button--primary button--sm" href="{% url 'positions:create' %}">{% translate "New position" %}</a>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

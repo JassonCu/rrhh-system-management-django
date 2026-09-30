@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ceiba-mark-title">
+  <title id="ceiba-mark-title">Ceiba RH</title>
+  <defs>
+    <linearGradient id="ceiba-mark-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#083A32"/>
+      <stop offset="1" stop-color="#0F6E5C"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#ceiba-mark-bg)"/>
+  <!-- Suelo y raíces: los expedientes que sostienen todo. -->
+  <path d="M19 52h26" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  <!-- Tronco y ramas: la estructura organizacional. -->
+  <path d="M32 50V21M32 36L19 25M32 36l13-11" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Copa: las personas; el nodo dorado (maíz) es quien dirige. -->
+  <circle cx="18" cy="22" r="5.5" fill="#FFFFFF"/>
+  <circle cx="46" cy="22" r="5.5" fill="#FFFFFF"/>
+  <circle cx="32" cy="15" r="6.5" fill="#E8A92B"/>
+</svg>

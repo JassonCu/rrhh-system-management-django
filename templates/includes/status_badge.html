@@ -1,0 +1,5 @@
+{% comment %}
+  Insignia de estado. Recibe `status` (valor estable, nunca traducido) y `label`
+  (texto ya traducido). El color nunca es la única señal: siempre lleva texto.
+  Correspondencia documentada en docs/ux/15-plan-ux-ui.md §6.3.
+{% endcomment %}<span class="badge badge--{% if status == 'ACTIVE' or status == 'APPROVED' or status == 'JUSTIFIED' %}success{% elif status == 'SUSPENDED' or status == 'SUBMITTED' or status == 'PENDING' %}warning{% elif status == 'REJECTED' %}danger{% elif status == 'DRAFT' or status == 'ON_LEAVE' %}info{% else %}neutral{% endif %}">{{ label }}</span>

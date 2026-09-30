@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ department.name }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'departments:list' %}">{% translate "Departments" %}</a></li>
+      {% for ancestor in ancestors %}
+        <li><a href="{% url 'departments:detail' ancestor.pk %}">{{ ancestor.name }}</a></li>
+      {% endfor %}
+      <li aria-current="page">{{ department.name }}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{{ department.name }}</h1>
+      <p class="page-header__meta">
+        <span>{{ department.code }}</span>
+        {% if department.is_active %}
+          {% include "includes/status_badge.html" with status="ACTIVE" label=_("Active") %}
+        {% else %}
+          {% include "includes/status_badge.html" with status="INACTIVE" label=_("Inactive") %}
+        {% endif %}
+      </p>
+    </div>
+    {% if perms.departments.change_department or perms.departments.add_departmentheadship %}
+      <div class="page-header__actions">
+        {% if perms.departments.add_departmentheadship %}
+          <a class="button button--secondary" href="{% url 'departments:headship_assign' department.pk %}">
+            {% include "includes/icon.html" with name="user-check" %}<span>{% translate "Appoint head" %}</span>
+          </a>
+        {% endif %}
+        {% if perms.departments.change_department %}
+        <a class="button button--secondary" href="{% url 'departments:update' department.pk %}">
+          {% include "includes/icon.html" with name="pencil" %}<span>{% translate "Edit" %}</span>
+        </a>
+        {% endif %}
+        {% if department.is_active %}
+          <form method="post" action="{% url 'departments:deactivate' department.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="button button--danger">{% translate "Deactivate" %}</button>
+          </form>
+        {% endif %}
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="grid grid--2">
+    <section class="card" aria-labelledby="department-title">
+      <h2 class="card__title" id="department-title">{% translate "Details" %}</h2>
+      <dl class="detail mt-6">
+        <dt>{% translate "Code" %}</dt><dd>{{ department.code }}</dd>
+        <dt>{% translate "Company" %}</dt><dd>{{ department.company.legal_name }}</dd>
+        <dt>{% translate "Cost center" %}</dt><dd>{{ department.cost_center|default:"—" }}</dd>
+      </dl>
+    </section>
+
+    <section class="card" aria-labelledby="children-title">
+      <h2 class="card__title" id="children-title">{% translate "Sub-departments" %}</h2>
+      <ul class="list">
+        {% for child in children %}
+          <li><a href="{% url 'departments:detail' child.pk %}">{{ child.name }}</a></li>
+        {% empty %}
+          <li class="list__muted">{% translate "None" %}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    {% comment %} Jefaturas con vigencia (ADR-014): el historial responde quién
+       mandaba el día que se aprobó algo, no solo quién manda hoy. {% endcomment %}
+    <section class="card" aria-labelledby="headships-title">
+      <div class="card__header">
+        <h2 class="card__title" id="headships-title">{% translate "Headships" %}</h2>
+        {% if perms.departments.add_departmentheadship %}
+          <a class="button button--ghost button--sm" href="{% url 'departments:headship_assign' department.pk %}">
+            {% include "includes/icon.html" with name="plus" %}<span>{% translate "Appoint head" %}</span>
+          </a>
+        {% endif %}
+      </div>
+      <ul class="list">
+        {% for headship in headships %}
+          <li>
+            <span>
+              <a href="{% url 'employees:detail' headship.employee.public_id %}">{{ headship.employee.person.full_name }}</a><br>
+              <span class="list__muted">
+                {{ headship.start_date }} — {{ headship.end_date|default:_("no end date") }}
+                {% if headship.appointment_note %}· {{ headship.appointment_note }}{% endif %}
+              </span>
+            </span>
+            {% if headship.is_current %}
+              <span class="badge badge--success">{% translate "Current" %}</span>
+              {% if perms.departments.change_departmentheadship %}
+                <a class="button button--secondary button--sm" href="{% url 'departments:headship_end' department.pk headship.pk %}">{% translate "End" %}</a>
+              {% endif %}
+            {% endif %}
+          </li>
+        {% empty %}
+          <li class="list__muted">{% translate "This department has no head yet." %}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+{% endblock %}

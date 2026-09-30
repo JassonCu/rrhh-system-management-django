@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load i18n leave_extras %}
+
+{% block title %}
+  {% if decision == "approve" %}{% translate "Approve leave" %}
+  {% elif decision == "reject" %}{% translate "Reject leave" %}
+  {% else %}{% translate "Cancel leave" %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'leave:inbox' %}">{% translate "Approvals" %}</a></li>
+      <li aria-current="page">{% translate "Decision" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">
+        {% if decision == "approve" %}{% translate "Approve leave" %}
+        {% elif decision == "reject" %}{% translate "Reject leave" %}
+        {% else %}{% translate "Cancel leave" %}{% endif %}
+      </h1>
+      <p class="page-header__meta">
+        <span>{{ leave_request.employee.person.full_name }} · {{ leave_request.leave_type.name }}</span>
+        {% include "includes/status_badge.html" with status=leave_request.status label=leave_request.get_status_display %}
+      </p>
+    </div>
+  </header>
+
+  <section class="card">
+    <dl class="detail">
+      <dt>{% translate "From" %}</dt><dd>{{ leave_request.start_date }}</dd>
+      <dt>{% translate "To" %}</dt><dd>{{ leave_request.end_date }}</dd>
+      <dt>{% translate "Working days" %}</dt><dd>{{ leave_request.working_days|as_days }}</dd>
+      <dt>{% translate "Balance today" %}</dt><dd>{{ balance|as_days }}</dd>
+      {% if pending_days %}
+        <dt>{% translate "Pending in other requests" %}</dt><dd>{{ pending_days|as_days }}</dd>
+      {% endif %}
+    </dl>
+  </section>
+
+  <form method="post" novalidate class="card form-card mt-6">
+    {% csrf_token %}
+    <div class="alert alert--warning">
+      <p><strong>{% translate "When you confirm:" %}</strong></p>
+      <ul>
+        {% if decision == "approve" %}
+          <li>{% translate "The days are deducted from the balance as a ledger entry." %}</li>
+          <li>{% translate "The entry is never edited or deleted: a cancellation writes a reversal instead." %}</li>
+        {% elif decision == "reject" %}
+          <li>{% translate "The requester reads your reason, so write it for them." %}</li>
+          <li>{% translate "A rejected request is final: a new one has to be filed." %}</li>
+        {% else %}
+          <li>{% translate "If it was approved, a reversal returns the days to the balance." %}</li>
+          <li>{% translate "A leave that already started cannot be cancelled." %}</li>
+        {% endif %}
+        <li>{% translate "The decision is recorded with your name and the time." %}</li>
+      </ul>
+    </div>
+    <div class="mt-6">{% include "includes/form_fields.html" %}</div>
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">
+        {% if decision == "approve" %}{% translate "Approve" %}
+        {% elif decision == "reject" %}{% translate "Reject" %}
+        {% else %}{% translate "Cancel request" %}{% endif %}
+      </button>
+      <a class="button button--ghost" href="{{ cancel_url }}">{% translate "Go back" %}</a>
+    </div>
+  </form>
+{% endblock %}

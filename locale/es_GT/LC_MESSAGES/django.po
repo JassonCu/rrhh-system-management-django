@@ -1,0 +1,3726 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Ceiba RH\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-28 20:44-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Equipo Ceiba RH\n"
+"Language-Team: es_GT\n"
+"Language: es_GT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Preferences"
+msgstr "Preferencias"
+
+msgid "Permissions"
+msgstr "Permisos"
+
+msgid "Important dates"
+msgstr "Fechas importantes"
+
+msgid "Audit"
+msgstr "Auditoría"
+
+msgid "Accounts"
+msgstr "Cuentas"
+
+msgid "System administrator"
+msgstr "Administrador del sistema"
+
+msgid "HR administrator"
+msgstr "Administrador de RR. HH."
+
+msgid "HR analyst"
+msgstr "Analista de RR. HH."
+
+msgid "Department head"
+msgstr "Jefe de departamento"
+
+msgid "Employee"
+msgstr "Empleado"
+
+msgid "Auditor"
+msgstr "Auditor"
+
+msgid "Email address"
+msgstr "Correo electrónico"
+
+msgid "The invitation will be sent to this address."
+msgstr "La invitación se enviará a esta dirección."
+
+msgid "Roles"
+msgstr "Roles"
+
+msgid "A user without roles can sign in but sees nothing."
+msgstr ""
+"Un usuario sin roles puede iniciar sesión, pero no verá ninguna información."
+
+msgid "An account with that email address already exists."
+msgstr "Ya existe una cuenta con ese correo electrónico."
+
+msgid "The auditor role cannot be combined with any other role."
+msgstr "El rol de auditor no puede combinarse con ningún otro rol."
+
+msgid "Reason"
+msgstr "Motivo"
+
+msgid "Optional. It is recorded in the audit log."
+msgstr "Opcional. Queda registrado en la bitácora."
+
+msgid "Preferred language"
+msgstr "Idioma preferido"
+
+msgid "An email address is required."
+msgstr "El correo electrónico es obligatorio."
+
+msgid "Superuser must have is_staff=True."
+msgstr "El superusuario debe tener is_staff=True."
+
+msgid "Superuser must have is_superuser=True."
+msgstr "El superusuario debe tener is_superuser=True."
+
+msgid "email address"
+msgstr "correo electrónico"
+
+msgid "Used as the login identifier. Stored in lowercase."
+msgstr "Se usa para iniciar sesión. Se guarda en minúsculas."
+
+msgid "active"
+msgstr "activo"
+
+msgid "Deactivate instead of deleting, so the audit trail survives."
+msgstr ""
+"Desactive en lugar de eliminar, para conservar la trazabilidad de auditoría."
+
+msgid "staff status"
+msgstr "acceso a la administración técnica"
+
+msgid "Grants access to the Django admin. Reserved for SUPERADMIN."
+msgstr "Da acceso al administrador de Django. Reservado para SUPERADMIN."
+
+msgid "must change password"
+msgstr "debe cambiar la contraseña"
+
+msgid "Forces a password change on the next sign-in."
+msgstr "Obliga a cambiar la contraseña en el próximo inicio de sesión."
+
+msgid "preferred language"
+msgstr "idioma preferido"
+
+msgid "Interface language. Follows the person across devices."
+msgstr ""
+"Idioma de la interfaz. Se mantiene en todos los dispositivos de la persona."
+
+msgid "date joined"
+msgstr "fecha de alta"
+
+msgid "user"
+msgstr "usuario"
+
+msgid "users"
+msgstr "usuarios"
+
+msgid "Can invite and deactivate accounts"
+msgstr "Puede invitar y desactivar cuentas"
+
+msgid "Invite a user"
+msgstr "Invitar a un usuario"
+
+msgid "Breadcrumb"
+msgstr "Ruta de navegación"
+
+msgid "The person will receive a single-use link to set their own password."
+msgstr "La persona recibirá un enlace de un solo uso para crear su contraseña."
+
+msgid "Send invitation"
+msgstr "Enviar invitación"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "My profile"
+msgstr "Mi perfil"
+
+msgid "Home"
+msgstr "Inicio"
+
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+msgid "Account"
+msgstr "Cuenta"
+
+msgid "No roles assigned"
+msgstr "Sin roles asignados"
+
+msgid "Save preferences"
+msgstr "Guardar preferencias"
+
+msgid "Accounts are created by invitation. Public sign-up is closed."
+msgstr "Las cuentas se crean por invitación. El registro público está cerrado."
+
+msgid "Search by email"
+msgstr "Buscar por correo"
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "List of accounts"
+msgstr "Lista de cuentas"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Actions"
+msgstr "Acciones"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Inactive"
+msgstr "Inactivo"
+
+msgid "Deactivate"
+msgstr "Desactivar"
+
+msgid "No accounts found."
+msgstr "No se encontraron cuentas."
+
+msgid "You cannot change your own roles."
+msgstr "No puede cambiar sus propios roles."
+
+msgid "You cannot deactivate your own account."
+msgstr "No puede desactivar su propia cuenta."
+
+msgid "Those roles cannot be combined."
+msgstr "Esos roles no pueden combinarse."
+
+msgid "One of the selected roles does not exist."
+msgstr "Uno de los roles seleccionados no existe."
+
+msgid "The operation could not be completed."
+msgstr "No se pudo completar la operación."
+
+msgid "Your preferences were saved."
+msgstr "Sus preferencias se guardaron."
+
+#, python-format
+msgid "Invitation sent to %(email)s."
+msgstr "Invitación enviada a %(email)s."
+
+msgid "Deactivate account"
+msgstr "Desactivar cuenta"
+
+msgid "The person will no longer be able to sign in."
+msgstr "La persona ya no podrá iniciar sesión."
+
+msgid "Their open sessions will be closed immediately."
+msgstr "Sus sesiones abiertas se cerrarán de inmediato."
+
+msgid "The account is not deleted: the audit log refers to it."
+msgstr "La cuenta no se elimina: la bitácora hace referencia a ella."
+
+msgid "You can invite them again later with a new invitation."
+msgstr "Podrá invitarla de nuevo más adelante con otra invitación."
+
+#, python-format
+msgid "Account %(email)s was deactivated."
+msgstr "La cuenta %(email)s fue desactivada."
+
+msgid "Attendance"
+msgstr "Asistencia"
+
+msgid "Monday"
+msgstr "Lunes"
+
+msgid "Tuesday"
+msgstr "Martes"
+
+msgid "Wednesday"
+msgstr "Miércoles"
+
+msgid "Thursday"
+msgstr "Jueves"
+
+msgid "Friday"
+msgstr "Viernes"
+
+msgid "Saturday"
+msgstr "Sábado"
+
+msgid "Sunday"
+msgstr "Domingo"
+
+msgid "Self-service"
+msgstr "Autoservicio"
+
+msgid "Registered by the manager"
+msgstr "Registrado por la jefatura"
+
+msgid "Registered by HR"
+msgstr "Registrado por RR. HH."
+
+msgid "Time clock"
+msgstr "Reloj marcador"
+
+msgid "Imported"
+msgstr "Importado"
+
+msgid "Late arrival"
+msgstr "Tardanza"
+
+msgid "Early leave"
+msgstr "Salida temprana"
+
+msgid "Absence"
+msgstr "Ausencia"
+
+msgid "Overtime"
+msgstr "Horas extra"
+
+msgid "Missing punch"
+msgstr "Marcaje faltante"
+
+msgid "Open"
+msgstr "Abierta"
+
+msgid "Justified"
+msgstr "Justificada"
+
+msgid "Rejected"
+msgstr "Rechazada"
+
+msgid "Check in"
+msgstr "Entrada"
+
+msgid "Check out"
+msgstr "Salida"
+
+msgid "It is recorded in the audit log with your name."
+msgstr "Queda en la bitácora con su nombre."
+
+msgid "Decision"
+msgstr "Decisión"
+
+msgid "Justify"
+msgstr "Justificar"
+
+msgid "Reject"
+msgstr "Rechazar"
+
+msgid "Justification"
+msgstr "Justificación"
+
+msgid "Working days"
+msgstr "Días laborales"
+
+msgid "Start time"
+msgstr "Hora de inicio"
+
+msgid "End time"
+msgstr "Hora de fin"
+
+msgid "Break (minutes)"
+msgstr "Descanso (minutos)"
+
+msgid "The start time must precede the end time."
+msgstr "La hora de inicio debe ser anterior a la de fin."
+
+msgid "code"
+msgstr "código"
+
+msgid "name"
+msgstr "nombre"
+
+msgid "weekly hours"
+msgstr "horas semanales"
+
+msgid "grace period (minutes)"
+msgstr "tolerancia (minutos)"
+
+msgid "Minutes of tolerance before an arrival counts as late."
+msgstr "Minutos de tolerancia antes de que una entrada cuente como tardanza."
+
+msgid "work schedule"
+msgstr "jornada"
+
+msgid "work schedules"
+msgstr "jornadas"
+
+msgid "The weekly hours must be between 0 and 168."
+msgstr "Las horas semanales deben estar entre 0 y 168."
+
+msgid "The grace period cannot exceed 120 minutes."
+msgstr "La tolerancia no puede superar los 120 minutos."
+
+msgid "weekday"
+msgstr "día de la semana"
+
+msgid "start time"
+msgstr "hora de inicio"
+
+msgid "end time"
+msgstr "hora de fin"
+
+msgid "break (minutes)"
+msgstr "descanso (minutos)"
+
+msgid "work schedule day"
+msgstr "día de la jornada"
+
+msgid "work schedule days"
+msgstr "días de la jornada"
+
+msgid "That schedule already has this weekday."
+msgstr "Esa jornada ya tiene ese día de la semana."
+
+msgid "contract"
+msgstr "contrato"
+
+msgid "start date"
+msgstr "fecha de inicio"
+
+msgid "end date"
+msgstr "fecha de fin"
+
+msgid "Empty means current schedule."
+msgstr "Vacío indica que es la jornada vigente."
+
+msgid "schedule assignment"
+msgstr "asignación de jornada"
+
+msgid "schedule assignments"
+msgstr "asignaciones de jornada"
+
+msgid "That contract already has a current schedule."
+msgstr "Ese contrato ya tiene una jornada vigente."
+
+msgid "The end date cannot precede the start date."
+msgstr "La fecha de fin no puede ser anterior a la fecha de inicio."
+
+msgid "employee"
+msgstr "empleado"
+
+msgid "work date"
+msgstr "fecha de trabajo"
+
+msgid "check in"
+msgstr "entrada"
+
+msgid "check out"
+msgstr "salida"
+
+msgid "source"
+msgstr "origen"
+
+msgid "registered by"
+msgstr "registrado por"
+
+msgid "note"
+msgstr "nota"
+
+msgid "attendance entry"
+msgstr "marcaje"
+
+msgid "attendance entries"
+msgstr "marcajes"
+
+msgid "Can correct attendance entries"
+msgstr "Puede corregir marcajes"
+
+msgid "That person already has an open entry."
+msgstr "Esa persona ya tiene un marcaje abierto."
+
+msgid "The check-out must come after the check-in (RN-50)."
+msgstr "La salida debe ser posterior a la entrada (RN-50)."
+
+msgid "type"
+msgstr "tipo"
+
+msgid "minutes"
+msgstr "minutos"
+
+msgid "status"
+msgstr "estado"
+
+msgid "justification"
+msgstr "justificación"
+
+msgid "resolved by"
+msgstr "resuelta por"
+
+msgid "resolved at"
+msgstr "fecha de resolución"
+
+msgid "attendance incident"
+msgstr "incidencia de asistencia"
+
+msgid "attendance incidents"
+msgstr "incidencias de asistencia"
+
+msgid "A resolved incident needs the date it was resolved."
+msgstr "Una incidencia resuelta necesita su fecha de resolución."
+
+msgid "Adjust entry"
+msgstr "Ajustar marcaje"
+
+msgid "Team attendance"
+msgstr "Asistencia del equipo"
+
+msgid "Before:"
+msgstr "Antes:"
+
+msgid "open"
+msgstr "abierto"
+
+msgid "The adjustment is recorded with your name and the time."
+msgstr "El ajuste queda registrado con su nombre y la hora."
+
+msgid "The attendance of that day is recalculated."
+msgstr "La asistencia de ese día se recalcula."
+
+msgid "You cannot correct your own attendance."
+msgstr "No puede corregir su propia asistencia."
+
+msgid "Attendance incidents"
+msgstr "Incidencias de asistencia"
+
+msgid "Overtime counts for payroll only once it is justified."
+msgstr "Las horas extra cuentan para la planilla solo cuando se justifican."
+
+msgid "All"
+msgstr "Todos"
+
+msgid "Filter"
+msgstr "Filtrar"
+
+msgid "List of attendance incidents"
+msgstr "Lista de incidencias de asistencia"
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Time"
+msgstr "Tiempo"
+
+msgid "Resolve"
+msgstr "Resolver"
+
+msgid "No incidents found."
+msgstr "No se encontraron incidencias."
+
+msgid "Resolve incident"
+msgstr "Resolver incidencia"
+
+msgid "When you confirm:"
+msgstr "Al confirmar:"
+
+msgid "The decision is recorded with your name and the time."
+msgstr "La decisión queda registrada con su nombre y la hora."
+
+msgid "Justified overtime counts for payroll; rejected does not."
+msgstr ""
+"Las horas extra justificadas cuentan para la planilla; las rechazadas no."
+
+msgid ""
+"A resolved incident is not reopened: a new one is created if the facts "
+"change."
+msgstr ""
+"Una incidencia resuelta no se reabre: si cambian los hechos, se crea otra."
+
+msgid "Save decision"
+msgstr "Guardar decisión"
+
+msgid "My attendance"
+msgstr "Mi asistencia"
+
+msgid "Your account is not linked to an employee record."
+msgstr "Su cuenta no está vinculada a una ficha de empleado."
+
+msgid "Today"
+msgstr "Hoy"
+
+#, python-format
+msgid "Checked in at %(time)s"
+msgstr "Entrada registrada a las %(time)s"
+
+msgid "Day closed"
+msgstr "Día cerrado"
+
+msgid "No entries yet"
+msgstr "Todavía sin marcajes"
+
+msgid "Clock out"
+msgstr "Registrar salida"
+
+msgid "Clock in"
+msgstr "Registrar entrada"
+
+msgid "Worked today"
+msgstr "Trabajado hoy"
+
+msgid "Expected"
+msgstr "Esperado"
+
+msgid "Last days"
+msgstr "Últimos días"
+
+msgid "Attendance of the last days"
+msgstr "Asistencia de los últimos días"
+
+msgid "Worked"
+msgstr "Trabajado"
+
+msgid "Incidents"
+msgstr "Incidencias"
+
+msgid "My incidents"
+msgstr "Mis incidencias"
+
+msgid "No incidents."
+msgstr "Sin incidencias."
+
+msgid "Assign work schedule"
+msgstr "Asignar jornada"
+
+msgid "Contracts"
+msgstr "Contratos"
+
+#, python-format
+msgid ""
+"Currently on %(code)s since %(since)s. The new schedule closes that one the "
+"day before; nothing is overwritten."
+msgstr ""
+"Actualmente en %(code)s desde %(since)s. La jornada nueva cierra esa el día "
+"anterior; no se sobrescribe nada."
+
+msgid "Assign"
+msgstr "Asignar"
+
+msgid "New schedule"
+msgstr "Nueva jornada"
+
+msgid "Work schedules"
+msgstr "Jornadas"
+
+msgid ""
+"The days share the same times. A schedule with different hours per day is "
+"refined afterwards."
+msgstr ""
+"Los días comparten el mismo horario. Una jornada con horarios distintos por "
+"día se afina después."
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid ""
+"Each schedule sets its own grace period before an arrival counts as late."
+msgstr ""
+"Cada jornada fija su propia tolerancia antes de que una entrada cuente como "
+"tardanza."
+
+msgid "List of work schedules"
+msgstr "Lista de jornadas"
+
+msgid "Code"
+msgstr "Código"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Weekly hours"
+msgstr "Horas semanales"
+
+msgid "Grace period"
+msgstr "Tolerancia"
+
+msgid "Days"
+msgstr "Días"
+
+#, python-format
+msgid "%(minutes)s min"
+msgstr "%(minutes)s min"
+
+msgid "No work schedules defined."
+msgstr "No hay jornadas definidas."
+
+msgid "Hours worked. Never location."
+msgstr "Horas trabajadas. Nunca la ubicación."
+
+msgid "Show"
+msgstr "Mostrar"
+
+msgid "Team attendance for the selected day"
+msgstr "Asistencia del equipo en el día elegido"
+
+msgid "Entries"
+msgstr "Marcajes"
+
+msgid "Adjust"
+msgstr "Ajustar"
+
+msgid "Nobody to show for that day."
+msgstr "No hay nadie que mostrar ese día."
+
+#, python-format
+msgid "%(hours)s h %(minutes)s min"
+msgstr "%(hours)s h %(minutes)s min"
+
+#, python-format
+msgid "%(hours)s h"
+msgstr "%(hours)s h"
+
+msgid "You cannot clock in without a live contract."
+msgstr "No puede marcar sin un contrato vigente."
+
+msgid "There is already an open entry: clock out first."
+msgstr "Ya hay un marcaje abierto: primero registre la salida."
+
+msgid "There is no open entry to close."
+msgstr "No hay ningún marcaje abierto que cerrar."
+
+msgid "The check-out must come after the check-in."
+msgstr "La salida debe ser posterior a la entrada."
+
+msgid "That entry is too long: correct it with an adjustment."
+msgstr "Ese marcaje es demasiado largo: corríjalo con un ajuste."
+
+msgid "Adjusting an entry requires a reason."
+msgstr "Ajustar un marcaje exige un motivo."
+
+msgid "Write the justification before deciding."
+msgstr "Escriba la justificación antes de decidir."
+
+msgid "That incident was already resolved."
+msgstr "Esa incidencia ya fue resuelta."
+
+msgid "Choose a valid decision."
+msgstr "Elija una decisión válida."
+
+msgid "A schedule needs at least one working day."
+msgstr "Una jornada necesita al menos un día laboral."
+
+msgid "That schedule is inactive."
+msgstr "Esa jornada está inactiva."
+
+msgid "The start date is outside the contract."
+msgstr "La fecha de inicio está fuera del contrato."
+
+msgid "The new schedule must start after the current one."
+msgstr "La jornada nueva debe empezar después de la vigente."
+
+msgid "Check-in recorded."
+msgstr "Entrada registrada."
+
+msgid "Check-out recorded."
+msgstr "Salida registrada."
+
+msgid "Incident resolved."
+msgstr "Incidencia resuelta."
+
+msgid "Entry adjusted."
+msgstr "Marcaje ajustado."
+
+msgid "Work schedule created."
+msgstr "Jornada creada."
+
+msgid "Work schedule assigned."
+msgstr "Jornada asignada."
+
+msgid "Sign in"
+msgstr "Iniciar sesión"
+
+msgid "Failed sign-in"
+msgstr "Inicio de sesión fallido"
+
+msgid "Sign out"
+msgstr "Cerrar sesión"
+
+msgid "Password change"
+msgstr "Cambio de contraseña"
+
+msgid "Password reset requested"
+msgstr "Restablecimiento de contraseña solicitado"
+
+msgid "Password reset completed"
+msgstr "Restablecimiento de contraseña completado"
+
+msgid "Email verified"
+msgstr "Correo verificado"
+
+msgid "User created"
+msgstr "Usuario creado"
+
+msgid "User deactivated"
+msgstr "Usuario desactivado"
+
+msgid "Activation code issued"
+msgstr "Código de activación emitido"
+
+msgid "Activation code redeemed"
+msgstr "Código de activación canjeado"
+
+msgid "Activation code rejected"
+msgstr "Código de activación rechazado"
+
+msgid "Activation code revoked"
+msgstr "Código de activación revocado"
+
+msgid "Role changed"
+msgstr "Rol modificado"
+
+msgid "Permission changed"
+msgstr "Permiso modificado"
+
+msgid "Permission denied"
+msgstr "Permiso denegado"
+
+msgid "Department created"
+msgstr "Departamento creado"
+
+msgid "Department updated"
+msgstr "Departamento actualizado"
+
+msgid "Department deactivated"
+msgstr "Departamento desactivado"
+
+msgid "Position created"
+msgstr "Puesto creado"
+
+msgid "Position updated"
+msgstr "Puesto actualizado"
+
+msgid "Position deactivated"
+msgstr "Puesto desactivado"
+
+msgid "Company created"
+msgstr "Empresa creada"
+
+msgid "Company updated"
+msgstr "Empresa actualizada"
+
+msgid "Department head appointed"
+msgstr "Jefatura nombrada"
+
+msgid "Department headship ended"
+msgstr "Jefatura finalizada"
+
+msgid "Job grade created"
+msgstr "Grado salarial creado"
+
+msgid "Job grade updated"
+msgstr "Grado salarial actualizado"
+
+msgid "Employee created"
+msgstr "Empleado creado"
+
+msgid "Employee updated"
+msgstr "Empleado actualizado"
+
+msgid "Sensitive employee data viewed"
+msgstr "Consulta de datos sensibles del empleado"
+
+msgid "Contract created"
+msgstr "Contrato creado"
+
+msgid "Contract updated"
+msgstr "Contrato actualizado"
+
+msgid "Contract terminated"
+msgstr "Contrato dado de baja"
+
+msgid "Salary changed"
+msgstr "Salario modificado"
+
+msgid "Salary history viewed"
+msgstr "Consulta del historial salarial"
+
+msgid "Assignment created"
+msgstr "Asignación de puesto creada"
+
+msgid "Assignment ended"
+msgstr "Asignación de puesto finalizada"
+
+#
+msgid "Leave request drafted"
+msgstr "Solicitud de ausencia en borrador"
+
+msgid "Leave request submitted"
+msgstr "Solicitud de ausencia enviada"
+
+msgid "Leave request approved"
+msgstr "Solicitud de ausencia aprobada"
+
+msgid "Leave request rejected"
+msgstr "Solicitud de ausencia rechazada"
+
+msgid "Leave request cancelled"
+msgstr "Solicitud de ausencia cancelada"
+
+#
+msgid "Leave balance adjusted"
+msgstr "Saldo de ausencias ajustado"
+
+#
+msgid "Leave accrued"
+msgstr "Ausencias devengadas"
+
+#
+msgid "Leave type created"
+msgstr "Tipo de ausencia creado"
+
+#
+msgid "Leave type updated"
+msgstr "Tipo de ausencia actualizado"
+
+#
+msgid "Attendance recorded for another person"
+msgstr "Marcaje registrado por cuenta de otra persona"
+
+msgid "Attendance adjusted"
+msgstr "Asistencia ajustada"
+
+msgid "Attendance incident resolved"
+msgstr "Incidencia de asistencia resuelta"
+
+msgid "Work schedule created"
+msgstr "Jornada creada"
+
+msgid "Work schedule assigned"
+msgstr "Jornada asignada"
+
+#
+msgid "Document type created"
+msgstr "Tipo de documento creado"
+
+#
+msgid "Document type updated"
+msgstr "Tipo de documento actualizado"
+
+msgid "Document uploaded"
+msgstr "Documento subido"
+
+msgid "Document downloaded"
+msgstr "Documento descargado"
+
+#
+msgid "Document archived"
+msgstr "Documento archivado"
+
+msgid "Payroll run executed"
+msgstr "Planilla ejecutada"
+
+msgid "Payroll run approved"
+msgstr "Planilla aprobada"
+
+msgid "Data exported"
+msgstr "Datos exportados"
+
+msgid "Success"
+msgstr "Correcto"
+
+msgid "Failure"
+msgstr "Error"
+
+msgid "Denied"
+msgstr "Denegado"
+
+msgid "occurred at"
+msgstr "fecha y hora"
+
+msgid "actor"
+msgstr "actor"
+
+msgid "Null when the action was performed by the system."
+msgstr "Vacío cuando la acción la realizó el sistema."
+
+msgid "actor (snapshot)"
+msgstr "actor (registro histórico)"
+
+msgid "Textual actor at the time of the event; survives account deletion."
+msgstr ""
+"Actor en texto al momento del evento; se conserva aunque se elimine la "
+"cuenta."
+
+msgid "action"
+msgstr "acción"
+
+msgid "object type"
+msgstr "tipo de objeto"
+
+msgid "Weak pointer in app_label.ModelName form. Not a foreign key."
+msgstr ""
+"Referencia débil con el formato app_label.ModelName. No es una clave foránea."
+
+msgid "object ID"
+msgstr "ID del objeto"
+
+msgid "object (snapshot)"
+msgstr "objeto (registro histórico)"
+
+msgid "outcome"
+msgstr "resultado"
+
+msgid "IP address"
+msgstr "dirección IP"
+
+msgid "user agent"
+msgstr "agente de usuario"
+
+msgid "request ID"
+msgstr "ID de la solicitud"
+
+msgid "Correlates this event with the application logs."
+msgstr "Relaciona este evento con los registros de la aplicación."
+
+msgid "metadata"
+msgstr "metadatos"
+
+msgid "Filtered diff. Never contains credentials or personal identifiers."
+msgstr ""
+"Cambios filtrados. Nunca contiene credenciales ni identificadores personales."
+
+msgid "audit event"
+msgstr "evento de auditoría"
+
+msgid "audit events"
+msgstr "eventos de auditoría"
+
+msgid "Can browse the audit log"
+msgstr "Puede consultar la bitácora de auditoría"
+
+msgid "Indefinite term"
+msgstr "Plazo indefinido"
+
+msgid "Fixed term"
+msgstr "Plazo fijo"
+
+msgid "Temporary"
+msgstr "Temporal"
+
+msgid "Internship"
+msgstr "Prácticas"
+
+msgid "Draft"
+msgstr "Borrador"
+
+msgid "Suspended"
+msgstr "Suspendido"
+
+msgid "Terminated"
+msgstr "Dado de baja"
+
+msgid "Expired"
+msgstr "Vencido"
+
+msgid "Resignation"
+msgstr "Renuncia"
+
+msgid "Dismissal with just cause"
+msgstr "Despido con causa justificada"
+
+msgid "Dismissal without just cause"
+msgstr "Despido sin causa justificada"
+
+msgid "Mutual agreement"
+msgstr "Mutuo acuerdo"
+
+msgid "End of fixed term"
+msgstr "Fin del plazo fijo"
+
+msgid "Retirement"
+msgstr "Jubilación"
+
+msgid "Death"
+msgstr "Fallecimiento"
+
+msgid "Monthly"
+msgstr "Mensual"
+
+msgid "Twice a month"
+msgstr "Quincenal"
+
+msgid "Weekly"
+msgstr "Semanal"
+
+msgid "Initial salary"
+msgstr "Salario inicial"
+
+msgid "Merit increase"
+msgstr "Aumento por desempeño"
+
+msgid "Promotion"
+msgstr "Ascenso"
+
+msgid "Adjustment or correction"
+msgstr "Ajuste o corrección"
+
+msgid "Legal minimum wage update"
+msgstr "Actualización del salario mínimo legal"
+
+msgid "Demotion"
+msgstr "Descenso"
+
+msgid "Initial assignment"
+msgstr "Asignación inicial"
+
+msgid "Transfer"
+msgstr "Traslado"
+
+msgid "Reorganization"
+msgstr "Reorganización"
+
+msgid "Temporary cover"
+msgstr "Cobertura temporal"
+
+msgid "Department"
+msgstr "Departamento"
+
+msgid "All departments"
+msgstr "Todos los departamentos"
+
+msgid "End date"
+msgstr "Fecha de fin"
+
+msgid "Termination date"
+msgstr "Fecha de baja"
+
+msgid "public ID"
+msgstr "ID público"
+
+msgid "Used in URLs. It does not replace authorization."
+msgstr "Se usa en las URL. No sustituye la autorización."
+
+msgid "employer"
+msgstr "empleador"
+
+msgid "contract type"
+msgstr "tipo de contrato"
+
+msgid "Required for fixed-term contracts; empty for indefinite ones."
+msgstr "Obligatoria en contratos a plazo fijo; vacía en los indefinidos."
+
+msgid "end of probation"
+msgstr "fin del período de prueba"
+
+msgid "termination reason"
+msgstr "motivo de la baja"
+
+msgid "termination date"
+msgstr "fecha de baja"
+
+msgid "signed on"
+msgstr "fecha de firma"
+
+msgid "notes"
+msgstr "notas"
+
+msgid "employment contract"
+msgstr "contrato laboral"
+
+msgid "employment contracts"
+msgstr "contratos laborales"
+
+msgid "Can terminate employment contracts"
+msgstr "Puede dar de baja contratos laborales"
+
+msgid "That employee already has a live contract."
+msgstr "Ese empleado ya tiene un contrato vigente."
+
+msgid "A fixed-term contract needs an end date."
+msgstr "Un contrato a plazo fijo necesita fecha de fin."
+
+msgid "An indefinite contract cannot have an end date."
+msgstr "Un contrato indefinido no puede tener fecha de fin."
+
+msgid ""
+"A terminated contract needs a date and a reason, and only a terminated one."
+msgstr ""
+"Un contrato dado de baja necesita fecha y motivo, y solo un contrato dado de "
+"baja puede tenerlos."
+
+msgid "amount"
+msgstr "monto"
+
+msgid "currency"
+msgstr "moneda"
+
+msgid "pay frequency"
+msgstr "frecuencia de pago"
+
+msgid "effective from"
+msgstr "vigente desde"
+
+msgid "effective to"
+msgstr "vigente hasta"
+
+msgid "Empty means current salary."
+msgstr "Vacío indica que es el salario vigente."
+
+msgid "reason"
+msgstr "motivo"
+
+msgid "Required when the amount is outside the salary band of the position."
+msgstr ""
+"Obligatoria cuando el monto está fuera de la banda salarial del puesto."
+
+msgid "contract salary"
+msgstr "salario del contrato"
+
+msgid "contract salaries"
+msgstr "salarios del contrato"
+
+msgid "Can view salary amounts"
+msgstr "Puede ver montos salariales"
+
+msgid "Can register salary changes"
+msgstr "Puede registrar cambios salariales"
+
+msgid "There is already a salary starting on that date."
+msgstr "Ya existe un salario que empieza en esa fecha."
+
+msgid "That contract already has a current salary."
+msgstr "Ese contrato ya tiene un salario vigente."
+
+msgid "The salary must be greater than zero."
+msgstr "El salario debe ser mayor que cero."
+
+msgid "position"
+msgstr "puesto"
+
+msgid "The department is derived from the position."
+msgstr "El departamento se obtiene del puesto."
+
+msgid "Empty means current assignment."
+msgstr "Vacío indica que es la asignación vigente."
+
+msgid "primary assignment"
+msgstr "puesto principal"
+
+msgid "full-time equivalent"
+msgstr "jornada (equivalente a tiempo completo)"
+
+msgid "1.00 is full time."
+msgstr "1.00 equivale a tiempo completo."
+
+msgid "assignment"
+msgstr "asignación de puesto"
+
+msgid "assignments"
+msgstr "asignaciones de puesto"
+
+msgid "That contract already has a current primary assignment."
+msgstr "Ese contrato ya tiene un puesto principal vigente."
+
+msgid "The FTE must be greater than 0 and at most 1."
+msgstr "La jornada debe ser mayor que 0 y como máximo 1."
+
+msgid "Contract"
+msgstr "Contrato"
+
+msgid "Employment contract"
+msgstr "Contrato laboral"
+
+msgid "Activate"
+msgstr "Activar"
+
+msgid "Resume"
+msgstr "Reanudar"
+
+msgid "Suspend"
+msgstr "Suspender"
+
+msgid "Terminate contract"
+msgstr "Dar de baja el contrato"
+
+msgid "Summary"
+msgstr "Resumen"
+
+msgid "Employer"
+msgstr "Empleador"
+
+msgid "Start date"
+msgstr "Fecha de inicio"
+
+msgid "End of probation"
+msgstr "Fin del período de prueba"
+
+msgid "Termination reason"
+msgstr "Motivo de la baja"
+
+msgid "Salary history"
+msgstr "Historial salarial"
+
+msgid "Register salary"
+msgstr "Registrar salario"
+
+msgid "Current"
+msgstr "Vigente"
+
+msgid "no end date"
+msgstr "sin fecha de fin"
+
+msgid "No salary registered."
+msgstr "No hay salario registrado."
+
+msgid "You do not have permission to view salaries."
+msgstr "No tiene permiso para ver salarios."
+
+msgid "Positions"
+msgstr "Puestos"
+
+msgid "Assign position"
+msgstr "Asignar puesto"
+
+msgid "Assignments"
+msgstr "Asignaciones de puesto"
+
+msgid "Position"
+msgstr "Puesto"
+
+msgid "From"
+msgstr "Desde"
+
+msgid "To"
+msgstr "Hasta"
+
+msgid "FTE"
+msgstr "Jornada"
+
+msgid "primary"
+msgstr "principal"
+
+msgid "End"
+msgstr "Finalizar"
+
+msgid "No positions assigned."
+msgstr "No hay puestos asignados."
+
+msgid "Employees"
+msgstr "Empleados"
+
+#, python-format
+msgid "%(counter)s contract"
+msgid_plural "%(counter)s contracts"
+msgstr[0] "%(counter)s contrato"
+msgstr[1] "%(counter)s contratos"
+
+msgid "List of contracts"
+msgstr "Lista de contratos"
+
+msgid "Start"
+msgstr "Inicio"
+
+msgid "No contracts found."
+msgstr "No se encontraron contratos."
+
+msgid "Contracts are created from the employee's record."
+msgstr "Los contratos se crean desde la ficha del empleado."
+
+msgid ""
+"The contract is never deleted: it is marked as terminated and its salary and "
+"positions are closed on that date."
+msgstr ""
+"El contrato nunca se elimina: se marca como dado de baja y su salario y sus "
+"puestos se cierran en esa fecha."
+
+msgid ""
+"If the employee has no other live contract, their account is deactivated and "
+"their sessions are closed."
+msgstr ""
+"Si el empleado no tiene otro contrato vigente, su cuenta se desactiva y se "
+"cierran sus sesiones."
+
+msgid "This action cannot be undone. A rehire creates a new contract."
+msgstr ""
+"Esta acción no se puede deshacer. Una recontratación crea un contrato nuevo."
+
+msgid "Confirm termination"
+msgstr "Confirmar la baja"
+
+msgid "Hiring"
+msgstr "Contratación"
+
+msgid "Choose the department first, then the position within it."
+msgstr "Elija primero el departamento y luego el puesto dentro de él."
+
+msgid "Save and continue"
+msgstr "Guardar y continuar"
+
+msgid "Save and exit"
+msgstr "Guardar y salir"
+
+msgid "Salary"
+msgstr "Salario"
+
+#, python-format
+msgid ""
+"Band for grade %(code)s: %(minimum)s – %(maximum)s %(currency)s. Outside it, "
+"a justification is required."
+msgstr ""
+"Banda del grado %(code)s: %(minimum)s – %(maximum)s %(currency)s. Fuera de "
+"ella se exige una justificación."
+
+msgid "Review and activate"
+msgstr "Revisar y activar"
+
+#, python-format
+msgid "%(fte)s FTE"
+msgstr "%(fte)s de jornada"
+
+msgid "Activate contract"
+msgstr "Activar contrato"
+
+msgid "Not yet"
+msgstr "Todavía no"
+
+msgid "This contract is already active."
+msgstr "Este contrato ya está activo."
+
+msgid "Open the contract"
+msgstr "Abrir el contrato"
+
+msgid "That status change is not allowed."
+msgstr "Ese cambio de estado no está permitido."
+
+msgid "Register the initial salary, starting on the contract start date."
+msgstr ""
+"Registre el salario inicial a partir de la fecha de inicio del contrato."
+
+msgid "The contract needs a current primary position."
+msgstr "El contrato necesita un puesto principal vigente."
+
+msgid "The employee already has a live contract."
+msgstr "El empleado ya tiene un contrato vigente."
+
+msgid "The contract overlaps another contract of the same employee."
+msgstr "El contrato se traslapa con otro contrato del mismo empleado."
+
+msgid "The contract is closed and cannot be changed."
+msgstr "El contrato está cerrado y no se puede modificar."
+
+msgid "The salary date is outside the contract."
+msgstr "La fecha del salario está fuera del período del contrato."
+
+msgid "The first salary must start on the contract start date."
+msgstr "El primer salario debe empezar en la fecha de inicio del contrato."
+
+msgid "A new salary must start after the current one."
+msgstr "Un salario nuevo debe empezar después del vigente."
+
+msgid ""
+"The amount is outside the salary band of the position: add a justification."
+msgstr ""
+"El monto está fuera de la banda salarial del puesto: agregue una "
+"justificación."
+
+msgid "The amount is below the legal minimum wage."
+msgstr "El monto es inferior al salario mínimo legal."
+
+msgid "The assignment date is outside the contract."
+msgstr "La fecha de la asignación está fuera del período del contrato."
+
+msgid "That position is inactive."
+msgstr "Ese puesto está inactivo."
+
+msgid "A new primary position must start after the current one."
+msgstr "Un puesto principal nuevo debe empezar después del vigente."
+
+msgid "The assignments would exceed full time."
+msgstr "Las asignaciones superarían la jornada completa."
+
+msgid "That assignment has already ended."
+msgstr "Esa asignación ya finalizó."
+
+msgid "Choose a valid termination reason."
+msgstr "Elija un motivo de baja válido."
+
+msgid "The termination date cannot precede the contract start."
+msgstr "La fecha de baja no puede ser anterior al inicio del contrato."
+
+msgid "The termination date is after the contract end."
+msgstr "La fecha de baja es posterior al fin del contrato."
+
+msgid "There is a salary change scheduled after that date."
+msgstr "Hay un cambio salarial programado después de esa fecha."
+
+msgid "There is an assignment scheduled after that date."
+msgstr "Hay una asignación programada después de esa fecha."
+
+msgid "You cannot terminate your own employment."
+msgstr "No puede dar de baja su propia relación laboral."
+
+msgid "You cannot change your own employment."
+msgstr "No puede modificar su propia relación laboral."
+
+msgid "The termination date cannot be in the future."
+msgstr "La fecha de baja no puede estar en el futuro."
+
+msgid "The position belongs to another company."
+msgstr "El puesto pertenece a otra empresa."
+
+msgid "Draft contract created."
+msgstr "Contrato creado como borrador."
+
+msgid "New contract"
+msgstr "Nuevo contrato"
+
+msgid "Salary registered."
+msgstr "Salario registrado."
+
+msgid "Position assigned."
+msgstr "Puesto asignado."
+
+msgid "Assignment ended."
+msgstr "Asignación finalizada."
+
+msgid "Enter a valid end date."
+msgstr "Ingrese una fecha de fin válida."
+
+msgid "Contract activated."
+msgstr "Contrato activado."
+
+msgid "The contract will move to Active."
+msgstr "El contrato pasará a Activo."
+
+msgid "The person will appear as active and in their manager's team."
+msgstr "La persona aparecerá como activa y en el equipo de su jefatura."
+
+msgid "It requires an initial salary and a current primary position."
+msgstr "Requiere salario inicial y un puesto principal vigente."
+
+msgid "Contract suspended."
+msgstr "Contrato suspendido."
+
+msgid "Suspend contract"
+msgstr "Suspender contrato"
+
+msgid "The contract will move to Suspended."
+msgstr "El contrato pasará a Suspendido."
+
+msgid "The person remains employed: their salary and positions stay open."
+msgstr "La persona sigue contratada: su salario y sus puestos quedan abiertos."
+
+msgid "Their employment status will show as suspended across the system."
+msgstr "Su situación laboral aparecerá como suspendida en todo el sistema."
+
+msgid "Contract resumed."
+msgstr "Contrato reanudado."
+
+msgid "Resume contract"
+msgstr "Reanudar contrato"
+
+msgid "The contract will move back to Active."
+msgstr "El contrato volverá a Activo."
+
+msgid "The person will appear as active again."
+msgstr "La persona volverá a aparecer como activa."
+
+msgid "Contract terminated."
+msgstr "Contrato dado de baja."
+
+msgid "Core"
+msgstr "Núcleo"
+
+msgid "created at"
+msgstr "creado el"
+
+msgid "updated at"
+msgstr "actualizado el"
+
+msgid "Short internal identifier, e.g. HQ."
+msgstr "Identificador interno corto, por ejemplo HQ."
+
+msgid "legal name"
+msgstr "razón social"
+
+msgid "trade name"
+msgstr "nombre comercial"
+
+msgid "tax ID"
+msgstr "NIT"
+
+msgid "Employer tax identification number."
+msgstr "Número de Identificación Tributaria del empleador."
+
+msgid "country"
+msgstr "país"
+
+msgid "ISO 3166-1 alpha-2 code."
+msgstr "Código ISO 3166-1 alfa-2."
+
+msgid "company"
+msgstr "empresa"
+
+msgid "companies"
+msgstr "empresas"
+
+msgid "date"
+msgstr "fecha"
+
+msgid "statutory"
+msgstr "de ley"
+
+msgid "Whether it is mandated by law rather than granted by the company."
+msgstr "Indica si lo establece la ley en lugar de concederlo la empresa."
+
+msgid "holiday"
+msgstr "día feriado"
+
+msgid "holidays"
+msgstr "días feriados"
+
+msgid "This company already has a holiday on that date."
+msgstr "Esta empresa ya tiene un día feriado en esa fecha."
+
+#, python-format
+msgid "%(value)s is not a valid ISO 3166-1 alpha-2 country code."
+msgstr "%(value)s no es un código de país ISO 3166-1 alfa-2 válido."
+
+#, python-format
+msgid "%(value)s is not a valid ISO 4217 currency code."
+msgstr "%(value)s no es un código de moneda ISO 4217 válido."
+
+msgid "Dashboard"
+msgstr "Inicio"
+
+msgid "Welcome"
+msgstr "Le damos la bienvenida"
+
+#, python-format
+msgid "Signed in as %(email)s."
+msgstr "Sesión iniciada como %(email)s."
+
+msgid "Active employees"
+msgstr "Empleados activos"
+
+msgid "Draft contracts"
+msgstr "Contratos en borrador"
+
+#, python-format
+msgid "Ending within %(days)s days"
+msgstr "Terminan en %(days)s días"
+
+msgid "Active without a contract"
+msgstr "Activos sin contrato"
+
+msgid "Drafts to activate"
+msgstr "Borradores por activar"
+
+msgid "See all"
+msgstr "Ver todos"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Nothing pending."
+msgstr "Nada pendiente."
+
+msgid "Contracts ending soon"
+msgstr "Contratos por terminar"
+
+msgid "No contracts ending soon."
+msgstr "No hay contratos por terminar."
+
+msgid "Active employees without a contract"
+msgstr "Empleados activos sin contrato"
+
+msgid "Hire"
+msgstr "Contratar"
+
+msgid "My team"
+msgstr "Mi equipo"
+
+msgid "Nobody is assigned to your departments yet."
+msgstr "Todavía no hay nadie asignado a sus departamentos."
+
+msgid "My space"
+msgstr "Mi espacio"
+
+msgid "My record"
+msgstr "Mi ficha"
+
+msgid "My contract"
+msgstr "Mi contrato"
+
+msgid "Your account, language and password"
+msgstr "Su cuenta, idioma y contraseña"
+
+msgid "Demo data"
+msgstr "Datos de demostración"
+
+msgid "Departments"
+msgstr "Departamentos"
+
+msgid "(root of the organization chart)"
+msgstr "(raíz del organigrama)"
+
+msgid "parent department"
+msgstr "departamento superior"
+
+msgid "Leave empty for the root of the organization chart."
+msgstr "Déjelo vacío para la raíz del organigrama."
+
+msgid "Unique within the company."
+msgstr "Único dentro de la empresa."
+
+msgid "cost center"
+msgstr "centro de costo"
+
+msgid "Link with accounting."
+msgstr "Vínculo con contabilidad."
+
+msgid "Deactivate instead of deleting: the history refers to it."
+msgstr "Desactive en lugar de eliminar: el historial hace referencia a él."
+
+msgid "department"
+msgstr "departamento"
+
+msgid "departments"
+msgstr "departamentos"
+
+msgid "That company already has a department with this code."
+msgstr "Esa empresa ya tiene un departamento con este código."
+
+msgid "A department cannot be its own parent."
+msgstr "Un departamento no puede ser su propio departamento superior."
+
+msgid "head"
+msgstr "jefe"
+
+msgid "Empty means currently in charge."
+msgstr "Vacío indica que sigue a cargo."
+
+msgid "appointment note"
+msgstr "nota del nombramiento"
+
+msgid "department headship"
+msgstr "jefatura de departamento"
+
+msgid "department headships"
+msgstr "jefaturas de departamento"
+
+msgid "That department already has a current head."
+msgstr "Ese departamento ya tiene una jefatura vigente."
+
+msgid "Edit company"
+msgstr "Editar empresa"
+
+msgid "New company"
+msgstr "Nueva empresa"
+
+msgid "Companies"
+msgstr "Empresas"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "The employer at the root of the organization chart."
+msgstr "La empresa empleadora, raíz del organigrama."
+
+msgid "List of companies"
+msgstr "Lista de empresas"
+
+msgid "Legal name"
+msgstr "Razón social"
+
+msgid "Tax ID"
+msgstr "NIT"
+
+msgid "No companies registered."
+msgstr "No hay empresas registradas."
+
+msgid "Appoint head"
+msgstr "Nombrar jefatura"
+
+msgid "Details"
+msgstr "Detalles"
+
+msgid "Company"
+msgstr "Empresa"
+
+msgid "Cost center"
+msgstr "Centro de costo"
+
+msgid "Sub-departments"
+msgstr "Subdepartamentos"
+
+msgid "None"
+msgstr "Ninguno"
+
+msgid "Headships"
+msgstr "Jefaturas"
+
+msgid "This department has no head yet."
+msgstr "Este departamento aún no tiene jefatura."
+
+msgid "Edit department"
+msgstr "Editar departamento"
+
+msgid "New department"
+msgstr "Nuevo departamento"
+
+msgid "Appoint department head"
+msgstr "Nombrar jefatura del departamento"
+
+#, python-format
+msgid ""
+"%(name)s has been in charge since %(since)s. The new appointment closes that "
+"one the day before; nothing is overwritten."
+msgstr ""
+"%(name)s está a cargo desde %(since)s. El nombramiento nuevo cierra ese el "
+"día anterior; no se sobrescribe nada."
+
+msgid "Appoint"
+msgstr "Nombrar"
+
+#, python-format
+msgid "%(counter)s department"
+msgid_plural "%(counter)s departments"
+msgstr[0] "%(counter)s departamento"
+msgstr[1] "%(counter)s departamentos"
+
+msgid "Search by name"
+msgstr "Buscar por nombre"
+
+msgid "List of departments"
+msgstr "Lista de departamentos"
+
+msgid "Parent"
+msgstr "Departamento superior"
+
+msgid "No departments found."
+msgstr "No se encontraron departamentos."
+
+msgid "That parent would make the department its own ancestor."
+msgstr "Con ese departamento superior, el departamento dependería de sí mismo."
+
+msgid "The parent must belong to the same company."
+msgstr "El departamento superior debe pertenecer a la misma empresa."
+
+msgid "Deactivate its sub-departments first."
+msgstr "Primero desactive sus subdepartamentos."
+
+msgid "Deactivate its positions first."
+msgstr "Primero desactive sus puestos."
+
+msgid "That person already heads this department."
+msgstr "Esa persona ya es la jefatura de este departamento."
+
+msgid "The new appointment must start after the current one."
+msgstr "El nombramiento nuevo debe empezar después del vigente."
+
+msgid "That headship has already ended."
+msgstr "Esa jefatura ya finalizó."
+
+msgid "Department created."
+msgstr "Departamento creado."
+
+msgid "Department updated."
+msgstr "Departamento actualizado."
+
+msgid "Deactivate department"
+msgstr "Desactivar departamento"
+
+msgid "The department will no longer be available for new positions."
+msgstr "El departamento dejará de estar disponible para puestos nuevos."
+
+msgid "It is not deleted: the history refers to it."
+msgstr "No se elimina: el historial hace referencia a él."
+
+msgid "It only works if it has no active sub-departments or positions."
+msgstr "Solo funciona si no tiene subdepartamentos ni puestos activos."
+
+msgid "Department deactivated."
+msgstr "Departamento desactivado."
+
+msgid "Company created."
+msgstr "Empresa creada."
+
+msgid "Company updated."
+msgstr "Empresa actualizada."
+
+msgid "Department head appointed."
+msgstr "Jefatura nombrada."
+
+msgid "End headship"
+msgstr "Finalizar jefatura"
+
+msgid "The department will have no head until a new appointment."
+msgstr "El departamento quedará sin jefatura hasta un nuevo nombramiento."
+
+msgid "The history is kept: it records who was in charge and when."
+msgstr "El historial se conserva: registra quién estuvo a cargo y cuándo."
+
+msgid "Their team will stop appearing in their scope."
+msgstr "Su equipo dejará de aparecer en su alcance."
+
+msgid "Headship ended."
+msgstr "Jefatura finalizada."
+
+msgid "Documents"
+msgstr "Documentos"
+
+msgid "Archived"
+msgstr "Archivado"
+
+#
+msgid "Expiring soon"
+msgstr "Por vencer"
+
+msgid "File"
+msgstr "Expediente"
+
+msgid "Optional: the file name is used if left empty."
+msgstr "Opcional: si lo deja vacío se usa el nombre del archivo."
+
+#
+msgid "The expiry cannot precede the issue date."
+msgstr "El vencimiento no puede ser anterior a la fecha de emisión."
+
+#
+msgid "This document type requires an expiry date."
+msgstr "Este tipo de documento exige una fecha de vencimiento."
+
+#, python-format
+msgid "These formats are not accepted: %(unknown)s"
+msgstr "Estos formatos no se aceptan: %(unknown)s"
+
+#
+msgid "A document type needs at least one format."
+msgstr "Un tipo de documento necesita al menos un formato."
+
+msgid "confidential"
+msgstr "confidencial"
+
+msgid "Only HR administration and auditing can open its content."
+msgstr ""
+"Solo la administración de RR. HH. y la auditoría pueden abrir su contenido."
+
+#
+#
+msgid "requires expiry date"
+msgstr "exige fecha de vencimiento"
+
+#
+msgid "For example, a medical certificate or a work permit."
+msgstr "Por ejemplo, un certificado médico o un permiso de trabajo."
+
+#
+msgid "the employee can upload it"
+msgstr "la persona puede subirlo"
+
+msgid "Types a person may add to their own file, such as a diploma."
+msgstr ""
+"Tipos que una persona puede agregar a su propio expediente, como un diploma."
+
+#
+msgid "retention (years)"
+msgstr "retención (años)"
+
+msgid "How long it must be kept. 0 means no policy defined yet."
+msgstr ""
+"Cuánto tiempo debe conservarse. 0 significa que aún no hay política definida."
+
+msgid "allowed formats"
+msgstr "formatos permitidos"
+
+msgid "Comma-separated list, for example: pdf,png,jpg"
+msgstr "Lista separada por comas, por ejemplo: pdf,png,jpg"
+
+msgid "maximum size (MB)"
+msgstr "tamaño máximo (MB)"
+
+msgid "document type"
+msgstr "tipo de documento"
+
+#
+msgid "document types"
+msgstr "tipos de documento"
+
+#
+#
+msgid "The maximum size must be between 1 and 25 MB."
+msgstr "El tamaño máximo debe estar entre 1 y 25 MB."
+
+#
+msgid "The retention cannot exceed 50 years."
+msgstr "La retención no puede superar los 50 años."
+
+#
+msgid "public id"
+msgstr "id público"
+
+msgid "title"
+msgstr "nombre del puesto"
+
+#
+msgid "stored file"
+msgstr "archivo almacenado"
+
+msgid "original file name"
+msgstr "nombre original del archivo"
+
+msgid "declared content type"
+msgstr "tipo de contenido declarado"
+
+msgid "size (bytes)"
+msgstr "tamaño (bytes)"
+
+msgid "checksum (SHA-256)"
+msgstr "suma de verificación (SHA-256)"
+
+msgid "issued on"
+msgstr "fecha de emisión"
+
+msgid "expires on"
+msgstr "fecha de vencimiento"
+
+msgid "uploaded by"
+msgstr "subido por"
+
+#
+msgid "archiving reason"
+msgstr "motivo del archivado"
+
+#
+msgid "employee document"
+msgstr "documento del expediente"
+
+#
+msgid "employee documents"
+msgstr "documentos del expediente"
+
+#
+msgid "Can open confidential documents"
+msgstr "Puede abrir documentos confidenciales"
+
+#
+#
+msgid "Can archive a document"
+msgstr "Puede archivar un documento"
+
+#
+msgid "That same file is already in the file."
+msgstr "Ese mismo archivo ya está en el expediente."
+
+#
+msgid "An empty file explains nothing."
+msgstr "Un archivo vacío no explica nada."
+
+#
+#
+msgid "Archive document"
+msgstr "Archivar documento"
+
+msgid "The document leaves the file but is not deleted: it stays as evidence."
+msgstr "El documento sale del expediente pero no se borra: queda como prueba."
+
+msgid "It can no longer be downloaded from the record."
+msgstr "Ya no se podrá descargar desde la ficha."
+
+msgid "Your name, the time and your reason are recorded."
+msgstr "Quedan registrados su nombre, la hora y su motivo."
+
+#
+msgid "Documents expiring"
+msgstr "Documentos por vencer"
+
+msgid "Expired documents are listed first: they are the ones to chase."
+msgstr ""
+"Los documentos vencidos aparecen primero: son los que hay que perseguir."
+
+msgid "Documents that expire soon"
+msgstr "Documentos que vencen pronto"
+
+#
+msgid "Expires"
+msgstr "Vence"
+
+msgid "expired"
+msgstr "vencido"
+
+#
+msgid "expiring soon"
+msgstr "por vencer"
+
+msgid "Nothing expires in the next few days."
+msgstr "No vence nada en los próximos días."
+
+#
+msgid "Employee file"
+msgstr "Expediente"
+
+#
+msgid "Upload document"
+msgstr "Subir documento"
+
+#
+msgid "Documents in this employee file"
+msgstr "Documentos de este expediente"
+
+msgid "Title"
+msgstr "Nombre del puesto"
+
+#
+msgid "Issued"
+msgstr "Emitido"
+
+#
+msgid "Confidential document"
+msgstr "Documento confidencial"
+
+msgid "Download"
+msgstr "Descargar"
+
+#
+msgid "Restricted"
+msgstr "Restringido"
+
+msgid "Archive"
+msgstr "Archivar"
+
+#
+msgid "This file has no documents yet."
+msgstr "Este expediente todavía no tiene documentos."
+
+#
+msgid "Edit document type"
+msgstr "Editar tipo de documento"
+
+#
+msgid "New document type"
+msgstr "Nuevo tipo de documento"
+
+#
+msgid "Document types"
+msgstr "Tipos de documento"
+
+msgid "Accepted formats: PDF, PNG, JPG, JPEG and DOCX."
+msgstr "Formatos aceptados: PDF, PNG, JPG, JPEG y DOCX."
+
+msgid ""
+"A confidential type can only be opened by HR administration and auditing; "
+"everyone else sees that it exists, not its content."
+msgstr ""
+"Un tipo confidencial solo lo abren la administración de RR. HH. y la "
+"auditoría; los demás ven que existe, no su contenido."
+
+msgid "Each type decides what formats it accepts, how big and who may open it."
+msgstr ""
+"Cada tipo decide qué formatos acepta, de qué tamaño y quién puede abrirlo."
+
+#
+msgid "New type"
+msgstr "Nuevo tipo"
+
+#
+msgid "List of document types"
+msgstr "Lista de tipos de documento"
+
+msgid "Formats"
+msgstr "Formatos"
+
+msgid "Maximum"
+msgstr "Máximo"
+
+msgid "Confidential"
+msgstr "Confidencial"
+
+#
+msgid "The employee uploads it"
+msgstr "La persona lo sube"
+
+#
+msgid "Retention"
+msgstr "Retención"
+
+#, python-format
+msgid "%(size)s MB"
+msgstr "%(size)s MB"
+
+msgid "Yes"
+msgstr "Sí"
+
+#
+msgid "No"
+msgstr "No"
+
+#, python-format
+msgid "%(years)s years"
+msgstr "%(years)s años"
+
+msgid "not defined"
+msgstr "sin definir"
+
+#
+#
+msgid "No document types defined."
+msgstr "No hay tipos de documento definidos."
+
+msgid "What each type accepts"
+msgstr "Qué acepta cada tipo"
+
+#, python-format
+msgid "Formats: %(formats)s · Maximum: %(size)s MB"
+msgstr "Formatos: %(formats)s · Máximo: %(size)s MB"
+
+#
+#
+msgid "requires an expiry date"
+msgstr "exige fecha de vencimiento"
+
+#
+msgid "There is no document type you can upload."
+msgstr "No hay ningún tipo de documento que usted pueda subir."
+
+msgid "That file is empty."
+msgstr "Ese archivo está vacío."
+
+msgid "That file exceeds the size allowed for this document type."
+msgstr "Ese archivo supera el tamaño permitido para este tipo de documento."
+
+msgid "That format is not accepted for this document type."
+msgstr "Ese formato no se acepta para este tipo de documento."
+
+msgid "The file claims to be of that format but its content is not."
+msgstr "El archivo dice ser de ese formato, pero su contenido no lo es."
+
+msgid "The file type reported by your browser does not match."
+msgstr "El tipo de archivo que informa su navegador no coincide."
+
+msgid "That document type does not accept any format yet."
+msgstr "Ese tipo de documento todavía no acepta ningún formato."
+
+#
+msgid "That same file is already in this file."
+msgstr "Ese mismo archivo ya está en este expediente."
+
+#
+#
+msgid "That document type is no longer available."
+msgstr "Ese tipo de documento ya no está disponible."
+
+#
+#
+msgid "Archiving a document requires a reason."
+msgstr "Archivar un documento exige un motivo."
+
+#
+msgid "That document is already archived."
+msgstr "Ese documento ya está archivado."
+
+#
+msgid "Document uploaded."
+msgstr "Documento subido."
+
+#
+msgid "Document archived."
+msgstr "Documento archivado."
+
+#
+msgid "Document type created."
+msgstr "Tipo de documento creado."
+
+#
+#
+msgid "Document type updated."
+msgstr "Tipo de documento actualizado."
+
+msgid "Female"
+msgstr "Femenino"
+
+msgid "Male"
+msgstr "Masculino"
+
+msgid "Other"
+msgstr "Otro"
+
+msgid "Prefer not to say"
+msgstr "Prefiere no indicarlo"
+
+msgid "Single"
+msgstr "Soltero(a)"
+
+msgid "Married"
+msgstr "Casado(a)"
+
+msgid "Divorced"
+msgstr "Divorciado(a)"
+
+msgid "Widowed"
+msgstr "Viudo(a)"
+
+msgid "Domestic partnership"
+msgstr "Unión de hecho"
+
+msgid "National ID (DPI/CUI)"
+msgstr "Documento Personal de Identificación (DPI/CUI)"
+
+msgid "Tax ID (NIT)"
+msgstr "Número de Identificación Tributaria (NIT)"
+
+msgid "Social security number (IGSS)"
+msgstr "Número de afiliación al IGSS"
+
+msgid "Passport"
+msgstr "Pasaporte"
+
+msgid "Driver's license"
+msgstr "Licencia de conducir"
+
+msgid "Mobile phone"
+msgstr "Teléfono celular"
+
+msgid "Landline"
+msgstr "Teléfono fijo"
+
+msgid "Personal email"
+msgstr "Correo personal"
+
+msgid "Work email"
+msgstr "Correo laboral"
+
+msgid "Mailing"
+msgstr "Correspondencia"
+
+msgid "Spouse or partner"
+msgstr "Cónyuge o pareja"
+
+msgid "Child"
+msgstr "Hijo(a)"
+
+msgid "Sibling"
+msgstr "Hermano(a)"
+
+msgid "Friend"
+msgstr "Amigo(a)"
+
+msgid "On leave"
+msgstr "De licencia"
+
+msgid "first name"
+msgstr "primer nombre"
+
+msgid "middle name"
+msgstr "segundo nombre"
+
+msgid "last name"
+msgstr "primer apellido"
+
+msgid "second last name"
+msgstr "segundo apellido"
+
+msgid "Common in Spanish-speaking naming conventions."
+msgstr "Habitual en los nombres de los países hispanohablantes."
+
+msgid "date of birth"
+msgstr "fecha de nacimiento"
+
+msgid "gender"
+msgstr "género"
+
+msgid "marital status"
+msgstr "estado civil"
+
+msgid "nationality"
+msgstr "nacionalidad"
+
+msgid "person"
+msgstr "persona"
+
+msgid "people"
+msgstr "personas"
+
+msgid "The date of birth is not plausible."
+msgstr "La fecha de nacimiento no es verosímil."
+
+msgid "The date of birth must be in the past."
+msgstr "La fecha de nacimiento debe estar en el pasado."
+
+msgid "number"
+msgstr "número"
+
+msgid "Stored without spaces or dashes."
+msgstr "Se guarda sin espacios ni guiones."
+
+msgid "issuing country"
+msgstr "país emisor"
+
+msgid "Empty means it does not expire."
+msgstr "Vacío indica que no vence."
+
+msgid "primary identification"
+msgstr "identificación principal"
+
+msgid "identity document"
+msgstr "documento de identidad"
+
+msgid "identity documents"
+msgstr "documentos de identidad"
+
+msgid "That document is already registered."
+msgstr "Ese documento ya está registrado."
+
+msgid "That person already has a permanent document of this type."
+msgstr "Esa persona ya tiene un documento permanente de este tipo."
+
+msgid "The expiry date cannot precede the issue date."
+msgstr "La fecha de vencimiento no puede ser anterior a la de emisión."
+
+msgid "value"
+msgstr "valor"
+
+msgid "contact method"
+msgstr "medio de contacto"
+
+msgid "contact methods"
+msgstr "medios de contacto"
+
+msgid "That contact detail is already registered."
+msgstr "Ese dato de contacto ya está registrado."
+
+msgid "There is already a primary contact of this type."
+msgstr "Ya existe un contacto principal de este tipo."
+
+msgid "address line 1"
+msgstr "dirección, línea 1"
+
+msgid "address line 2"
+msgstr "dirección, línea 2"
+
+msgid "locality"
+msgstr "municipio"
+
+msgid "region"
+msgstr "departamento geográfico"
+
+msgid "postal code"
+msgstr "código postal"
+
+msgid "address"
+msgstr "dirección"
+
+msgid "addresses"
+msgstr "direcciones"
+
+msgid "That person already has a primary address."
+msgstr "Esa persona ya tiene una dirección principal."
+
+msgid "account"
+msgstr "cuenta"
+
+msgid "Empty when the employee has no access to the system."
+msgstr "Vacío cuando el empleado no tiene acceso al sistema."
+
+msgid "employee code"
+msgstr "código de empleado"
+
+msgid "Never reused after a termination."
+msgstr "Nunca se reutiliza tras una baja."
+
+msgid "hire date"
+msgstr "fecha de ingreso"
+
+msgid "employment status"
+msgstr "situación laboral"
+
+msgid "employees"
+msgstr "empleados"
+
+msgid "Can view sensitive personal data"
+msgstr "Puede ver datos personales sensibles"
+
+msgid "The termination date cannot precede the hire date."
+msgstr "La fecha de baja no puede ser anterior a la fecha de ingreso."
+
+msgid ""
+"A terminated employee needs a termination date, and only a terminated one."
+msgstr ""
+"Un empleado dado de baja necesita fecha de baja, y solo un empleado dado de "
+"baja puede tenerla."
+
+msgid "full name"
+msgstr "nombre completo"
+
+msgid "relationship"
+msgstr "parentesco"
+
+msgid "phone"
+msgstr "teléfono"
+
+msgid "alternate phone"
+msgstr "teléfono alternativo"
+
+msgid "priority"
+msgstr "prioridad"
+
+msgid "1 means the first person to call."
+msgstr "1 indica la primera persona a quien llamar."
+
+msgid "emergency contact"
+msgstr "contacto de emergencia"
+
+msgid "emergency contacts"
+msgstr "contactos de emergencia"
+
+msgid "That priority is already assigned."
+msgstr "Esa prioridad ya está asignada."
+
+msgid "Record sections"
+msgstr "Secciones de la ficha"
+
+msgid "Record"
+msgstr "Ficha"
+
+msgid "Personal details"
+msgstr "Datos personales"
+
+msgid "Date of birth"
+msgstr "Fecha de nacimiento"
+
+msgid "Nationality"
+msgstr "Nacionalidad"
+
+msgid "Gender"
+msgstr "Género"
+
+msgid "Marital status"
+msgstr "Estado civil"
+
+msgid "Hire date"
+msgstr "Fecha de ingreso"
+
+msgid "Contact details"
+msgstr "Datos de contacto"
+
+msgid "Only work contact details are shown."
+msgstr "Solo se muestran los datos de contacto laborales."
+
+msgid "No contact details registered."
+msgstr "No hay datos de contacto registrados."
+
+msgid "Emergency contacts"
+msgstr "Contactos de emergencia"
+
+msgid "None registered."
+msgstr "No hay ninguno registrado."
+
+msgid "Identification"
+msgstr "Identificación"
+
+msgid "Add document"
+msgstr "Agregar documento"
+
+msgid "No documents registered."
+msgstr "No hay documentos registrados."
+
+msgid "Contracts of this employee"
+msgstr "Contratos de este empleado"
+
+msgid "This employee has no contracts yet."
+msgstr "Este empleado aún no tiene contratos."
+
+msgid "Edit employee"
+msgstr "Editar empleado"
+
+msgid "New employee"
+msgstr "Nuevo empleado"
+
+msgid "Employment details"
+msgstr "Datos laborales"
+
+#, python-format
+msgid "%(counter)s employee"
+msgid_plural "%(counter)s employees"
+msgstr[0] "%(counter)s empleado"
+msgstr[1] "%(counter)s empleados"
+
+msgid "Search by name or code"
+msgstr "Buscar por nombre o código"
+
+msgid "List of employees"
+msgstr "Lista de empleados"
+
+msgid "No employees found."
+msgstr "No se encontraron empleados."
+
+#, python-format
+msgid "A DPI must have exactly %(length)s digits."
+msgstr "El DPI debe tener exactamente %(length)s dígitos."
+
+msgid "The DPI check digit is not valid."
+msgstr "El dígito verificador del DPI no es válido."
+
+msgid "The NIT is too short."
+msgstr "El NIT es demasiado corto."
+
+msgid "A NIT may only contain digits, optionally ending in K."
+msgstr "El NIT solo puede contener dígitos y, opcionalmente, terminar en K."
+
+msgid "The NIT check character is not valid."
+msgstr "El carácter verificador del NIT no es válido."
+
+msgid "The IGSS number must contain between 6 and 13 digits."
+msgstr "El número de afiliación al IGSS debe tener entre 6 y 13 dígitos."
+
+msgid "The document number cannot be empty."
+msgstr "El número de documento no puede estar vacío."
+
+msgid "The person is below the minimum working age."
+msgstr "La persona no alcanza la edad mínima para trabajar."
+
+msgid "That employee is already terminated."
+msgstr "Ese empleado ya está dado de baja."
+
+msgid "Employee created."
+msgstr "Empleado creado."
+
+msgid "Employee updated."
+msgstr "Empleado actualizado."
+
+msgid "Document added."
+msgstr "Documento agregado."
+
+#
+msgid "Leave"
+msgstr "Ausencias"
+
+msgid "Pending approval"
+msgstr "Pendiente de aprobación"
+
+msgid "Approved"
+msgstr "Aprobada"
+
+#
+msgid "Cancelled"
+msgstr "Cancelada"
+
+#
+msgid "Monthly accrual"
+msgstr "Devengo mensual"
+
+#
+msgid "Granted by HR"
+msgstr "Otorgado por RR. HH."
+
+#
+msgid "Carried over"
+msgstr "Arrastrado del período anterior"
+
+msgid "Accrual"
+msgstr "Devengo"
+
+#
+msgid "Consumption"
+msgstr "Consumo"
+
+msgid "Reversal"
+msgstr "Reversa"
+
+#
+msgid "Adjustment"
+msgstr "Ajuste"
+
+msgid "Leave type"
+msgstr "Tipo de ausencia"
+
+msgid "Optional. Do not include medical details."
+msgstr "Opcional. No incluya detalles médicos."
+
+#
+msgid "The end date cannot be earlier than the start date."
+msgstr "La fecha de fin no puede ser anterior a la de inicio."
+
+msgid "Note"
+msgstr "Nota"
+
+msgid "The requester will read it."
+msgstr "La persona solicitante la leerá."
+
+msgid "Sensitive types are hidden from the team calendar."
+msgstr "Los tipos sensibles se ocultan en el calendario del equipo."
+
+msgid "Accrued in twelfths, one twelfth per month worked."
+msgstr "Se devenga en doceavos, uno por cada mes trabajado."
+
+msgid "A type cannot require notice and also allow retroactive registration."
+msgstr ""
+"Un tipo no puede exigir preaviso y a la vez admitir registro retroactivo."
+
+#, python-format
+msgid "That is above the maximum of %(max)s days per year."
+msgstr "Supera el máximo de %(max)s días por año."
+
+msgid "Positive adds to the balance; negative subtracts from it."
+msgstr "Un valor positivo suma al saldo; uno negativo lo resta."
+
+#
+msgid "It is recorded in the ledger and in the audit log with your name."
+msgstr "Queda en el libro de saldos y en la bitácora con su nombre."
+
+msgid "An adjustment of zero days changes nothing."
+msgstr "Un ajuste de cero días no cambia nada."
+
+msgid "paid"
+msgstr "con goce de salario"
+
+#
+msgid "requires approval"
+msgstr "requiere aprobación"
+
+#
+msgid "requires document"
+msgstr "requiere documento"
+
+msgid "For example, a medical certificate."
+msgstr "Por ejemplo, un certificado médico."
+
+msgid "allows negative balance"
+msgstr "admite saldo negativo"
+
+msgid "Only for types the company grants in advance."
+msgstr "Solo para tipos que la empresa concede por adelantado."
+
+#
+msgid "annual days"
+msgstr "días por año"
+
+msgid "Days accrued per year. They are granted month by month."
+msgstr "Días que se devengan al año. Se otorgan mes a mes."
+
+msgid "minimum notice (days)"
+msgstr "preaviso mínimo (días)"
+
+msgid "retroactive registration (days)"
+msgstr "registro retroactivo (días)"
+
+msgid ""
+"How many days after it started the leave can still be registered. 0 means it "
+"must be requested in advance."
+msgstr ""
+"Cuántos días después de iniciada todavía se puede registrar la ausencia. 0 "
+"significa que debe solicitarse con anticipación."
+
+msgid "sensitive"
+msgstr "sensible"
+
+msgid "The team calendar shows it as a generic absence, without the type."
+msgstr ""
+"El calendario del equipo lo muestra como ausencia genérica, sin el tipo."
+
+msgid "leave type"
+msgstr "tipo de ausencia"
+
+msgid "leave types"
+msgstr "tipos de ausencia"
+
+#
+msgid "The annual days must be between 0 and 60."
+msgstr "Los días por año deben estar entre 0 y 60."
+
+#
+msgid "Retroactive registration cannot exceed 30 days."
+msgstr "El registro retroactivo no puede superar los 30 días."
+
+msgid "from years of service"
+msgstr "desde años de servicio"
+
+msgid "Completed years of service from which this tier applies."
+msgstr "Años de servicio cumplidos a partir de los cuales aplica este tramo."
+
+#
+msgid "days per year"
+msgstr "días por año"
+
+#
+msgid "accrual tier"
+msgstr "tramo por antigüedad"
+
+#
+msgid "accrual tiers"
+msgstr "tramos por antigüedad"
+
+#
+msgid "That type already has a tier for those years."
+msgstr "Ese tipo ya tiene un tramo para esos años."
+
+msgid "A tier starts at one year of service or more."
+msgstr "Un tramo empieza en un año de servicio o más."
+
+msgid "period start"
+msgstr "inicio del período"
+
+msgid "period end"
+msgstr "fin del período"
+
+#
+msgid "granted days"
+msgstr "días otorgados"
+
+msgid "leave entitlement"
+msgstr "derecho de ausencia"
+
+msgid "leave entitlements"
+msgstr "derechos de ausencia"
+
+#
+msgid "That period was already accrued."
+msgstr "Ese período ya se devengó."
+
+#
+msgid "The period start must precede its end."
+msgstr "El inicio del período debe ser anterior a su fin."
+
+#
+msgid "working days"
+msgstr "días hábiles"
+
+msgid "Calculated from the schedule and the public holidays."
+msgstr "Se calcula con la jornada y los días feriados."
+
+#
+msgid "decided by"
+msgstr "decidida por"
+
+#
+msgid "decided at"
+msgstr "decidida el"
+
+#
+msgid "decision note"
+msgstr "nota de la decisión"
+
+#
+msgid "leave request"
+msgstr "solicitud de ausencia"
+
+#
+msgid "leave requests"
+msgstr "solicitudes de ausencia"
+
+msgid "Can approve or reject leave requests"
+msgstr "Puede aprobar o rechazar solicitudes de ausencia"
+
+#
+msgid "The request must cover at least one working day."
+msgstr "La solicitud debe cubrir al menos un día hábil."
+
+#
+msgid "A decided request needs the date it was decided."
+msgstr "Una solicitud decidida necesita la fecha en que se decidió."
+
+msgid "from"
+msgstr "desde"
+
+msgid "to"
+msgstr "hasta"
+
+#
+msgid "leave request transition"
+msgstr "transición de solicitud de ausencia"
+
+#
+msgid "leave request transitions"
+msgstr "transiciones de solicitudes de ausencia"
+
+#
+msgid "days"
+msgstr "días"
+
+msgid "Positive adds to the balance; negative consumes it."
+msgstr "Un valor positivo suma al saldo; uno negativo lo consume."
+
+#
+msgid "entitlement"
+msgstr "derecho"
+
+#
+msgid "created by"
+msgstr "creado por"
+
+msgid "leave ledger entry"
+msgstr "asiento del libro de ausencias"
+
+#
+msgid "leave ledger entries"
+msgstr "asientos del libro de ausencias"
+
+msgid "An entry of zero days explains nothing."
+msgstr "Un asiento de cero días no explica nada."
+
+msgid "The sign of the days does not match the entry type."
+msgstr "El signo de los días no corresponde al tipo de asiento."
+
+msgid "A consumption or reversal needs its request."
+msgstr "Un consumo o una reversa necesita su solicitud."
+
+msgid "Adjust leave balance"
+msgstr "Ajustar saldo de ausencias"
+
+msgid ""
+"For corrections that the accrual cannot express, such as a transfer or a "
+"settlement."
+msgstr ""
+"Para correcciones que el devengo no puede expresar, como un traslado o una "
+"liquidación."
+
+msgid "A ledger entry is written; entries are never edited or deleted."
+msgstr "Se escribe un asiento; los asientos nunca se editan ni se borran."
+
+msgid ""
+"To undo an adjustment you write the opposite one, and both remain visible."
+msgstr ""
+"Para deshacer un ajuste se escribe el contrario, y ambos quedan a la vista."
+
+#
+msgid ""
+"The adjustment is recorded in the audit log with your name and your reason."
+msgstr "El ajuste queda en la bitácora con su nombre y su motivo."
+
+#
+msgid "Adjust balance"
+msgstr "Ajustar saldo"
+
+msgid "Leave balance"
+msgstr "Saldo de ausencias"
+
+msgid "Leave balances"
+msgstr "Saldos de ausencias"
+
+#, python-format
+msgid "%(accrued)s accrued · %(used)s used"
+msgstr "%(accrued)s devengados · %(used)s usados"
+
+#
+msgid "No leave types defined yet."
+msgstr "Todavía no hay tipos de ausencia definidos."
+
+msgid "Ledger"
+msgstr "Libro de saldos"
+
+msgid "Append-only: the balance is the sum of these entries."
+msgstr "Solo se agregan asientos: el saldo es la suma de ellos."
+
+#
+msgid "Leave ledger entries"
+msgstr "Asientos del libro de ausencias"
+
+#
+msgid "Entry"
+msgstr "Asiento"
+
+#
+msgid "No entries yet."
+msgstr "Todavía no hay asientos."
+
+msgid "Approvals"
+msgstr "Aprobaciones"
+
+msgid "Only requests you can decide on. Your own never appear here."
+msgstr ""
+"Solo las solicitudes sobre las que usted puede decidir. Las suyas nunca "
+"aparecen aquí."
+
+msgid "Leave requests awaiting your decision"
+msgstr "Solicitudes de ausencia que esperan su decisión"
+
+#
+msgid "Balance"
+msgstr "Saldo"
+
+msgid "Approve"
+msgstr "Aprobar"
+
+msgid "Nothing awaits your decision."
+msgstr "Nada espera su decisión."
+
+#
+msgid "Dates"
+msgstr "Fechas"
+
+msgid "Review"
+msgstr "Revisar"
+
+#
+msgid "My leave"
+msgstr "Mis ausencias"
+
+msgid "Your balance is the sum of your ledger: it is never stored twice."
+msgstr "Su saldo es la suma de su libro: nunca se guarda dos veces."
+
+#
+msgid "Request leave"
+msgstr "Solicitar ausencia"
+
+#
+msgid "My requests"
+msgstr "Mis solicitudes"
+
+#
+msgid "List of my leave requests"
+msgstr "Lista de mis solicitudes de ausencia"
+
+msgid "You have not requested any leave yet."
+msgstr "Todavía no ha solicitado ninguna ausencia."
+
+#
+msgid "Recent ledger entries"
+msgstr "Asientos recientes"
+
+#, python-format
+msgid "Available balance: %(days)s days"
+msgstr "Saldo disponible: %(days)s días"
+
+#, python-format
+msgid "Requires %(notice)s days of notice"
+msgstr "Requiere %(notice)s días de preaviso"
+
+#, python-format
+msgid "Can be registered up to %(days)s days after it started"
+msgstr "Se puede registrar hasta %(days)s días después de iniciada"
+
+msgid ""
+"Working days are counted from your schedule and the company holidays: you do "
+"not type them in."
+msgstr ""
+"Los días hábiles se cuentan con su jornada y los feriados de la empresa: "
+"usted no los escribe."
+
+msgid "Back"
+msgstr "Volver"
+
+msgid "Approve leave"
+msgstr "Aprobar ausencia"
+
+#
+msgid "Reject leave"
+msgstr "Rechazar ausencia"
+
+#
+msgid "Cancel leave"
+msgstr "Cancelar ausencia"
+
+msgid "Balance today"
+msgstr "Saldo actual"
+
+msgid "Pending in other requests"
+msgstr "Pendiente en otras solicitudes"
+
+msgid "The days are deducted from the balance as a ledger entry."
+msgstr "Los días se descuentan del saldo mediante un asiento."
+
+msgid ""
+"The entry is never edited or deleted: a cancellation writes a reversal "
+"instead."
+msgstr ""
+"El asiento nunca se edita ni se borra: una cancelación escribe una reversa."
+
+msgid "The requester reads your reason, so write it for them."
+msgstr "La persona solicitante leerá su motivo: escríbalo para ella."
+
+msgid "A rejected request is final: a new one has to be filed."
+msgstr "Una solicitud rechazada es definitiva: hay que presentar una nueva."
+
+msgid "If it was approved, a reversal returns the days to the balance."
+msgstr "Si estaba aprobada, una reversa devuelve los días al saldo."
+
+#
+msgid "A leave that already started cannot be cancelled."
+msgstr "Una ausencia que ya empezó no se puede cancelar."
+
+#
+msgid "Cancel request"
+msgstr "Cancelar solicitud"
+
+msgid "Go back"
+msgstr "Volver"
+
+#
+msgid "Leave request"
+msgstr "Solicitud de ausencia"
+
+#
+msgid "Review and submit"
+msgstr "Revisar y enviar"
+
+msgid "Decided"
+msgstr "Decidida"
+
+#
+msgid "Decision note"
+msgstr "Nota de la decisión"
+
+#
+msgid "History"
+msgstr "Historial"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "Review your request"
+msgstr "Revise su solicitud"
+
+msgid "Balance after approval"
+msgstr "Saldo tras la aprobación"
+
+#
+msgid "When you submit:"
+msgstr "Al enviar:"
+
+msgid "It goes to your approver and you can no longer edit the dates."
+msgstr "Pasa a quien aprueba y ya no podrá editar las fechas."
+
+msgid "Those days are blocked against new overlapping requests."
+msgstr "Esos días quedan bloqueados para nuevas solicitudes que se traslapen."
+
+msgid ""
+"This type needs no approval: it is approved on submission and the days are "
+"deducted."
+msgstr ""
+"Este tipo no requiere aprobación: se aprueba al enviarlo y los días se "
+"descuentan."
+
+#
+msgid "Submit request"
+msgstr "Enviar solicitud"
+
+msgid "Discard"
+msgstr "Descartar"
+
+msgid ""
+"The type sets how much notice is required and whether it needs approval."
+msgstr "El tipo define cuánto preaviso se exige y si requiere aprobación."
+
+msgid "Leave calendar"
+msgstr "Calendario de ausencias"
+
+msgid "Earlier"
+msgstr "Anterior"
+
+msgid "Later"
+msgstr "Siguiente"
+
+msgid "Who is away on each day"
+msgstr "Quién está ausente cada día"
+
+msgid "Away"
+msgstr "Ausente"
+
+msgid "Nobody is away in this window."
+msgstr "Nadie está ausente en este período."
+
+#
+msgid "Edit leave type"
+msgstr "Editar tipo de ausencia"
+
+msgid "New leave type"
+msgstr "Nuevo tipo de ausencia"
+
+msgid "Leave types"
+msgstr "Tipos de ausencia"
+
+msgid "Annual days accrue in twelfths, one twelfth per month worked."
+msgstr "Los días anuales se devengan en doceavos, uno por cada mes trabajado."
+
+msgid "Days by seniority"
+msgstr "Días por antigüedad"
+
+#, python-format
+msgid ""
+"Base: %(days)s days per year. Each tier applies from the completed years of "
+"service it states, and can never grant fewer days than the base or a lower "
+"tier."
+msgstr ""
+"Base: %(days)s días por año. Cada tramo aplica desde los años de servicio "
+"cumplidos que indica, y nunca puede otorgar menos días que la base ni que un "
+"tramo menor."
+
+#, python-format
+msgid "From %(years)s year"
+msgid_plural "From %(years)s years"
+msgstr[0] "Desde %(years)s año"
+msgstr[1] "Desde %(years)s años"
+
+#, python-format
+msgid "%(days)s days"
+msgstr "%(days)s días"
+
+msgid "Remove"
+msgstr "Quitar"
+
+msgid "No tiers: everyone accrues the base days."
+msgstr "Sin tramos: todas las personas devengan los días base."
+
+#
+msgid "Add tier"
+msgstr "Agregar tramo"
+
+#
+msgid "Types are deactivated, never deleted: the history depends on them."
+msgstr ""
+"Los tipos se desactivan, nunca se borran: el historial depende de ellos."
+
+#
+msgid "List of leave types"
+msgstr "Lista de tipos de ausencia"
+
+msgid "Days per year"
+msgstr "Días por año"
+
+msgid "Notice"
+msgstr "Preaviso"
+
+#
+msgid "Retroactive"
+msgstr "Retroactivo"
+
+msgid "Approval"
+msgstr "Aprobación"
+
+msgid "Sensitive"
+msgstr "Sensible"
+
+#, python-format
+msgid "%(days)s d"
+msgstr "%(days)s d"
+
+#
+msgid "Required"
+msgstr "Requerida"
+
+msgid "Automatic"
+msgstr "Automática"
+
+#
+msgid "No leave types defined."
+msgstr "No hay tipos de ausencia definidos."
+
+#
+msgid "You cannot request leave without a live contract."
+msgstr "No puede solicitar ausencias sin un contrato vigente."
+
+#
+msgid "That leave type is no longer available."
+msgstr "Ese tipo de ausencia ya no está disponible."
+
+msgid "You already have leave requested for those dates."
+msgstr "Ya tiene una ausencia solicitada para esas fechas."
+
+msgid "That type requires more advance notice."
+msgstr "Ese tipo exige más días de preaviso."
+
+#
+msgid "The base days cannot exceed a seniority tier."
+msgstr "Los días base no pueden superar un tramo por antigüedad."
+
+msgid "A tier cannot grant fewer days than the base of the type."
+msgstr "Un tramo no puede otorgar menos días que la base del tipo."
+
+msgid "A tier cannot grant fewer days than a lower seniority tier."
+msgstr "Un tramo no puede otorgar menos días que un tramo de menor antigüedad."
+
+msgid "A tier cannot grant more days than a higher seniority tier."
+msgstr "Un tramo no puede otorgar más días que un tramo de mayor antigüedad."
+
+#
+#
+msgid "That type cannot be registered that long after it started."
+msgstr "Ese tipo no se puede registrar tanto tiempo después de iniciado."
+
+msgid "There are no working days in that range."
+msgstr "No hay días hábiles en ese rango."
+
+#
+msgid "That request can no longer change to that state."
+msgstr "Esa solicitud ya no puede pasar a ese estado."
+
+msgid "That request is not yours to change."
+msgstr "Esa solicitud no le corresponde modificarla."
+
+#
+msgid "You cannot decide on that request."
+msgstr "Usted no puede decidir sobre esa solicitud."
+
+msgid "Only an approver can cancel an approved leave."
+msgstr "Solo quien aprueba puede cancelar una ausencia aprobada."
+
+#
+msgid "There is not enough balance for those days."
+msgstr "No hay saldo suficiente para esos días."
+
+#
+msgid "Rejecting a request requires a reason."
+msgstr "Rechazar una solicitud exige un motivo."
+
+#
+msgid "That leave already started: it cannot be cancelled."
+msgstr "Esa ausencia ya empezó: no se puede cancelar."
+
+#
+msgid "An adjustment requires a reason."
+msgstr "Un ajuste exige un motivo."
+
+msgid "You cannot adjust your own leave balance."
+msgstr "No puede ajustar su propio saldo de ausencias."
+
+#
+msgid "Leave request submitted."
+msgstr "Solicitud de ausencia enviada."
+
+#
+msgid "Leave request approved."
+msgstr "Solicitud de ausencia aprobada."
+
+#
+msgid "Leave request rejected."
+msgstr "Solicitud de ausencia rechazada."
+
+#
+msgid "Leave request cancelled."
+msgstr "Solicitud de ausencia cancelada."
+
+#
+msgid "Leave type created."
+msgstr "Tipo de ausencia creado."
+
+#
+msgid "Leave type updated."
+msgstr "Tipo de ausencia actualizado."
+
+msgid "Seniority tier added."
+msgstr "Tramo por antigüedad agregado."
+
+msgid "Seniority tier removed."
+msgstr "Tramo por antigüedad quitado."
+
+msgid "Remove seniority tier"
+msgstr "Quitar tramo por antigüedad"
+
+msgid "From the next accrual, that seniority receives the previous tier."
+msgstr "Desde el próximo devengo, esa antigüedad recibe el tramo anterior."
+
+msgid "Days already accrued do not change: they are in the ledger."
+msgstr "Los días ya devengados no cambian: están en el libro."
+
+msgid "Remove tier"
+msgstr "Quitar tramo"
+
+#
+msgid "Balance adjusted."
+msgstr "Saldo ajustado."
+
+msgid "For example G05."
+msgstr "Por ejemplo G05."
+
+msgid "level"
+msgstr "nivel"
+
+msgid "Hierarchical order; higher means more senior."
+msgstr "Orden jerárquico; un número mayor indica más responsabilidad."
+
+msgid "minimum salary"
+msgstr "salario mínimo de la banda"
+
+msgid "maximum salary"
+msgstr "salario máximo de la banda"
+
+msgid "ISO 4217 code."
+msgstr "Código ISO 4217."
+
+msgid "job grade"
+msgstr "grado salarial"
+
+msgid "job grades"
+msgstr "grados salariales"
+
+msgid "The minimum salary must be greater than zero."
+msgstr "El salario mínimo de la banda debe ser mayor que cero."
+
+msgid "The maximum salary cannot be lower than the minimum salary."
+msgstr "El salario máximo de la banda no puede ser menor que el mínimo."
+
+msgid "The area this position belongs to."
+msgstr "Área a la que pertenece este puesto."
+
+msgid "Determines the salary band. It is not stored here."
+msgstr "Determina la banda salarial. No se guarda aquí."
+
+msgid "Unique across the whole organization."
+msgstr "Único en toda la organización."
+
+msgid "Unique within the department."
+msgstr "Único dentro del departamento."
+
+msgid "description"
+msgstr "descripción"
+
+msgid "Role profile. Specific to this department."
+msgstr "Perfil del puesto. Específico de este departamento."
+
+msgid "positions"
+msgstr "puestos"
+
+msgid "That department already has a position with this title."
+msgstr "Ese departamento ya tiene un puesto con ese nombre."
+
+msgid "Job grade"
+msgstr "Grado salarial"
+
+msgid "The salary band is confidential."
+msgstr "La banda salarial es confidencial."
+
+msgid "Role profile"
+msgstr "Perfil del puesto"
+
+msgid "Edit position"
+msgstr "Editar puesto"
+
+msgid "New position"
+msgstr "Nuevo puesto"
+
+msgid "New job grade"
+msgstr "Nuevo grado salarial"
+
+msgid "Job grades"
+msgstr "Grados salariales"
+
+msgid "Salary bands are confidential information."
+msgstr "Las bandas salariales son información confidencial."
+
+msgid "List of job grades"
+msgstr "Lista de grados salariales"
+
+msgid "Level"
+msgstr "Nivel"
+
+msgid "Minimum"
+msgstr "Mínimo"
+
+msgid "No job grades defined."
+msgstr "No hay grados salariales definidos."
+
+#, python-format
+msgid "%(counter)s position"
+msgid_plural "%(counter)s positions"
+msgstr[0] "%(counter)s puesto"
+msgstr[1] "%(counter)s puestos"
+
+msgid "Search by title"
+msgstr "Buscar por nombre del puesto"
+
+msgid "List of positions"
+msgstr "Lista de puestos"
+
+msgid "No positions found."
+msgstr "No se encontraron puestos."
+
+msgid "Position created."
+msgstr "Puesto creado."
+
+msgid "Position updated."
+msgstr "Puesto actualizado."
+
+msgid "Deactivate position"
+msgstr "Desactivar puesto"
+
+msgid "The position can no longer be assigned in a contract."
+msgstr "El puesto ya no podrá asignarse en un contrato."
+
+msgid "It only works if it has no current or scheduled assignments."
+msgstr "Solo funciona si no tiene asignaciones vigentes ni programadas."
+
+msgid "The position has current assignments."
+msgstr "El puesto tiene asignaciones vigentes."
+
+msgid "Position deactivated."
+msgstr "Puesto desactivado."
+
+msgid "Job grade created."
+msgstr "Grado salarial creado."
+
+msgid "Reports"
+msgstr "Reportes"
+
+#
+msgid "Expected hours"
+msgstr "Horas esperadas"
+
+#
+msgid "Worked hours"
+msgstr "Horas trabajadas"
+
+#
+msgid "Difference"
+msgstr "Diferencia"
+
+#
+msgid "Late arrivals"
+msgstr "Tardanzas"
+
+#
+msgid "Absences"
+msgstr "Ausencias"
+
+#
+msgid "Contract start"
+msgstr "Inicio del contrato"
+
+#
+msgid "Contract end"
+msgstr "Fin del contrato"
+
+#, python-format
+msgid "%(count)s people"
+msgstr "%(count)s personas"
+
+#, python-format
+msgid "%(count)s ending"
+msgstr "%(count)s por terminar"
+
+#
+msgid "current"
+msgstr "vigente"
+
+#, python-format
+msgid "%(count)s documents"
+msgstr "%(count)s documentos"
+
+#, python-format
+msgid "%(count)s in the period"
+msgstr "%(count)s en el período"
+
+#
+msgid "Attendance by period"
+msgstr "Asistencia por período"
+
+msgid "Worked and expected hours, late arrivals and absences per person."
+msgstr "Horas trabajadas y esperadas, tardanzas y ausencias por persona."
+
+#
+msgid "Leave and balances"
+msgstr "Ausencias y saldos"
+
+msgid "Requests in the period and the balance of each leave type."
+msgstr "Solicitudes del período y el saldo de cada tipo de ausencia."
+
+#
+msgid "Headcount and contracts"
+msgstr "Plantilla y contratos"
+
+msgid "Active people, their contract and what expires in the period."
+msgstr "Personas activas, su contrato y lo que vence en el período."
+
+#
+#
+#
+msgid "Files and expiries"
+msgstr "Expedientes y vencimientos"
+
+msgid "Documents on file and those expiring in the period."
+msgstr "Documentos del expediente y los que vencen en el período."
+
+msgid "All within my scope"
+msgstr "Todo lo que puedo ver"
+
+#
+#, python-format
+msgid "The range cannot exceed %(days)s days."
+msgstr "El rango no puede superar los %(days)s días."
+
+#, python-format
+msgid ""
+"Only the first %(shown)s rows are shown. Export to Excel to see them all."
+msgstr ""
+"Solo se muestran las primeras %(shown)s filas. Exporte a Excel para verlas "
+"todas."
+
+#, python-format
+msgid "Generated by %(actor)s on %(moment)s"
+msgstr "Generado por %(actor)s el %(moment)s"
+
+msgid "Internal document: it contains personal data of the organisation."
+msgstr "Documento interno: contiene datos personales de la organización."
+
+#, python-format
+msgid "Page %(number)s"
+msgstr "Página %(number)s"
+
+#, python-format
+msgid "Generated on %(moment)s"
+msgstr "Generado el %(moment)s"
+
+msgid "The report was cut: only the first rows are included."
+msgstr "El reporte se recortó: solo se incluyen las primeras filas."
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Export to Excel"
+msgstr "Exportar a Excel"
+
+msgid "PDF with QR"
+msgstr "PDF con QR"
+
+msgid "Generate"
+msgstr "Generar"
+
+#
+msgid "Result"
+msgstr "Resultado"
+
+#, python-format
+msgid "%(rows)s row"
+msgid_plural "%(rows)s rows"
+msgstr[0] "%(rows)s fila"
+msgstr[1] "%(rows)s filas"
+
+msgid ""
+"The report exceeded the maximum number of rows and was cut: narrow the range "
+"or the department."
+msgstr ""
+"El reporte superó el máximo de filas y se cortó: acote el rango o el "
+"departamento."
+
+msgid "Nothing to show with those filters."
+msgstr "No hay nada que mostrar con esos filtros."
+
+#, python-format
+msgid "Only the first %(shown)s rows are shown. Export to see them all."
+msgstr ""
+"Solo se muestran las primeras %(shown)s filas. Exporte para verlas todas."
+
+msgid ""
+"Every report shows only the people within your scope, and every export is "
+"recorded."
+msgstr ""
+"Cada reporte muestra únicamente a las personas que usted puede ver, y toda "
+"exportación queda registrada."
+
+msgid "Available reports"
+msgstr "Reportes disponibles"
+
+#
+#
+msgid "There is no report available for your role."
+msgstr "No hay ningún reporte disponible para su rol."
+
+msgid "Spanish (Guatemala)"
+msgstr "Español (Guatemala)"
+
+msgid "English"
+msgstr "Inglés"
+
+msgid "Skip to main content"
+msgstr "Saltar al contenido principal"
+
+msgid "About this system"
+msgstr "Acerca de este sistema"
+
+msgid "People, contracts and salaries in one secure place."
+msgstr "Personas, contratos y salarios en un solo lugar seguro."
+
+msgid "Employee records with protected personal data"
+msgstr "Fichas de empleados con datos personales protegidos"
+
+msgid "Contracts, salaries and positions with full history"
+msgstr "Contratos, salarios y puestos con historial completo"
+
+msgid "Every sensitive action is audited"
+msgstr "Cada acción sensible queda auditada"
+
+msgid "Access is restricted to authorized personnel."
+msgstr "Acceso restringido al personal autorizado."
+
+msgid "Sign In"
+msgstr "Iniciar sesión"
+
+msgid "Use the work email address registered by Human Resources."
+msgstr "Use el correo laboral registrado por Recursos Humanos."
+
+msgid "Forgot your password?"
+msgstr "¿Olvidó su contraseña?"
+
+msgid "Hide"
+msgstr "Ocultar"
+
+msgid ""
+"Accounts are created by Human Resources. If you need access, ask HR for an "
+"invitation."
+msgstr ""
+"Las cuentas las crea Recursos Humanos. Si necesita acceso, solicite una "
+"invitación a RR. HH."
+
+msgid "Bad request"
+msgstr "Solicitud no válida"
+
+msgid ""
+"The request could not be processed. Please check the data and try again."
+msgstr ""
+"No se pudo procesar la solicitud. Revise los datos e inténtelo de nuevo."
+
+msgid "Back to home"
+msgstr "Volver al inicio"
+
+msgid "Access denied"
+msgstr "Acceso denegado"
+
+msgid "You do not have permission to perform this action."
+msgstr "No tiene permiso para realizar esta acción."
+
+msgid "Not found"
+msgstr "Página no encontrada"
+
+msgid "The page you are looking for does not exist."
+msgstr "La página que busca no existe."
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Change"
+msgstr "Cambiar"
+
+msgid "Menu"
+msgstr "Menú"
+
+msgid "Main navigation"
+msgstr "Navegación principal"
+
+msgid "People"
+msgstr "Personas"
+
+msgid "Organization"
+msgstr "Organización"
+
+msgid "Administration"
+msgstr "Administración"
+
+msgid "Technical administration"
+msgstr "Administración técnica"
+
+msgid "Pagination"
+msgstr "Paginación"
+
+#, python-format
+msgid "Page %(current)s of %(total)s"
+msgstr "Página %(current)s de %(total)s"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "Restricted information"
+msgstr "Información restringida"

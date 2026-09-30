@@ -1,0 +1,4 @@
+{% load i18n %}{% comment %}
+  Bloque de información restringida. Es PRESENTACIÓN: el dato no llega a la
+  plantilla (lo filtra el selector), aquí solo se explica por qué no se ve.
+{% endcomment %}<span class="restricted">{% include "includes/icon.html" with name="lock" %}<span>{% if message %}{{ message }}{% else %}{% translate "Restricted information" %}{% endif %}</span></span>

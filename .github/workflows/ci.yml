@@ -1,0 +1,161 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_DEFAULT: "3.14"
+
+jobs:
+  lint:
+    name: Lint y formato
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_DEFAULT }}
+          cache: pip
+      - run: pip install -r requirements/development.txt
+      - run: ruff check --output-format=github .
+      - run: ruff format --check .
+
+  security:
+    name: Seguridad estática y dependencias
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_DEFAULT }}
+          cache: pip
+      - run: pip install -r requirements/development.txt
+      # Falla ante hallazgos de severidad media o alta.
+      - run: bandit -c pyproject.toml -r apps config -ll
+      - run: pip-audit --strict --progress-spinner off
+      # `scan --baseline` REESCRIBE la línea base y siempre sale con 0: nunca
+      # bloqueaba nada (revisión de la Fase 4, H-6). El hook sí falla ante un
+      # secreto que no esté auditado en la línea base.
+      - run: git ls-files -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline
+
+  django-checks:
+    name: Checks de Django y migraciones
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_DEFAULT }}
+          cache: pip
+      - run: pip install -r requirements/development.txt
+      - run: python manage.py check
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings.testing
+      # Debe salir SIN advertencias, no solo sin errores (§K.1).
+      - name: check --deploy con settings de producción
+        run: python manage.py check --deploy --fail-level WARNING
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings.production
+          SECRET_KEY: ${{ secrets.CI_DUMMY_SECRET_KEY || 'ci-only-placeholder-with-enough-entropy-to-pass-the-length-check-0123456789' }}
+          ALLOWED_HOSTS: rrhh.example.com
+          EMAIL_HOST: smtp.example.com
+      - name: No hay modelos sin migración
+        run: python manage.py makemigrations --check --dry-run
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings.testing
+      - name: Las migraciones aplican sobre una base vacía
+        run: python manage.py migrate --noinput
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings.development
+
+  i18n:
+    name: Catálogos de traducción
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_DEFAULT }}
+          cache: pip
+      - run: sudo apt-get update && sudo apt-get install -y gettext
+      - run: pip install -r requirements/development.txt
+      - name: Extraer cadenas
+        run: |
+          mkdir -p locale
+          python manage.py makemessages --locale es_GT --locale en --ignore=.venv --no-obsolete
+          python manage.py makemessages --locale es_GT --locale en --domain djangojs --ignore=.venv --no-obsolete
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings.development
+      # Si el diff no está vacío, hay texto nuevo sin extraer al catálogo (§O.8).
+      - name: Sin cadenas pendientes de extraer
+        run: git diff --exit-code -- locale/ || (echo "::error::Hay cadenas nuevas sin extraer. Ejecuta makemessages y traduce." && exit 1)
+      - name: Catálogo es_GT sin huecos ni fuzzy
+        run: python scripts/check_translations.py
+
+  test-sqlite:
+    name: Pruebas (SQLite)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 3.12 es el mínimo declarado en pyproject; probar ambos extremos impide
+        # que se cuele sintaxis exclusiva de la versión más nueva.
+        python-version: ["3.12", "3.14"]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: pip install -r requirements/development.txt
+      - run: pytest --cov --cov-report=term-missing --cov-report=xml
+      - name: Publicar cobertura
+        if: matrix.python-version == '3.14'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage.xml
+
+  test-postgres:
+    name: Pruebas (PostgreSQL)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: rrhh
+          POSTGRES_PASSWORD: rrhh
+          POSTGRES_DB: rrhh_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_DEFAULT }}
+          cache: pip
+      - run: pip install -r requirements/development.txt "psycopg[binary]"
+      # Detecta hoy las divergencias entre motores, no el día de la migración
+      # (ADR-003). Es especialmente relevante para DecimalField: SQLite no valida
+      # la precisión declarada y PostgreSQL sí.
+      - run: pytest -q
+        env:
+          DATABASE_URL: postgres://rrhh:rrhh@localhost:5432/rrhh_test
+
+  gate:
+    name: Todo verde
+    runs-on: ubuntu-latest
+    needs: [lint, security, django-checks, i18n, test-sqlite, test-postgres]
+    steps:
+      - run: echo "Todas las comprobaciones pasaron."

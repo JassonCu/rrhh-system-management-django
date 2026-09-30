@@ -1,0 +1,63 @@
+{% extends "account/base_entrance.html" %}
+{% load i18n %}
+{% comment %}
+  Sustituye a la plantilla de allauth:
+  - quita la invitación a registrarse (el registro está cerrado, ADR-004);
+  - deja claro que se entra con el CORREO: el campo es type="email" y el
+    navegador no envía el formulario si se escribe un nombre de usuario;
+  - controla el marcado para el diseño, sin estilos ni scripts en línea (CSP).
+{% endcomment %}
+{% block title %}{% translate "Sign In" %}{% endblock %}
+
+{% block content %}
+  <header class="auth__header">
+    <h1 class="auth__title">{% translate "Sign In" %}</h1>
+    <p class="auth__subtitle">{% translate "Use the work email address registered by Human Resources." %}</p>
+  </header>
+
+  <form method="post" action="{% url 'account_login' %}" class="auth-form">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="alert alert--error" role="alert">
+        {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="field{% if form.login.errors %} field--error{% endif %}">
+      <label for="{{ form.login.id_for_label }}">{{ form.login.label }}</label>
+      {{ form.login }}
+      {% for error in form.login.errors %}
+        <p class="field__error" role="alert">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="field{% if form.password.errors %} field--error{% endif %}">
+      <div class="field__row">
+        <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+        <a class="auth__link" href="{% url 'account_reset_password' %}">{% translate "Forgot your password?" %}</a>
+      </div>
+      <div class="password-input">
+        {{ form.password }}
+        {# Oculto sin JavaScript: main.js lo muestra y lo engancha. #}
+        <button type="button" class="password-input__toggle" hidden
+                data-password-toggle="{{ form.password.id_for_label }}"
+                data-label-show="{% translate 'Show' %}"
+                data-label-hide="{% translate 'Hide' %}"
+                aria-controls="{{ form.password.id_for_label }}"
+                aria-pressed="false">{% translate "Show" %}</button>
+      </div>
+      {% for error in form.password.errors %}
+        <p class="field__error" role="alert">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    {{ redirect_field }}
+
+    <button type="submit" class="button button--primary button--block">{% translate "Sign In" %}</button>
+  </form>
+
+  <p class="auth__note">
+    {% translate "Accounts are created by Human Resources. If you need access, ask HR for an invitation." %}
+  </p>
+{% endblock %}

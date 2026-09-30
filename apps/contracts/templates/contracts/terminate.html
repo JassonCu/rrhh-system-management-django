@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Terminate contract" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'contracts:list' %}">{% translate "Contracts" %}</a></li>
+      <li><a href="{% url 'contracts:detail' contract.public_id %}">{{ contract.employee.employee_code }}</a></li>
+      <li aria-current="page">{% translate "Terminate contract" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Terminate contract" %}</h1>
+      <p class="page-header__meta">{{ contract.employee.person.full_name }} · {{ contract.employee.employee_code }}</p>
+    </div>
+  </header>
+
+  {% comment %} Patrón de confirmación (plan UX/UI §5): página propia, consecuencias en
+     lista y botón con verbo explícito. Formulario POST con CSRF, sin modales. {% endcomment %}
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    <div class="alert alert--warning">
+      <p><strong>{% translate "When you confirm:" %}</strong></p>
+      <ul>
+        <li>{% translate "The contract is never deleted: it is marked as terminated and its salary and positions are closed on that date." %}</li>
+        <li>{% translate "If the employee has no other live contract, their account is deactivated and their sessions are closed." %}</li>
+        <li>{% translate "This action cannot be undone. A rehire creates a new contract." %}</li>
+      </ul>
+    </div>
+
+    <div class="mt-6">
+      {% include "includes/form_fields.html" %}
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="button button--danger">{% translate "Confirm termination" %}</button>
+      <a class="button button--ghost" href="{% url 'contracts:detail' contract.public_id %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

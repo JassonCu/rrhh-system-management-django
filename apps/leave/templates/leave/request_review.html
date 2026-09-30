@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load i18n leave_extras %}
+{% block title %}{% translate "Review your request" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'leave:my_leave' %}">{% translate "My leave" %}</a></li>
+      <li aria-current="page">{% translate "Review your request" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Review your request" %}</h1>
+      <p class="page-header__meta">
+        {{ leave_request.leave_type.name }}
+        {% include "includes/status_badge.html" with status=leave_request.status label=leave_request.get_status_display %}
+      </p>
+    </div>
+  </header>
+
+  {% include "leave/includes/stepper.html" %}
+
+  <section class="card">
+    <h2 class="card__title">{% translate "Summary" %}</h2>
+    <dl class="detail">
+      <dt>{% translate "From" %}</dt><dd>{{ leave_request.start_date }}</dd>
+      <dt>{% translate "To" %}</dt><dd>{{ leave_request.end_date }}</dd>
+      <dt>{% translate "Working days" %}</dt><dd>{{ leave_request.working_days|as_days }}</dd>
+      <dt>{% translate "Balance today" %}</dt><dd>{{ balance|as_days }}</dd>
+      {% if pending_days %}
+        <dt>{% translate "Pending in other requests" %}</dt><dd>{{ pending_days|as_days }}</dd>
+      {% endif %}
+      <dt>{% translate "Balance after approval" %}</dt>
+      <dd{% if balance_after < 0 %} class="cell-warning"{% endif %}>{{ balance_after|as_days }}</dd>
+    </dl>
+  </section>
+
+  <form method="post" novalidate class="card form-card mt-6">
+    {% csrf_token %}
+    <div class="alert alert--warning">
+      <p><strong>{% translate "When you submit:" %}</strong></p>
+      <ul>
+        <li>{% translate "It goes to your approver and you can no longer edit the dates." %}</li>
+        <li>{% translate "Those days are blocked against new overlapping requests." %}</li>
+        {% if not leave_request.leave_type.requires_approval %}
+          <li>{% translate "This type needs no approval: it is approved on submission and the days are deducted." %}</li>
+        {% endif %}
+      </ul>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Submit request" %}</button>
+      <a class="button button--ghost" href="{% url 'leave:request_cancel' leave_request.public_id %}">{% translate "Discard" %}</a>
+    </div>
+  </form>
+{% endblock %}

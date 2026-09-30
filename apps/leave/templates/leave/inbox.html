@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n leave_extras %}
+{% block title %}{% translate "Approvals" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Approvals" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Approvals" %}</h1>
+      <p class="page-header__meta">{% translate "Only requests you can decide on. Your own never appear here." %}</p>
+    </div>
+  </header>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "Leave requests awaiting your decision" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Employee" %}</th>
+          <th scope="col">{% translate "Type" %}</th>
+          <th scope="col">{% translate "From" %}</th>
+          <th scope="col">{% translate "To" %}</th>
+          <th scope="col">{% translate "Working days" %}</th>
+          <th scope="col">{% translate "Balance" %}</th>
+          <th scope="col"><span class="visually-hidden">{% translate "Actions" %}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          <tr>
+            <td class="cell-strong">{{ row.leave_request.employee.person.full_name }}</td>
+            <td>{{ row.leave_request.leave_type.name }}</td>
+            <td>{{ row.leave_request.start_date }}</td>
+            <td>{{ row.leave_request.end_date }}</td>
+            <td>{{ row.leave_request.working_days|as_days }}</td>
+            <td{% if row.balance < row.leave_request.working_days %} class="cell-warning"{% endif %}>{{ row.balance|as_days }}</td>
+            <td>
+              <a href="{% url 'leave:request_approve' row.leave_request.public_id %}">{% translate "Approve" %}</a> ·
+              <a href="{% url 'leave:request_reject' row.leave_request.public_id %}">{% translate "Reject" %}</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="7">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "Nothing awaits your decision." %}</p>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

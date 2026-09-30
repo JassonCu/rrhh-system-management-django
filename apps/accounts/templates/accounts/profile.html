@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "My profile" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "My profile" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "My profile" %}</h1>
+      <p class="page-header__meta">{{ user.email }}</p>
+    </div>
+    <div class="page-header__actions">
+      <a class="button button--secondary" href="{% url 'account_change_password' %}">
+        {% include "includes/icon.html" with name="lock" %}<span>{% translate "Change password" %}</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="grid grid--2">
+    <section class="card" aria-labelledby="account-title">
+      <h2 class="card__title" id="account-title">{% translate "Account" %}</h2>
+      <dl class="detail mt-6">
+        <dt>{% translate "Email address" %}</dt>
+        <dd>{{ user.email }}</dd>
+        <dt>{% translate "Roles" %}</dt>
+        <dd>
+          {% for group in user.groups.all %}<span class="badge badge--neutral">{{ group.name }}</span> {% empty %}<span class="list__muted">{% translate "No roles assigned" %}</span>{% endfor %}
+        </dd>
+      </dl>
+    </section>
+
+    <section class="card" aria-labelledby="preferences-title">
+      <h2 class="card__title" id="preferences-title">{% translate "Preferences" %}</h2>
+      <form method="post" novalidate class="mt-6">
+        {% csrf_token %}
+        {% include "includes/form_fields.html" %}
+        <div class="form-actions">
+          <button type="submit" class="button button--primary">{% translate "Save preferences" %}</button>
+        </div>
+      </form>
+    </section>
+  </div>
+{% endblock %}

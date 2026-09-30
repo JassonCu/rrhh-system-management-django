@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}
+  {% if company %}{% translate "Edit company" %}{% else %}{% translate "New company" %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'departments:company_list' %}">{% translate "Companies" %}</a></li>
+      <li aria-current="page">
+        {% if company %}{% translate "Edit" %}{% else %}{% translate "New company" %}{% endif %}
+      </li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1 class="page-header__title">
+      {% if company %}{% translate "Edit company" %}{% else %}{% translate "New company" %}{% endif %}
+    </h1>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" %}
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Save" %}</button>
+      <a class="button button--ghost" href="{% url 'departments:company_list' %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

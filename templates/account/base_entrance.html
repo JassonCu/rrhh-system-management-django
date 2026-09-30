@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% comment %}
+  Diseño de las pantallas de entrada (login, recuperar contraseña, verificar
+  correo): panel de marca + tarjeta, sin la estructura de la aplicación. Todas las
+  plantillas de allauth que heredan de aquí lo reciben sin cambios. Sin estilos
+  en línea: todo vive en main.css.
+{% endcomment %}
+{% block body_class %}auth-body{% endblock %}
+
+{% block body %}
+  <a class="skip-link" href="#main">{% translate "Skip to main content" %}</a>
+
+  <main id="main" class="auth">
+    <section class="auth__brand" aria-label="{% translate 'About this system' %}">
+      <div class="auth__brand-inner">
+        <p class="auth__product">
+          <img class="auth__logo" src="{% static 'img/brand/ceiba-mark.svg' %}" alt="" width="44" height="44">
+          <span>{{ PRODUCT_NAME }}</span>
+        </p>
+        <p class="auth__headline">{% translate "People, contracts and salaries in one secure place." %}</p>
+        <ul class="auth__features">
+          <li>{% translate "Employee records with protected personal data" %}</li>
+          <li>{% translate "Contracts, salaries and positions with full history" %}</li>
+          <li>{% translate "Every sensitive action is audited" %}</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="auth__panel">
+      <div class="auth__toolbar">{% include "includes/language_selector.html" %}</div>
+      <div class="auth__card">
+        {% include "includes/messages.html" %}
+        {% block content %}{% endblock %}
+      </div>
+      <p class="auth__legal">{% translate "Access is restricted to authorized personnel." %}</p>
+    </section>
+  </main>
+{% endblock %}

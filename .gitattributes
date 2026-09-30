@@ -1,0 +1,11 @@
+# Normaliza los finales de línea: el equipo es mixto Windows/Linux y el CI corre
+# en Linux. Sin esto, ruff format y pre-commit discrepan entre máquinas.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.ico binary
+*.mo binary

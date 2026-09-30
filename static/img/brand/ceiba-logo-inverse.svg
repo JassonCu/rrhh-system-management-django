@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232 64" role="img" aria-labelledby="ceiba-inverse-title">
+  <title id="ceiba-inverse-title">Ceiba RH</title>
+  <!-- Versión para fondos oscuros (jade-900 o fotografía). -->
+  <rect width="64" height="64" rx="15" fill="#FFFFFF"/>
+  <path d="M19 52h26" stroke="#0F6E5C" stroke-width="4" stroke-linecap="round"/>
+  <path d="M32 50V21M32 36L19 25M32 36l13-11" fill="none" stroke="#0F6E5C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="18" cy="22" r="5.5" fill="#0F6E5C"/>
+  <circle cx="46" cy="22" r="5.5" fill="#0F6E5C"/>
+  <circle cx="32" cy="15" r="6.5" fill="#E8A92B"/>
+  <text x="80" y="42" font-family="system-ui, 'Segoe UI', Roboto, Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="-0.5" fill="#FFFFFF">ceiba<tspan dx="8" font-size="15" font-weight="700" letter-spacing="1.5" fill="#E8A92B">RH</tspan></text>
+</svg>

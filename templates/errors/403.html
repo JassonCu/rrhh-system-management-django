@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Access denied" %}{% endblock %}
+{% block content %}
+  <section class="error-page">
+    <span class="error-page__icon">{% include "includes/icon.html" with name="lock" %}</span>
+    <p class="error-page__code">403</p>
+    <h1>{% translate "Access denied" %}</h1>
+    {# Mensaje deliberadamente genérico: no confirma qué recurso existe (§K.6). #}
+    <p>{% translate "You do not have permission to perform this action." %}</p>
+    <a class="button button--primary" href="{% url 'dashboard:home' %}">{% translate "Back to home" %}</a>
+  </section>
+{% endblock %}

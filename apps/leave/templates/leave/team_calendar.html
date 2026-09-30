@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Leave calendar" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Leave calendar" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Leave calendar" %}</h1>
+      <p class="page-header__meta">{{ start }} — {{ end }}</p>
+    </div>
+    <div class="page-header__actions">
+      <a class="button button--ghost" href="?from={{ previous|date:'Y-m-d' }}">{% translate "Earlier" %}</a>
+      <a class="button button--ghost" href="?from={{ next|date:'Y-m-d' }}">{% translate "Later" %}</a>
+    </div>
+  </header>
+
+  {% comment %} Los tipos sensibles (salud, duelo) se muestran como ausencia
+     genérica a terceros: el selector decide, la plantilla solo pinta. {% endcomment %}
+  <div class="table-scroll">
+    <table class="calendar">
+      <caption class="visually-hidden">{% translate "Who is away on each day" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Employee" %}</th>
+          {% for day in days %}
+            <th scope="col" class="calendar__day{% if day.weekday >= 5 %} calendar__day--weekend{% endif %}">{{ day|date:"D d/m" }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          <tr>
+            <th scope="row" class="cell-strong">{{ row.employee.person.full_name }}</th>
+            {% for cell in row.cells %}
+              <td class="calendar__cell{% if cell.day.weekday >= 5 %} calendar__cell--weekend{% endif %}{% if cell.entry %} calendar__cell--away{% endif %}">
+                {% if cell.entry %}
+                  <span class="visually-hidden">
+                    {% if cell.entry.label %}{{ cell.entry.label }}{% else %}{% translate "Away" %}{% endif %}
+                  </span>
+                  <span aria-hidden="true" title="{% if cell.entry.label %}{{ cell.entry.label }}{% else %}{% translate 'Away' %}{% endif %}">●</span>
+                {% endif %}
+              </td>
+            {% endfor %}
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="{{ days|length|add:1 }}">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="calendar" %}
+                <p>{% translate "Nobody is away in this window." %}</p>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

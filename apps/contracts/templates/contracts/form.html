@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      {% if contract %}
+        <li><a href="{% url 'contracts:list' %}">{% translate "Contracts" %}</a></li>
+        <li><a href="{% url 'contracts:detail' contract.public_id %}">{{ contract.employee.employee_code }}</a></li>
+      {% elif subject %}
+        <li><a href="{% url 'employees:list' %}">{% translate "Employees" %}</a></li>
+        <li><a href="{% url 'employees:detail' subject.public_id %}">{{ subject.employee_code }}</a></li>
+      {% endif %}
+      <li aria-current="page">{{ title }}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{{ title }}</h1>
+      {% if subject %}
+        <p class="page-header__meta">{{ subject.person.full_name }} · {{ subject.employee_code }}</p>
+      {% elif contract %}
+        <p class="page-header__meta">{{ contract.employee.person.full_name }} · {{ contract.employee.employee_code }}</p>
+      {% endif %}
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" %}
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Save" %}</button>
+      {% if contract %}
+        <a class="button button--ghost" href="{% url 'contracts:detail' contract.public_id %}">{% translate "Cancel" %}</a>
+      {% elif subject %}
+        <a class="button button--ghost" href="{% url 'employees:detail' subject.public_id %}">{% translate "Cancel" %}</a>
+      {% endif %}
+    </div>
+  </form>
+{% endblock %}

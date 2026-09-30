@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Add document" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'employees:list' %}">{% translate "Employees" %}</a></li>
+      <li><a href="{% url 'employees:detail' employee.public_id %}">{{ employee.employee_code }}</a></li>
+      <li aria-current="page">{% translate "Add document" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Add document" %}</h1>
+      <p class="page-header__meta">{{ employee.employee_code }} · {{ employee.person.full_name }}</p>
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" %}
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Save" %}</button>
+      <a class="button button--ghost" href="{% url 'employees:detail' employee.public_id %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

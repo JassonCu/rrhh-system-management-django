@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load i18n attendance_extras %}
+{% block title %}{% translate "Attendance incidents" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Attendance incidents" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Attendance incidents" %}</h1>
+      <p class="page-header__meta">{% translate "Overtime counts for payroll only once it is justified." %}</p>
+    </div>
+  </header>
+
+  <form method="get" class="toolbar">
+    <div class="field">
+      <label for="status">{% translate "Status" %}</label>
+      <select id="status" name="status">
+        <option value="">{% translate "All" %}</option>
+        <option value="OPEN" {% if status == "OPEN" %}selected{% endif %}>{% translate "Open" %}</option>
+        <option value="JUSTIFIED" {% if status == "JUSTIFIED" %}selected{% endif %}>{% translate "Justified" %}</option>
+        <option value="REJECTED" {% if status == "REJECTED" %}selected{% endif %}>{% translate "Rejected" %}</option>
+      </select>
+    </div>
+    <button type="submit" class="button button--secondary">{% translate "Filter" %}</button>
+  </form>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "List of attendance incidents" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Employee" %}</th>
+          <th scope="col">{% translate "Date" %}</th>
+          <th scope="col">{% translate "Type" %}</th>
+          <th scope="col">{% translate "Time" %}</th>
+          <th scope="col">{% translate "Status" %}</th>
+          <th scope="col"><span class="visually-hidden">{% translate "Actions" %}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for incident in page %}
+          <tr>
+            <td class="cell-strong">
+              <a href="{% url 'employees:detail' incident.employee.public_id %}">{{ incident.employee.person.full_name }}</a>
+            </td>
+            <td>{{ incident.work_date }}</td>
+            <td>{{ incident.get_incident_type_display }}</td>
+            <td>{{ incident.minutes|as_hours }}</td>
+            <td>{% include "includes/status_badge.html" with status=incident.status label=incident.get_status_display %}</td>
+            <td class="cell-actions">
+              {% if incident.is_open and perms.attendance.change_attendanceincident %}
+                <a class="button button--secondary button--sm" href="{% url 'attendance:incident_resolve' incident.pk %}">{% translate "Resolve" %}</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="6">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "No incidents found." %}</p>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

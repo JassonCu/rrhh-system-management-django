@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Upload document" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'employees:detail' employee.public_id %}">{{ employee.person.full_name }}</a></li>
+      <li aria-current="page">{% translate "Upload document" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Upload document" %}</h1>
+      <p class="page-header__meta">{{ employee.person.full_name }} · {{ employee.employee_code }}</p>
+    </div>
+  </header>
+
+  {% comment %} Los límites se muestran **antes** de elegir el archivo, no en el
+     mensaje de error (patrón UX §4.1). {% endcomment %}
+  <section class="card" aria-labelledby="limits-title">
+    <h2 class="card__title" id="limits-title">{% translate "What each type accepts" %}</h2>
+    <ul class="list">
+      {% for type in types %}
+        <li>
+          <span>
+            {{ type.name }}<br>
+            <span class="list__muted">
+              {% blocktranslate with formats=type.allowed_extensions size=type.max_size_mb %}Formats: {{ formats }} · Maximum: {{ size }} MB{% endblocktranslate %}
+              {% if type.requires_expiry %} · {% translate "requires an expiry date" %}{% endif %}
+            </span>
+          </span>
+          {% if type.is_sensitive %}
+            <span class="badge badge--warning">{% translate "Confidential" %}</span>
+          {% endif %}
+        </li>
+      {% empty %}
+        <li class="list__muted">{% translate "There is no document type you can upload." %}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <form method="post" enctype="multipart/form-data" novalidate class="card form-card mt-6">
+    {% csrf_token %}
+    <div>{% include "includes/form_fields.html" %}</div>
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Upload document" %}</button>
+      <a class="button button--ghost" href="{{ cancel_url }}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

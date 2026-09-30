@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Employees" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Employees" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Employees" %}</h1>
+      <p class="page-header__meta">{% blocktranslate count counter=page.paginator.count %}{{ counter }} employee{% plural %}{{ counter }} employees{% endblocktranslate %}</p>
+    </div>
+    {% if perms.employees.add_employee %}
+      <div class="page-header__actions">
+        <a class="button button--primary" href="{% url 'employees:create' %}">
+          {% include "includes/icon.html" with name="plus" %}<span>{% translate "New employee" %}</span>
+        </a>
+      </div>
+    {% endif %}
+  </header>
+
+  <form method="get" role="search" class="toolbar">
+    <div class="field">
+      <label for="search">{% translate "Search by name or code" %}</label>
+      <input type="search" id="search" name="q" value="{{ query }}">
+    </div>
+    <div class="field">
+      <label for="status">{% translate "Status" %}</label>
+      <select id="status" name="status">
+        <option value="">{% translate "All" %}</option>
+        <option value="ACTIVE" {% if status == "ACTIVE" %}selected{% endif %}>{% translate "Active" %}</option>
+        <option value="ON_LEAVE" {% if status == "ON_LEAVE" %}selected{% endif %}>{% translate "On leave" %}</option>
+        <option value="SUSPENDED" {% if status == "SUSPENDED" %}selected{% endif %}>{% translate "Suspended" %}</option>
+        <option value="TERMINATED" {% if status == "TERMINATED" %}selected{% endif %}>{% translate "Terminated" %}</option>
+      </select>
+    </div>
+    <button type="submit" class="button button--secondary">
+      {% include "includes/icon.html" with name="search" %}<span>{% translate "Search" %}</span>
+    </button>
+  </form>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "List of employees" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Code" %}</th>
+          <th scope="col">{% translate "Name" %}</th>
+          <th scope="col">{% translate "Hire date" %}</th>
+          <th scope="col">{% translate "Status" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for employee in page %}
+          <tr>
+            <td class="cell-strong"><a href="{% url 'employees:detail' employee.public_id %}">{{ employee.employee_code }}</a></td>
+            {% comment %} El listado NUNCA muestra PII sensible: ni DPI ni fecha de
+               nacimiento. Ver que alguien existe no requiere ver su documento. {% endcomment %}
+            <td>{{ employee.person.full_name }}</td>
+            <td class="cell-muted">{{ employee.hire_date }}</td>
+            <td>{% include "includes/status_badge.html" with status=employee.employment_status label=employee.get_employment_status_display %}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "No employees found." %}</p>
+                {% if perms.employees.add_employee and not query and not status %}
+                  <a class="button button--primary button--sm" href="{% url 'employees:create' %}">{% translate "New employee" %}</a>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

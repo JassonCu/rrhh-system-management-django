@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}
+  {% if position %}{% translate "Edit position" %}{% else %}{% translate "New position" %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'positions:list' %}">{% translate "Positions" %}</a></li>
+      {% if position %}
+        <li><a href="{% url 'positions:detail' position.pk %}">{{ position.code }}</a></li>
+        <li aria-current="page">{% translate "Edit" %}</li>
+      {% else %}
+        <li aria-current="page">{% translate "New position" %}</li>
+      {% endif %}
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1 class="page-header__title">
+      {% if position %}{% translate "Edit position" %}{% else %}{% translate "New position" %}{% endif %}
+    </h1>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" %}
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Save" %}</button>
+      <a class="button button--ghost" href="{% if position %}{% url 'positions:detail' position.pk %}{% else %}{% url 'positions:list' %}{% endif %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load i18n leave_extras %}
+{% block title %}{% translate "Dates" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'leave:my_leave' %}">{% translate "My leave" %}</a></li>
+      <li><a href="{% url 'leave:request_start' %}">{% translate "Request leave" %}</a></li>
+      <li aria-current="page">{% translate "Dates" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{{ leave_type.name }}</h1>
+      <p class="page-header__meta">
+        {% blocktranslate with days=balance|as_days %}Available balance: {{ days }} days{% endblocktranslate %}
+        {% if leave_type.min_notice_days %}
+          · {% blocktranslate with notice=leave_type.min_notice_days %}Requires {{ notice }} days of notice{% endblocktranslate %}
+        {% endif %}
+        {% if leave_type.max_backdating_days %}
+          · {% blocktranslate with days=leave_type.max_backdating_days %}Can be registered up to {{ days }} days after it started{% endblocktranslate %}
+        {% endif %}
+      </p>
+    </div>
+  </header>
+
+  {% include "leave/includes/stepper.html" %}
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    <p class="list__muted">
+      {% translate "Working days are counted from your schedule and the company holidays: you do not type them in." %}
+    </p>
+    <div class="mt-6">{% include "includes/form_fields.html" %}</div>
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Continue" %}</button>
+      <a class="button button--ghost" href="{% url 'leave:request_start' %}">{% translate "Back" %}</a>
+    </div>
+  </form>
+{% endblock %}

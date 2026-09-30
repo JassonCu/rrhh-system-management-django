@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Reports" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Reports" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Reports" %}</h1>
+      <p class="page-header__meta">
+        {% translate "Every report shows only the people within your scope, and every export is recorded." %}
+      </p>
+    </div>
+  </header>
+
+  <section class="quick-links" aria-label="{% translate 'Available reports' %}">
+    {% for spec in reports %}
+      <a class="quick-link" href="{% url 'reports:detail' spec.slug %}">
+        {% include "includes/icon.html" with name="layers" %}
+        <span>
+          <span class="quick-link__title">{{ spec.title }}</span><br>
+          <span class="quick-link__text">{{ spec.description }}</span>
+        </span>
+      </a>
+    {% empty %}
+      <div class="empty-state">
+        {% include "includes/icon.html" with name="inbox" %}
+        <p>{% translate "There is no report available for your role." %}</p>
+      </div>
+    {% endfor %}
+  </section>
+{% endblock %}

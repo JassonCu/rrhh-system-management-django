@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Request leave" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'leave:my_leave' %}">{% translate "My leave" %}</a></li>
+      <li aria-current="page">{% translate "Request leave" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Request leave" %}</h1>
+      <p class="page-header__meta">{% translate "The type sets how much notice is required and whether it needs approval." %}</p>
+    </div>
+  </header>
+
+  {% include "leave/includes/stepper.html" %}
+
+  {% if not employee %}
+    <div class="alert alert--info">
+      <p>{% translate "Your account is not linked to an employee record." %}</p>
+    </div>
+  {% else %}
+    <form method="post" novalidate class="card form-card">
+      {% csrf_token %}
+      <div>{% include "includes/form_fields.html" %}</div>
+      <div class="form-actions">
+        <button type="submit" class="button button--primary">{% translate "Continue" %}</button>
+        <a class="button button--ghost" href="{% url 'leave:my_leave' %}">{% translate "Cancel" %}</a>
+      </div>
+    </form>
+  {% endif %}
+{% endblock %}

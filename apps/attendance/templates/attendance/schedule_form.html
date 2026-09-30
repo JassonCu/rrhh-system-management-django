@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "New schedule" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'attendance:schedule_list' %}">{% translate "Work schedules" %}</a></li>
+      <li aria-current="page">{% translate "New schedule" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "New schedule" %}</h1>
+      <p class="page-header__meta">{% translate "The days share the same times. A schedule with different hours per day is refined afterwards." %}</p>
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" %}
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Save" %}</button>
+      <a class="button button--ghost" href="{% url 'attendance:schedule_list' %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

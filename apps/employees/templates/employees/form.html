@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}
+  {% if employee %}{% translate "Edit employee" %}{% else %}{% translate "New employee" %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'employees:list' %}">{% translate "Employees" %}</a></li>
+      {% if employee %}
+        <li><a href="{% url 'employees:detail' employee.public_id %}">{{ employee.employee_code }}</a></li>
+        <li aria-current="page">{% translate "Edit" %}</li>
+      {% else %}
+        <li aria-current="page">{% translate "New employee" %}</li>
+      {% endif %}
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1 class="page-header__title">
+      {% if employee %}{% translate "Edit employee" %}{% else %}{% translate "New employee" %}{% endif %}
+    </h1>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+
+    <fieldset class="form-section">
+      <legend>{% translate "Personal details" %}</legend>
+      {% with form=person_form %}{% include "includes/form_fields.html" %}{% endwith %}
+    </fieldset>
+
+    {% if employee_form %}
+      <fieldset class="form-section">
+        <legend>{% translate "Employment details" %}</legend>
+        {% with form=employee_form %}{% include "includes/form_fields.html" %}{% endwith %}
+      </fieldset>
+    {% endif %}
+
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Save" %}</button>
+      <a class="button button--ghost" href="{% if employee %}{% url 'employees:detail' employee.public_id %}{% else %}{% url 'employees:list' %}{% endif %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

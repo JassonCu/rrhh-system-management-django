@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Appoint department head" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'departments:list' %}">{% translate "Departments" %}</a></li>
+      <li><a href="{% url 'departments:detail' department.pk %}">{{ department.name }}</a></li>
+      <li aria-current="page">{% translate "Appoint department head" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Appoint department head" %}</h1>
+      <p class="page-header__meta">{{ department.code }} · {{ department.name }}</p>
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    {% if current %}
+      <div class="alert alert--info">
+        <p>
+          {% blocktranslate with name=current.employee.person.full_name since=current.start_date %}{{ name }} has been in charge since {{ since }}. The new appointment closes that one the day before; nothing is overwritten.{% endblocktranslate %}
+        </p>
+      </div>
+    {% endif %}
+    <div class="mt-6">{% include "includes/form_fields.html" %}</div>
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Appoint" %}</button>
+      <a class="button button--ghost" href="{% url 'departments:detail' department.pk %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

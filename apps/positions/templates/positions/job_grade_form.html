@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "New job grade" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'positions:list' %}">{% translate "Positions" %}</a></li>
+      <li><a href="{% url 'positions:job_grade_list' %}">{% translate "Job grades" %}</a></li>
+      <li aria-current="page">{% translate "New job grade" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1 class="page-header__title">{% translate "New job grade" %}</h1>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" %}
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Save" %}</button>
+      <a class="button button--ghost" href="{% url 'positions:job_grade_list' %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

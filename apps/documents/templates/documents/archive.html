@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Archive document" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{{ cancel_url }}">{{ document.employee.person.full_name }}</a></li>
+      <li aria-current="page">{% translate "Archive document" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Archive document" %}</h1>
+      <p class="page-header__meta">
+        {{ document.document_type.name }} · {{ document.employee.employee_code }}
+      </p>
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    <div class="alert alert--warning">
+      <p><strong>{% translate "When you confirm:" %}</strong></p>
+      <ul>
+        <li>{% translate "The document leaves the file but is not deleted: it stays as evidence." %}</li>
+        <li>{% translate "It can no longer be downloaded from the record." %}</li>
+        <li>{% translate "Your name, the time and your reason are recorded." %}</li>
+      </ul>
+    </div>
+    <div class="mt-6">{% include "includes/form_fields.html" %}</div>
+    <div class="form-actions">
+      <button type="submit" class="button button--danger">{% translate "Archive document" %}</button>
+      <a class="button button--ghost" href="{{ cancel_url }}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

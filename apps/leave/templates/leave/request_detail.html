@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load i18n leave_extras %}
+{% block title %}{% translate "Leave request" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'leave:my_leave' %}">{% translate "My leave" %}</a></li>
+      <li aria-current="page">{% translate "Leave request" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{{ leave_request.leave_type.name }}</h1>
+      <p class="page-header__meta">
+        <span>{{ leave_request.employee.person.full_name }} · {{ leave_request.employee.employee_code }}</span>
+        {% include "includes/status_badge.html" with status=leave_request.status label=leave_request.get_status_display %}
+      </p>
+    </div>
+    <div class="page-header__actions">
+      {% if leave_request.status == "DRAFT" and is_owner %}
+        <a class="button button--primary" href="{% url 'leave:request_review' leave_request.public_id %}">{% translate "Review and submit" %}</a>
+      {% endif %}
+      {% if can_decide and leave_request.status == "SUBMITTED" %}
+        <a class="button button--primary" href="{% url 'leave:request_approve' leave_request.public_id %}">{% translate "Approve" %}</a>
+        <a class="button button--ghost" href="{% url 'leave:request_reject' leave_request.public_id %}">{% translate "Reject" %}</a>
+      {% endif %}
+      {% if can_cancel %}
+        <a class="button button--ghost" href="{% url 'leave:request_cancel' leave_request.public_id %}">{% translate "Cancel request" %}</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <section class="card">
+    <h2 class="card__title">{% translate "Details" %}</h2>
+    <dl class="detail">
+      <dt>{% translate "From" %}</dt><dd>{{ leave_request.start_date }}</dd>
+      <dt>{% translate "To" %}</dt><dd>{{ leave_request.end_date }}</dd>
+      <dt>{% translate "Working days" %}</dt><dd>{{ leave_request.working_days|as_days }}</dd>
+      <dt>{% translate "Balance" %}</dt><dd>{{ balance|as_days }}</dd>
+      {% if leave_request.reason %}
+        <dt>{% translate "Reason" %}</dt><dd>{{ leave_request.reason }}</dd>
+      {% endif %}
+      {% if leave_request.decided_at %}
+        <dt>{% translate "Decided" %}</dt>
+        <dd>{{ leave_request.decided_at|date:"Y-m-d H:i" }}{% if leave_request.decided_by %} · {{ leave_request.decided_by }}{% endif %}</dd>
+      {% endif %}
+      {% if leave_request.decision_note %}
+        <dt>{% translate "Decision note" %}</dt><dd>{{ leave_request.decision_note }}</dd>
+      {% endif %}
+    </dl>
+  </section>
+
+  <section class="card mt-6" aria-labelledby="history-title">
+    <h2 class="card__title" id="history-title">{% translate "History" %}</h2>
+    <ol class="timeline">
+      {% for transition in transitions %}
+        <li class="timeline__item{% if forloop.last %} timeline__item--current{% endif %}">
+          <span class="timeline__marker" aria-hidden="true"></span>
+          <p class="timeline__head">
+            <span>{{ transition.get_to_status_display }}</span>
+            <span class="timeline__dates">{{ transition.created_at|date:"Y-m-d H:i" }}</span>
+          </p>
+          <p class="list__muted">
+            {% if transition.actor %}{{ transition.actor }}{% else %}{% translate "System" %}{% endif %}
+            {% if transition.note %} · {{ transition.note }}{% endif %}
+          </p>
+        </li>
+      {% endfor %}
+    </ol>
+  </section>
+{% endblock %}

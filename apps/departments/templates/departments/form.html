@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}
+  {% if department %}{% translate "Edit department" %}{% else %}{% translate "New department" %}{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'departments:list' %}">{% translate "Departments" %}</a></li>
+      {% if department %}
+        <li><a href="{% url 'departments:detail' department.pk %}">{{ department.name }}</a></li>
+        <li aria-current="page">{% translate "Edit" %}</li>
+      {% else %}
+        <li aria-current="page">{% translate "New department" %}</li>
+      {% endif %}
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1 class="page-header__title">
+      {% if department %}{% translate "Edit department" %}{% else %}{% translate "New department" %}{% endif %}
+    </h1>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" %}
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Save" %}</button>
+      <a class="button button--ghost" href="{% if department %}{% url 'departments:detail' department.pk %}{% else %}{% url 'departments:list' %}{% endif %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ position.title }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'positions:list' %}">{% translate "Positions" %}</a></li>
+      <li aria-current="page">{{ position.code }}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{{ position.title }}</h1>
+      <p class="page-header__meta">
+        <span>{{ position.code }}</span>
+        {% if position.is_active %}
+          {% include "includes/status_badge.html" with status="ACTIVE" label=_("Active") %}
+        {% else %}
+          {% include "includes/status_badge.html" with status="INACTIVE" label=_("Inactive") %}
+        {% endif %}
+      </p>
+    </div>
+    {% if perms.positions.change_position %}
+      <div class="page-header__actions">
+        <a class="button button--secondary" href="{% url 'positions:update' position.pk %}">
+          {% include "includes/icon.html" with name="pencil" %}<span>{% translate "Edit" %}</span>
+        </a>
+        {% if position.is_active %}
+          <form method="post" action="{% url 'positions:deactivate' position.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="button button--danger">{% translate "Deactivate" %}</button>
+          </form>
+        {% endif %}
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="grid grid--2">
+    <section class="card" aria-labelledby="position-title">
+      <h2 class="card__title" id="position-title">{% translate "Details" %}</h2>
+      <dl class="detail mt-6">
+        <dt>{% translate "Code" %}</dt><dd>{{ position.code }}</dd>
+        <dt>{% translate "Department" %}</dt>
+        <dd><a href="{% url 'departments:detail' position.department.pk %}">{{ position.department.name }}</a></dd>
+        <dt>{% translate "Job grade" %}</dt>
+        <dd>
+          {% if grade %}
+            {{ grade.code }} — {{ grade.min_salary }} / {{ grade.max_salary }} {{ grade.currency }}
+          {% else %}
+            {% comment %} Sin `view_jobgrade` no se muestra el importe: la banda es confidencial
+               y el acceso al puesto NO lo hereda (§J.4, sin cascada de permisos). {% endcomment %}
+            {{ position.job_grade.code }}
+            {% translate "The salary band is confidential." as band_restricted %}
+            {% include "includes/restricted.html" with message=band_restricted %}
+          {% endif %}
+        </dd>
+      </dl>
+    </section>
+
+    {% if position.description %}
+      <section class="card" aria-labelledby="profile-title">
+        <h2 class="card__title" id="profile-title">{% translate "Role profile" %}</h2>
+        {{ position.description|linebreaks }}
+      </section>
+    {% endif %}
+  </div>
+{% endblock %}

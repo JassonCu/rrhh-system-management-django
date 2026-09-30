@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load i18n attendance_extras %}
+{% block title %}{% translate "My attendance" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "My attendance" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "My attendance" %}</h1>
+      <p class="page-header__meta">{{ today }}</p>
+    </div>
+  </header>
+
+  {% if not employee %}
+    <div class="alert alert--info">
+      <p>{% translate "Your account is not linked to an employee record." %}</p>
+    </div>
+  {% else %}
+    {% comment %} Una sola acción: el sistema sabe si toca entrada o salida
+       (patrones de la Fase 5, §2.2). {% endcomment %}
+    <section class="card punch" aria-labelledby="punch-title">
+      <h2 class="card__title" id="punch-title">{% translate "Today" %}</h2>
+      <p class="punch__status">
+        {% if summary.open_entry %}
+          {% blocktranslate with time=summary.open_entry.check_in_at|time:"H:i" %}Checked in at {{ time }}{% endblocktranslate %}
+        {% elif summary.worked_minutes %}
+          {% translate "Day closed" %}
+        {% else %}
+          {% translate "No entries yet" %}
+        {% endif %}
+      </p>
+
+      <form method="post" action="{% url 'attendance:punch' %}">
+        {% csrf_token %}
+        <button type="submit" class="button button--primary button--block punch__button">
+          {% if summary.open_entry %}{% translate "Clock out" %}{% else %}{% translate "Clock in" %}{% endif %}
+        </button>
+      </form>
+
+      <dl class="detail mt-6">
+        <dt>{% translate "Worked today" %}</dt><dd>{{ summary.worked_minutes|as_hours }}</dd>
+        <dt>{% translate "Expected" %}</dt><dd>{{ summary.expected_minutes|as_hours }}</dd>
+      </dl>
+    </section>
+
+    <section class="card mt-6" aria-labelledby="recent-title">
+      <h2 class="card__title" id="recent-title">{% translate "Last days" %}</h2>
+      <div class="table-scroll">
+        <table>
+          <caption class="visually-hidden">{% translate "Attendance of the last days" %}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{% translate "Date" %}</th>
+              <th scope="col">{% translate "Expected" %}</th>
+              <th scope="col">{% translate "Worked" %}</th>
+              <th scope="col">{% translate "Incidents" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for day in recent %}
+              <tr>
+                <td class="cell-strong">{{ day.date }}</td>
+                <td class="cell-muted">{{ day.expected_minutes|as_hours }}</td>
+                <td>{{ day.worked_minutes|as_hours }}</td>
+                <td>
+                  {% for incident in day.incidents %}
+                    {% include "includes/status_badge.html" with status=incident.status label=incident.get_incident_type_display %}
+                  {% empty %}—{% endfor %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card mt-6" aria-labelledby="my-incidents-title">
+      <h2 class="card__title" id="my-incidents-title">{% translate "My incidents" %}</h2>
+      <ul class="list">
+        {% for incident in incidents %}
+          <li>
+            <span>
+              {{ incident.get_incident_type_display }} · {{ incident.work_date }}<br>
+              <span class="list__muted">{{ incident.minutes|as_hours }}{% if incident.justification %} · {{ incident.justification }}{% endif %}</span>
+            </span>
+            {% include "includes/status_badge.html" with status=incident.status label=incident.get_status_display %}
+          </li>
+        {% empty %}
+          <li class="list__muted">{% translate "No incidents." %}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+{% endblock %}

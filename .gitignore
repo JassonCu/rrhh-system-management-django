@@ -169,3 +169,9 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
+
+# --- Proyecto RRHH ---
+media/
+staticfiles/
+.ruff_cache/
+*.sqlite3

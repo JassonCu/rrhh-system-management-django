@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Assign work schedule" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'contracts:list' %}">{% translate "Contracts" %}</a></li>
+      <li><a href="{{ cancel_url }}">{{ contract.employee.employee_code }}</a></li>
+      <li aria-current="page">{% translate "Assign work schedule" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Assign work schedule" %}</h1>
+      <p class="page-header__meta">
+        {{ contract.employee.person.full_name }} · {{ contract.employee.employee_code }}
+      </p>
+    </div>
+  </header>
+
+  <form method="post" novalidate class="card form-card">
+    {% csrf_token %}
+    {% if current %}
+      <div class="alert alert--info">
+        <p>
+          {% blocktranslate with code=current.work_schedule.code since=current.start_date %}Currently on {{ code }} since {{ since }}. The new schedule closes that one the day before; nothing is overwritten.{% endblocktranslate %}
+        </p>
+      </div>
+    {% endif %}
+    <div class="mt-6">{% include "includes/form_fields.html" %}</div>
+    <div class="form-actions">
+      <button type="submit" class="button button--primary">{% translate "Assign" %}</button>
+      <a class="button button--ghost" href="{{ cancel_url }}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% load i18n %}
+{% if page.paginator.num_pages > 1 %}
+  {% comment %} `querystring` conserva los filtros activos (búsqueda, estado, empleado)
+     al cambiar de página; antes solo se conservaba la búsqueda. {% endcomment %}
+  <nav class="pagination" aria-label="{% translate 'Pagination' %}">
+    <span>{% blocktranslate with current=page.number total=page.paginator.num_pages %}Page {{ current }} of {{ total }}{% endblocktranslate %}</span>
+    <span class="pagination__links">
+      {% if page.has_previous %}
+        <a class="button button--secondary button--sm" href="{% querystring page=page.previous_page_number %}">{% translate "Previous" %}</a>
+      {% endif %}
+      {% if page.has_next %}
+        <a class="button button--secondary button--sm" href="{% querystring page=page.next_page_number %}">{% translate "Next" %}</a>
+      {% endif %}
+    </span>
+  </nav>
+{% endif %}

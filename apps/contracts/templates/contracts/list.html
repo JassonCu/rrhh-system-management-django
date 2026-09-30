@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Contracts" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Contracts" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Contracts" %}</h1>
+      <p class="page-header__meta">{% blocktranslate count counter=page.paginator.count %}{{ counter }} contract{% plural %}{{ counter }} contracts{% endblocktranslate %}</p>
+    </div>
+  </header>
+
+  <form method="get" role="search" class="toolbar">
+    <input type="hidden" name="employee" value="{{ employee_filter }}">
+    <div class="field">
+      <label for="status">{% translate "Status" %}</label>
+      <select id="status" name="status">
+        <option value="">{% translate "All" %}</option>
+        <option value="DRAFT" {% if status == "DRAFT" %}selected{% endif %}>{% translate "Draft" %}</option>
+        <option value="ACTIVE" {% if status == "ACTIVE" %}selected{% endif %}>{% translate "Active" %}</option>
+        <option value="SUSPENDED" {% if status == "SUSPENDED" %}selected{% endif %}>{% translate "Suspended" %}</option>
+        <option value="TERMINATED" {% if status == "TERMINATED" %}selected{% endif %}>{% translate "Terminated" %}</option>
+        <option value="EXPIRED" {% if status == "EXPIRED" %}selected{% endif %}>{% translate "Expired" %}</option>
+      </select>
+    </div>
+    <button type="submit" class="button button--secondary">{% translate "Filter" %}</button>
+  </form>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "List of contracts" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Employee" %}</th>
+          <th scope="col">{% translate "Type" %}</th>
+          <th scope="col">{% translate "Start" %}</th>
+          <th scope="col">{% translate "End" %}</th>
+          <th scope="col">{% translate "Status" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for contract in page %}
+          <tr>
+            <td class="cell-strong">
+              <a href="{% url 'contracts:detail' contract.public_id %}">{{ contract.employee.person.full_name }}</a><br>
+              <span class="cell-muted">{{ contract.employee.employee_code }}</span>
+            </td>
+            <td>{{ contract.get_contract_type_display }}</td>
+            <td class="cell-muted">{{ contract.start_date }}</td>
+            <td class="cell-muted">{{ contract.effective_end|default:"—" }}</td>
+            <td>{% include "includes/status_badge.html" with status=contract.status label=contract.get_status_display %}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "No contracts found." %}</p>
+                {% if perms.contracts.add_employmentcontract %}
+                  <p class="list__muted">{% translate "Contracts are created from the employee's record." %}</p>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load i18n leave_extras %}
+{% block title %}{% translate "Leave balance" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Leave balance" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{{ employee.person.full_name }}</h1>
+      <p class="page-header__meta">{{ employee.employee_code }}</p>
+    </div>
+    {% if perms.leave.add_leaveledgerentry %}
+      <div class="page-header__actions">
+        <a class="button button--ghost" href="{% url 'leave:balance_adjust' %}">{% translate "Adjust balance" %}</a>
+      </div>
+    {% endif %}
+  </header>
+
+  <section class="metrics" aria-label="{% translate 'Leave balances' %}">
+    {% for balance in balances %}
+      <article class="metric">
+        <p class="metric__label">{{ balance.leave_type.name }}</p>
+        <p class="metric__value">{{ balance.available|as_days }}</p>
+        <p class="metric__hint">
+          {% blocktranslate with accrued=balance.accrued|as_days used=balance.used|as_days %}{{ accrued }} accrued · {{ used }} used{% endblocktranslate %}
+        </p>
+      </article>
+    {% empty %}
+      <p class="list__muted">{% translate "No leave types defined yet." %}</p>
+    {% endfor %}
+  </section>
+
+  <section class="card mt-6" aria-labelledby="ledger-title">
+    <h2 class="card__title" id="ledger-title">{% translate "Ledger" %}</h2>
+    <p class="list__muted">{% translate "Append-only: the balance is the sum of these entries." %}</p>
+    <div class="table-scroll mt-6">
+      <table>
+        <caption class="visually-hidden">{% translate "Leave ledger entries" %}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{% translate "Date" %}</th>
+            <th scope="col">{% translate "Type" %}</th>
+            <th scope="col">{% translate "Entry" %}</th>
+            <th scope="col">{% translate "Days" %}</th>
+            <th scope="col">{% translate "Note" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in page %}
+            <tr>
+              <td class="cell-muted">{{ entry.created_at|date:"Y-m-d" }}</td>
+              <td>{{ entry.leave_type.name }}</td>
+              <td>{{ entry.get_entry_type_display }}</td>
+              <td class="cell-strong">{{ entry.days|as_days }}</td>
+              <td class="cell-muted">{{ entry.note|default:"—" }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5">
+                <div class="empty-state">
+                  {% include "includes/icon.html" with name="inbox" %}
+                  <p>{% translate "No entries yet." %}</p>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% include "includes/pagination.html" %}
+  </section>
+{% endblock %}

@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ employee.employee_code }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'employees:list' %}">{% translate "Employees" %}</a></li>
+      <li aria-current="page">{{ employee.employee_code }}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{{ person.full_name }}</h1>
+      <p class="page-header__meta">
+        <span>{{ employee.employee_code }}</span>
+        {% include "includes/status_badge.html" with status=employee.employment_status label=employee.get_employment_status_display %}
+      </p>
+    </div>
+    <div class="page-header__actions">
+      {% if perms.employees.change_employee %}
+        <a class="button button--secondary" href="{% url 'employees:update' employee.public_id %}">
+          {% include "includes/icon.html" with name="pencil" %}<span>{% translate "Edit" %}</span>
+        </a>
+      {% endif %}
+      {% comment %} La baja ya no se hace aquí: el estado laboral solo cambia al terminar un
+         contrato, en la misma transacción (RN-18, ADR-012). {% endcomment %}
+      {% if perms.contracts.add_employmentcontract %}
+        <a class="button button--primary" href="{% url 'contracts:create' employee.public_id %}">
+          {% include "includes/icon.html" with name="plus" %}<span>{% translate "New contract" %}</span>
+        </a>
+      {% endif %}
+    </div>
+  </header>
+
+  {% comment %} Pestañas como enlaces: cada una tiene su URL, funcionan sin JavaScript
+     y `aria-current` anuncia la activa. {% endcomment %}
+  <nav class="tabs" aria-label="{% translate 'Record sections' %}">
+    <a class="tabs__link" href="?tab=record"{% if tab == "record" %} aria-current="page"{% endif %}>
+      {% include "includes/icon.html" with name="user" %}<span>{% translate "Record" %}</span>
+    </a>
+    <a class="tabs__link" href="?tab=documents"{% if tab == "documents" %} aria-current="page"{% endif %}>
+      {% include "includes/icon.html" with name="contract" %}<span>{% translate "Documents" %}</span>
+    </a>
+    {% if can_view_documents %}
+      <a class="tabs__link" href="?tab=file"{% if tab == "file" %} aria-current="page"{% endif %}>
+        {% include "includes/icon.html" with name="inbox" %}<span>{% translate "File" %}</span>
+      </a>
+    {% endif %}
+    {% if can_view_contracts %}
+      <a class="tabs__link" href="?tab=contracts"{% if tab == "contracts" %} aria-current="page"{% endif %}>
+        {% include "includes/icon.html" with name="briefcase" %}<span>{% translate "Contracts" %}</span>
+      </a>
+    {% endif %}
+  </nav>
+
+  {% if tab == "record" %}
+    <div class="grid grid--2">
+      <section class="card" aria-labelledby="personal-title">
+        <h2 class="card__title" id="personal-title">{% translate "Personal details" %}</h2>
+        <dl class="detail mt-6">
+          <dt>{% translate "Date of birth" %}</dt>
+          <dd>
+            {% comment %} El enmascarado lo decide la VISTA, no la plantilla: `show_sensitive`
+               viene del selector `can_view_sensitive_pii`. La plantilla no toma
+               decisiones de seguridad (regla 3). {% endcomment %}
+            {% if show_sensitive %}{{ person.birth_date }}{% else %}{% include "includes/restricted.html" %}{% endif %}
+          </dd>
+          <dt>{% translate "Nationality" %}</dt><dd>{{ person.nationality }}</dd>
+          <dt>{% translate "Gender" %}</dt><dd>{{ person.get_gender_display }}</dd>
+          <dt>{% translate "Marital status" %}</dt>
+          <dd>{% if show_sensitive %}{{ person.get_marital_status_display }}{% else %}{% include "includes/restricted.html" %}{% endif %}</dd>
+          <dt>{% translate "Hire date" %}</dt><dd>{{ employee.hire_date }}</dd>
+          {% if employee.termination_date %}
+            <dt>{% translate "Termination date" %}</dt><dd>{{ employee.termination_date }}</dd>
+          {% endif %}
+        </dl>
+      </section>
+
+      <section class="card" aria-labelledby="contact-title">
+        <h2 class="card__title" id="contact-title">{% translate "Contact details" %}</h2>
+        {% if not show_personal %}
+          <p class="list__muted">{% translate "Only work contact details are shown." %}</p>
+        {% endif %}
+        <ul class="list">
+          {% for contact in contacts %}
+            <li>
+              <span>
+                <span class="list__muted">{{ contact.get_contact_type_display }}</span><br>
+                {{ contact.value }}
+              </span>
+              {% if contact.is_primary %}<span class="badge badge--info">{% translate "primary" %}</span>{% endif %}
+            </li>
+          {% empty %}
+            <li class="list__muted">{% translate "No contact details registered." %}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="emergency-title">
+        <h2 class="card__title" id="emergency-title">{% translate "Emergency contacts" %}</h2>
+        {% if show_personal %}
+          <ul class="list">
+            {% for contact in emergency_contacts %}
+              <li>
+                <span>
+                  {{ contact.full_name }}<br>
+                  <span class="list__muted">{{ contact.get_relationship_display }}</span>
+                </span>
+                <span>{{ contact.phone }}</span>
+              </li>
+            {% empty %}
+              <li class="list__muted">{% translate "None registered." %}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          {% comment %} Los datos ni siquiera llegan a la plantilla: el selector devuelve un
+             queryset vacío. Este bloque solo evita decir "ninguno" cuando es "restringido". {% endcomment %}
+          {% include "includes/restricted.html" %}
+        {% endif %}
+      </section>
+    </div>
+
+  {% elif tab == "documents" %}
+    <section class="card" aria-labelledby="identification-title">
+      <div class="card__header">
+        <h2 class="card__title" id="identification-title">{% translate "Identification" %}</h2>
+        {% if perms.employees.change_employee %}
+          <a class="button button--ghost button--sm" href="{% url 'employees:document_add' employee.public_id %}">
+            {% include "includes/icon.html" with name="plus" %}<span>{% translate "Add document" %}</span>
+          </a>
+        {% endif %}
+      </div>
+      <ul class="list">
+        {% for document in documents %}
+          <li>
+            <span>
+              <span class="list__muted">{{ document.get_document_type_display }}</span><br>
+              {% if show_sensitive %}{{ document.number }}{% else %}{{ document.masked_number }}{% endif %}
+            </span>
+            {% if document.is_expired %}<span class="badge badge--danger">{% translate "expired" %}</span>{% endif %}
+          </li>
+        {% empty %}
+          <li>
+            <div class="empty-state">
+              {% include "includes/icon.html" with name="inbox" %}
+              <p>{% translate "No documents registered." %}</p>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+  {% elif tab == "file" %}
+    {% include "documents/includes/file_tab.html" %}
+
+  {% else %}
+    <section class="card" aria-labelledby="contracts-title">
+      <div class="card__header">
+        <h2 class="card__title" id="contracts-title">{% translate "Contracts" %}</h2>
+        {% if perms.contracts.add_employmentcontract %}
+          <a class="button button--ghost button--sm" href="{% url 'contracts:create' employee.public_id %}">
+            {% include "includes/icon.html" with name="plus" %}<span>{% translate "New contract" %}</span>
+          </a>
+        {% endif %}
+      </div>
+      <div class="table-scroll">
+        <table>
+          <caption class="visually-hidden">{% translate "Contracts of this employee" %}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{% translate "Type" %}</th>
+              <th scope="col">{% translate "Start" %}</th>
+              <th scope="col">{% translate "End" %}</th>
+              <th scope="col">{% translate "Status" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for contract in contracts %}
+              <tr>
+                <td class="cell-strong">
+                  <a href="{% url 'contracts:detail' contract.public_id %}">{{ contract.get_contract_type_display }}</a>
+                </td>
+                <td>{{ contract.start_date }}</td>
+                <td class="cell-muted">{{ contract.effective_end|default:"—" }}</td>
+                <td>{% include "includes/status_badge.html" with status=contract.status label=contract.get_status_display %}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4">
+                  <div class="empty-state">
+                    {% include "includes/icon.html" with name="inbox" %}
+                    <p>{% translate "This employee has no contracts yet." %}</p>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

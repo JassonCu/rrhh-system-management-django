@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% comment %}
+  Asistente de contratación (plan UX/UI §7.2). El paso se deduce del estado del
+  contrato, no de la sesión: se puede salir y retomar, y dos pestañas abiertas no
+  se contradicen. El puesto va antes que el salario para poder avisar de la banda
+  antes de guardar (RN-23).
+{% endcomment %}
+{% block title %}{% translate "Hiring" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'contracts:list' %}">{% translate "Contracts" %}</a></li>
+      <li><a href="{% url 'contracts:detail' contract.public_id %}">{{ contract.employee.employee_code }}</a></li>
+      <li aria-current="page">{% translate "Hiring" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Hiring" %}</h1>
+      <p class="page-header__meta">
+        <span>{{ contract.employee.person.full_name }} · {{ contract.employee.employee_code }}</span>
+        {% include "includes/status_badge.html" with status=contract.status label=contract.get_status_display %}
+      </p>
+    </div>
+  </header>
+
+  <ol class="stepper">
+    {% for entry in steps %}
+      <li class="stepper__item stepper__item--{{ entry.state }}">
+        <span class="stepper__number" aria-hidden="true">{{ forloop.counter }}</span>
+        <span>{{ entry.label }}</span>
+      </li>
+    {% endfor %}
+  </ol>
+
+  {% if step == "position" %}
+    <form method="post" novalidate class="card form-card">
+      {% csrf_token %}
+      <h2 class="card__title">{% translate "Position" %}</h2>
+      <p class="list__muted">{% translate "Choose the department first, then the position within it." %}</p>
+      <div class="mt-6">{% include "includes/form_fields.html" %}</div>
+      <div class="form-actions">
+        <button type="submit" class="button button--primary">{% translate "Save and continue" %}</button>
+        <a class="button button--ghost" href="{% url 'contracts:detail' contract.public_id %}">{% translate "Save and exit" %}</a>
+      </div>
+    </form>
+
+  {% elif step == "salary" %}
+    <form method="post" novalidate class="card form-card">
+      {% csrf_token %}
+      <h2 class="card__title">{% translate "Salary" %}</h2>
+      {% if band %}
+        <p class="list__muted">
+          {% blocktranslate with minimum=band.min_salary maximum=band.max_salary currency=band.currency code=band.code %}Band for grade {{ code }}: {{ minimum }} – {{ maximum }} {{ currency }}. Outside it, a justification is required.{% endblocktranslate %}
+        </p>
+      {% endif %}
+      <div class="mt-6">{% include "includes/form_fields.html" %}</div>
+      <div class="form-actions">
+        <button type="submit" class="button button--primary">{% translate "Save and continue" %}</button>
+        <a class="button button--ghost" href="{% url 'contracts:detail' contract.public_id %}">{% translate "Save and exit" %}</a>
+      </div>
+    </form>
+
+  {% else %}
+    <section class="card" aria-labelledby="review-title">
+      <h2 class="card__title" id="review-title">{% translate "Review and activate" %}</h2>
+      <dl class="detail mt-6">
+        <dt>{% translate "Employer" %}</dt><dd>{{ contract.company.legal_name }}</dd>
+        <dt>{% translate "Type" %}</dt><dd>{{ contract.get_contract_type_display }}</dd>
+        <dt>{% translate "Start date" %}</dt><dd>{{ contract.start_date }}</dd>
+        <dt>{% translate "End date" %}</dt><dd>{{ contract.end_date|default:"—" }}</dd>
+        <dt>{% translate "Position" %}</dt>
+        <dd>
+          {% if assignment %}
+            {{ assignment.position.title }} · {{ assignment.position.department.name }} ·
+            {% blocktranslate with fte=assignment.fte %}{{ fte }} FTE{% endblocktranslate %}
+          {% else %}—{% endif %}
+        </dd>
+        <dt>{% translate "Salary" %}</dt>
+        <dd>
+          {% if can_view_salary and salary %}
+            {{ salary.amount }} {{ salary.currency }} · {{ salary.get_pay_frequency_display }}
+          {% elif salary %}
+            {% include "includes/restricted.html" %}
+          {% else %}—{% endif %}
+        </dd>
+      </dl>
+
+      {% if contract.status == "DRAFT" %}
+        <form method="post" action="{% url 'contracts:activate' contract.public_id %}" class="form-actions">
+          {% csrf_token %}
+          <button type="submit" class="button button--primary">{% translate "Activate contract" %}</button>
+          <a class="button button--ghost" href="{% url 'contracts:detail' contract.public_id %}">{% translate "Not yet" %}</a>
+        </form>
+      {% else %}
+        <p class="mt-6">{% translate "This contract is already active." %}</p>
+        <a class="button button--secondary" href="{% url 'contracts:detail' contract.public_id %}">{% translate "Open the contract" %}</a>
+      {% endif %}
+    </section>
+  {% endif %}
+{% endblock %}

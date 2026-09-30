@@ -1,0 +1,8 @@
+# Dependencias de ejecución. Versiones exactas para builds reproducibles (§L.1).
+Django==6.1.1
+django-csp==4.0          # CSP estricta con nonce por petición (ADR-007)
+python-dotenv==1.2.3     # carga de .env en desarrollo
+argon2-cffi==25.1.0      # hasher de contraseñas recomendado por OWASP (ADR-013)
+django-allauth==65.19.3  # autenticación — se conecta en la Fase 2 (ADR-004)
+openpyxl==3.1.5        # exportación a Excel de los reportes (Fase de reportes)
+reportlab==5.0.1        # PDF de reportes con QR incorporado (módulo de reportes)

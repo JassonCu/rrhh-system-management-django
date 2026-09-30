@@ -1,0 +1,177 @@
+{% load i18n static %}
+{% comment %}
+  Barra lateral de navegación (plan UX/UI §4.1).
+  Los enlaces se muestran según permisos por COMODIDAD, NUNCA por seguridad: la
+  vista vuelve a comprobar el permiso y el selector el alcance (regla 36).
+  En móvil se pliega con <details>: funciona sin JavaScript; main.js solo la
+  cierra al cargar en pantallas estrechas.
+{% endcomment %}
+{% with ns=request.resolver_match.namespace url_name=request.resolver_match.url_name %}
+<aside class="app-sidebar">
+  <div class="app-sidebar__header">
+    <a class="app-brand" href="{% url 'dashboard:home' %}">
+      <img src="{% static 'img/brand/ceiba-mark.svg' %}" alt="" width="32" height="32">
+      <span>{{ PRODUCT_NAME }}</span>
+    </a>
+  </div>
+
+  <details class="app-nav" open data-responsive-nav>
+    <summary class="app-nav__toggle">{% include "includes/icon.html" with name="menu" %}<span>{% translate "Menu" %}</span></summary>
+    <nav aria-label="{% translate 'Main navigation' %}">
+      <ul class="app-nav__list">
+        <li>
+          <a class="app-nav__link" href="{% url 'dashboard:home' %}"{% if ns == "dashboard" %} aria-current="page"{% endif %}>
+            {% include "includes/icon.html" with name="home" %}<span>{% translate "Home" %}</span>
+          </a>
+        </li>
+        <li>
+          <a class="app-nav__link" href="{% url 'accounts:profile' %}"{% if ns == "accounts" and url_name == "profile" %} aria-current="page"{% endif %}>
+            {% include "includes/icon.html" with name="user" %}<span>{% translate "My profile" %}</span>
+          </a>
+        </li>
+      </ul>
+
+      {% if perms.employees.view_employee or perms.contracts.view_employmentcontract or perms.leave.view_leaverequest %}
+        <p class="app-nav__group" id="nav-people">{% translate "People" %}</p>
+        <ul class="app-nav__list" aria-labelledby="nav-people">
+          {% if perms.employees.view_employee %}
+            <li>
+              <a class="app-nav__link" href="{% url 'employees:list' %}"{% if ns == "employees" %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="users" %}<span>{% translate "Employees" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.contracts.view_employmentcontract %}
+            <li>
+              <a class="app-nav__link" href="{% url 'contracts:list' %}"{% if ns == "contracts" %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="contract" %}<span>{% translate "Contracts" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.attendance.view_attendanceentry %}
+            <li>
+              <a class="app-nav__link" href="{% url 'attendance:my_attendance' %}"{% if ns == "attendance" and url_name == "my_attendance" %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="clock" %}<span>{% translate "My attendance" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.attendance.view_attendanceincident %}
+            <li>
+              <a class="app-nav__link" href="{% url 'attendance:incident_list' %}"{% if ns == "attendance" and "incident" in url_name %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="alert" %}<span>{% translate "Attendance incidents" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.leave.view_leaverequest %}
+            <li>
+              <a class="app-nav__link" href="{% url 'leave:my_leave' %}"{% if ns == "leave" and url_name != "inbox" and url_name != "team_calendar" and "type" not in url_name and "balance" not in url_name %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="sun" %}<span>{% translate "My leave" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.leave.approve_leave %}
+            <li>
+              <a class="app-nav__link" href="{% url 'leave:inbox' %}"{% if ns == "leave" and url_name == "inbox" %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="check-circle" %}<span>{% translate "Approvals" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.leave.view_leaverequest %}
+            <li>
+              <a class="app-nav__link" href="{% url 'leave:team_calendar' %}"{% if ns == "leave" and url_name == "team_calendar" %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="calendar" %}<span>{% translate "Leave calendar" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.documents.view_employeedocument %}
+            <li>
+              <a class="app-nav__link" href="{% url 'documents:expiring' %}"{% if ns == "documents" and url_name == "expiring" %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="contract" %}<span>{% translate "Documents expiring" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.documents.add_documenttype %}
+            <li>
+              <a class="app-nav__link" href="{% url 'documents:type_list' %}"{% if ns == "documents" and "type" in url_name %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="layers" %}<span>{% translate "Document types" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.leave.add_leavetype %}
+            <li>
+              <a class="app-nav__link" href="{% url 'leave:type_list' %}"{% if ns == "leave" and "type" in url_name %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="layers" %}<span>{% translate "Leave types" %}</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      {% endif %}
+
+      {% if perms.employees.view_employee or perms.attendance.view_attendanceentry or perms.leave.view_leaverequest %}
+        <p class="app-nav__group" id="nav-reports">{% translate "Reports" %}</p>
+        <ul class="app-nav__list" aria-labelledby="nav-reports">
+          <li>
+            <a class="app-nav__link" href="{% url 'reports:index' %}"{% if ns == "reports" %} aria-current="page"{% endif %}>
+              {% include "includes/icon.html" with name="layers" %}<span>{% translate "Reports" %}</span>
+            </a>
+          </li>
+        </ul>
+      {% endif %}
+
+      {% if perms.departments.view_department or perms.positions.view_position or perms.core.view_company %}
+        <p class="app-nav__group" id="nav-organization">{% translate "Organization" %}</p>
+        <ul class="app-nav__list" aria-labelledby="nav-organization">
+          {% if perms.core.view_company %}
+            <li>
+              <a class="app-nav__link" href="{% url 'departments:company_list' %}"{% if ns == "departments" and "company" in url_name %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="shield" %}<span>{% translate "Companies" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.departments.view_department %}
+            <li>
+              <a class="app-nav__link" href="{% url 'departments:list' %}"{% if ns == "departments" and "company" not in url_name %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="building" %}<span>{% translate "Departments" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.positions.view_position %}
+            <li>
+              <a class="app-nav__link" href="{% url 'positions:list' %}"{% if ns == "positions" and "job_grade" not in url_name %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="briefcase" %}<span>{% translate "Positions" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if perms.positions.view_jobgrade %}
+            <li>
+              <a class="app-nav__link" href="{% url 'positions:job_grade_list' %}"{% if ns == "positions" and "job_grade" in url_name %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="layers" %}<span>{% translate "Job grades" %}</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      {% endif %}
+
+      {% if perms.accounts.view_user or user.is_staff %}
+        <p class="app-nav__group" id="nav-administration">{% translate "Administration" %}</p>
+        <ul class="app-nav__list" aria-labelledby="nav-administration">
+          {% if perms.accounts.view_user %}
+            <li>
+              <a class="app-nav__link" href="{% url 'accounts:user_list' %}"{% if ns == "accounts" and url_name != "profile" %} aria-current="page"{% endif %}>
+                {% include "includes/icon.html" with name="user-check" %}<span>{% translate "Accounts" %}</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if user.is_staff %}
+            <li>
+              <a class="app-nav__link" href="{% url 'admin:index' %}">
+                {% include "includes/icon.html" with name="shield" %}<span>{% translate "Technical administration" %}</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      {% endif %}
+    </nav>
+  </details>
+</aside>
+{% endwith %}

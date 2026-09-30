@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Accounts" %}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+    <ol>
+      <li><a href="{% url 'dashboard:home' %}">{% translate "Home" %}</a></li>
+      <li aria-current="page">{% translate "Accounts" %}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <div>
+      <h1 class="page-header__title">{% translate "Accounts" %}</h1>
+      <p class="page-header__meta">{% translate "Accounts are created by invitation. Public sign-up is closed." %}</p>
+    </div>
+    {% if perms.accounts.manage_users %}
+      {% comment %} Se oculta por comodidad, NUNCA por seguridad: la vista comprueba el
+         permiso igualmente (regla 36). {% endcomment %}
+      <div class="page-header__actions">
+        <a class="button button--primary" href="{% url 'accounts:invite_user' %}">
+          {% include "includes/icon.html" with name="plus" %}<span>{% translate "Invite a user" %}</span>
+        </a>
+      </div>
+    {% endif %}
+  </header>
+
+  <form method="get" role="search" class="toolbar">
+    <div class="field">
+      <label for="search">{% translate "Search by email" %}</label>
+      <input type="search" id="search" name="q" value="{{ query }}">
+    </div>
+    <button type="submit" class="button button--secondary">
+      {% include "includes/icon.html" with name="search" %}<span>{% translate "Search" %}</span>
+    </button>
+  </form>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">{% translate "List of accounts" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Email address" %}</th>
+          <th scope="col">{% translate "Roles" %}</th>
+          <th scope="col">{% translate "Status" %}</th>
+          <th scope="col"><span class="visually-hidden">{% translate "Actions" %}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for account in page %}
+          <tr>
+            <td class="cell-strong">{{ account.email }}</td>
+            <td>
+              {% for group in account.groups.all %}<span class="badge badge--neutral">{{ group.name }}</span> {% empty %}<span class="cell-muted">—</span>{% endfor %}
+            </td>
+            <td>
+              {% if account.is_active %}
+                {% include "includes/status_badge.html" with status="ACTIVE" label=_("Active") %}
+              {% else %}
+                {% include "includes/status_badge.html" with status="INACTIVE" label=_("Inactive") %}
+              {% endif %}
+            </td>
+            <td class="cell-actions">
+              {% if perms.accounts.manage_users and account.is_active and account.pk != user.pk %}
+                <form method="post" action="{% url 'accounts:deactivate_user' account.pk %}">
+                  {% csrf_token %}
+                  <button type="submit" class="button button--secondary button--sm">{% translate "Deactivate" %}</button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4">
+              <div class="empty-state">
+                {% include "includes/icon.html" with name="inbox" %}
+                <p>{% translate "No accounts found." %}</p>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include "includes/pagination.html" %}
+{% endblock %}
